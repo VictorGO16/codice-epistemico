@@ -21,12 +21,27 @@ export interface DebateSession {
   lastActivity: Date;
 }
 
+interface AnalysisArgument {
+  participantName: string;
+  thesis: string;
+  strength: number;
+  coherence: number;
+  arguments: string[];
+}
+
+export interface DebateAnalysis {
+  arguments: AnalysisArgument[];
+  participantScores: Record<string, number>;
+  moderatorConclusion: string;
+  overallAnalysis: string;
+}
+
 interface DebateState {
   // Current session (only one at a time)
   currentSession: DebateSession | null;
   
   // Current analysis (linked to current session)
-  currentAnalysis: any | null;
+  currentAnalysis: DebateAnalysis | null;
   
   // UI state
   isDebateOpen: boolean;
@@ -34,14 +49,14 @@ interface DebateState {
   
   // Actions
   startSession: (topic: string, participantIds: string[]) => void;
-  restoreSession: (session: DebateSession, analysis?: any) => void;
+  restoreSession: (session: DebateSession, analysis?: DebateAnalysis) => void;
   endSession: () => void;
   addMessage: (message: Omit<DebateMessage, 'id' | 'timestamp'>) => string;
   updateMessage: (messageId: string, updates: Partial<DebateMessage>) => void;
   nextSpeaker: () => void;
   setDebateOpen: (open: boolean) => void;
   setAnalysisOpen: (open: boolean) => void;
-  setCurrentAnalysis: (analysis: any) => void;
+  setCurrentAnalysis: (analysis: DebateAnalysis) => void;
   clearCurrentSession: () => void;
   
   // Navigation between debate and analysis
@@ -79,7 +94,7 @@ export const useDebateStore = create<DebateState>()(
         });
       },
 
-      restoreSession: (session: DebateSession, analysis?: any) => {
+      restoreSession: (session: DebateSession, analysis?: DebateAnalysis) => {
         set({
           currentSession: {
             ...session,
@@ -209,7 +224,7 @@ export const useDebateStore = create<DebateState>()(
       },
 
       openAnalysis: () => {
-        const { currentSession, currentAnalysis } = get();
+        const { currentSession } = get();
         if (currentSession) {
           set({
             isDebateOpen: false,

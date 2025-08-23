@@ -42,10 +42,39 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
   const { returnToDebate, setCurrentAnalysis, currentAnalysis } = useDebateStore();
   const { updateSessionData, getSessionsByType } = useSessionStore();
 
+  // Helper function to convert analysis data to AnalysisResult
+  const convertToAnalysisResult = (analysisData: Record<string, unknown> | unknown): AnalysisResult => {
+    const data = analysisData as Record<string, unknown>;
+    // Handle both DebateAnalysis format and API response format
+    const args = (data.arguments as unknown[]) || [];
+    const argumentCards: ArgumentCard[] = args.map((arg: unknown, index: number) => {
+      const argObj = arg as Record<string, unknown>;
+      return {
+        id: (argObj.id as string) || `arg-${index}`,
+        participantId: (argObj.participantId as string) || Object.keys(philosophicalData).find(key => 
+          philosophicalData[key].name === (argObj.participantName as string)
+        ) || '',
+        participantName: (argObj.participantName as string) || '',
+        thesis: (argObj.thesis as string) || '',
+        arguments: (argObj.arguments as string[]) || [],
+        refutations: (argObj.refutations as string[]) || [],
+        strength: (argObj.strength as number) || 0,
+        coherence: (argObj.coherence as number) || 0,
+      };
+    });
+
+    return {
+      arguments: argumentCards,
+      moderatorConclusion: (data.moderatorConclusion as string) || '',
+      participantScores: (data.participantScores as Record<string, number>) || {},
+      overallAnalysis: (data.overallAnalysis as string) || '',
+    };
+  };
+
   useEffect(() => {
     // Use existing analysis if available
     if (currentAnalysis) {
-      setAnalysis(currentAnalysis);
+      setAnalysis(convertToAnalysisResult(currentAnalysis));
     } else {
       generateAnalysis();
     }
@@ -83,8 +112,9 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
         throw new Error(data.error || 'Error desconocido');
       }
 
-      setAnalysis(data.analysis);
-      setCurrentAnalysis(data.analysis); // Store in global state
+      const analysisResult = convertToAnalysisResult(data.analysis);
+      setAnalysis(analysisResult);
+      setCurrentAnalysis(data.analysis); // Store raw data in global state
       
       // Save analysis to session if exists
       const debateSessions = getSessionsByType('debate');

@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+interface Participant {
+  name: string;
+  year: number;
+  coreIdea: string;
+}
+
+interface ConversationMessage {
+  participantName: string;
+  text: string;
+}
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 
@@ -27,14 +38,14 @@ export async function POST(request: NextRequest) {
 
     // Build context about other participants
     const otherParticipantsContext = otherParticipants.length > 0 
-      ? `\n\nOtros participantes en este debate:\n${otherParticipants.map((p: any) => 
+      ? `\n\nOtros participantes en este debate:\n${otherParticipants.map((p: Participant) => 
           `- ${p.name} (${p.year > 0 ? p.year : `${Math.abs(p.year)} a.C.`}): ${p.coreIdea.substring(0, 200)}...`
         ).join('\n')}`
       : '';
 
     // Build conversation history
     const historyContext = conversationHistory.length > 0
-      ? `\n\nHistorial de la conversación:\n${conversationHistory.map((msg: any) => 
+      ? `\n\nHistorial de la conversación:\n${conversationHistory.map((msg: ConversationMessage) => 
           `${msg.participantName}: ${msg.text}`
         ).join('\n\n')}`
       : '';

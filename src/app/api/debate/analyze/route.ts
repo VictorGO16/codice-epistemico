@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId, topic, participants, messages } = await request.json();
+    const { topic, participants, messages } = await request.json();
 
     if (!topic || !participants || !messages) {
       return NextResponse.json(
@@ -24,11 +24,11 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
 
     // Build the debate transcript
-    const transcript = messages.map((msg: any) => 
+    const transcript = messages.map((msg: { participantName: string; text: string }) => 
       `${msg.participantName}: ${msg.text}`
     ).join('\n\n');
 
-    const participantsList = participants.map((p: any) => 
+    const participantsList = participants.map((p: { name: string; type: string }) => 
       `- ${p.name} (${p.type === 'philosopher' ? 'Filósofo' : 'Científico'})`
     ).join('\n');
 
@@ -108,7 +108,7 @@ IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones a
       
       // Fallback: create a basic analysis structure
       const fallbackAnalysis = {
-        arguments: participants.map((p: any, index: number) => ({
+        arguments: participants.map((p: { id: string; name: string }, index: number) => ({
           id: `arg_${index + 1}`,
           participantId: p.id,
           participantName: p.name,
@@ -118,7 +118,7 @@ IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones a
           strength: 7,
           coherence: 8
         })),
-        participantScores: participants.reduce((scores: any, p: any) => {
+        participantScores: participants.reduce((scores: Record<string, number>, p: { id: string }) => {
           scores[p.id] = 7.5;
           return scores;
         }, {}),

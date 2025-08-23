@@ -22,6 +22,28 @@ import { useDebateStore } from '@/lib/stores/debate-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { TabId } from '@/types';
 
+interface DebateMessage {
+  id: string;
+  participantId: string;
+  participantName: string;
+  text: string;
+  timestamp: Date;
+  isLoading?: boolean;
+}
+
+interface DebateAnalysis {
+  arguments: Array<{
+    participantName: string;
+    thesis: string;
+    strength: number;
+    coherence: number;
+    arguments: string[];
+  }>;
+  participantScores: Record<string, number>;
+  moderatorConclusion: string;
+  overallAnalysis: string;
+}
+
 interface RightSidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -94,7 +116,6 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
     duplicateSession 
   } = useSessionStore();
   const { 
-    startSession: startDebateSession, 
     restoreSession,
     setDebateOpen, 
     currentSession, 
@@ -102,8 +123,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
     openAnalysis, 
     returnToDebate,
     isDebateOpen,
-    isAnalysisOpen,
-    setCurrentAnalysis
+    isAnalysisOpen
   } = useDebateStore();
   const [showSessionMenu, setShowSessionMenu] = useState<string | null>(null);
 
@@ -296,14 +316,14 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                         id: session.data.sessionId as string,
                                         topic: session.data.topic as string,
                                         participantIds: session.data.participants as string[],
-                                        messages: session.data.messages as any[],
+                                        messages: session.data.messages as DebateMessage[],
                                         isActive: false,
                                         currentSpeaker: 0,
                                         createdAt: new Date(session.createdAt),
                                         lastActivity: new Date(session.data.lastActivity as string || session.lastAccessed),
                                       };
                                       
-                                      restoreSession(restoredSession, session.data.analysis);
+                                      restoreSession(restoredSession, session.data.analysis as DebateAnalysis);
                                       setDebateOpen(true);
                                     }
                                   }
@@ -419,14 +439,14 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                           id: session.data.sessionId as string,
                                           topic: session.data.topic as string,
                                           participantIds: session.data.participants as string[],
-                                          messages: session.data.messages as any[],
+                                          messages: session.data.messages as DebateMessage[],
                                           isActive: false,
                                           currentSpeaker: 0,
                                           createdAt: new Date(session.createdAt),
                                           lastActivity: new Date(session.data.lastActivity as string || session.lastAccessed),
                                         };
                                         
-                                        restoreSession(restoredSession, session.data.analysis);
+                                        restoreSession(restoredSession, session.data.analysis as DebateAnalysis);
                                         setDebateOpen(true);
                                       }
                                     }

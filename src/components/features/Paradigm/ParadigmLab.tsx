@@ -73,7 +73,7 @@ export default function ParadigmLab() {
     if (activeSession && activeSession.type === 'paradigm' && activeSession.data) {
       setSelectedParadigm((activeSession.data.selectedParadigm as string) || '');
       setObjectOfStudy((activeSession.data.objectOfStudy as string) || '');
-      setAnalysis(activeSession.data.analysis || null);
+      setAnalysis((activeSession.data.analysis as ParadigmAnalysis) || null);
     }
   }, [activeSession]);
 

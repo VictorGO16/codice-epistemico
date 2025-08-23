@@ -47,8 +47,8 @@ export default function ContentArea() {
           if (activeSession.data?.conceptId && activeSession.data?.conceptName) {
             return (
               <OracleChat 
-                conceptId={activeSession.data.conceptId}
-                conceptName={activeSession.data.conceptName}
+                conceptId={(activeSession.data.conceptId as string) || ''}
+                conceptName={(activeSession.data.conceptName as string) || ''}
               />
             );
           }

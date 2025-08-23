@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { XMarkIcon, PlayIcon, PauseIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import { useDebate } from '@/lib/hooks/useDebate';
 import { useUIStore } from '@/lib/stores/ui-store';
@@ -11,6 +11,14 @@ import DebateAnalysis from './DebateAnalysis';
 import ExportButton from '@/components/ui/ExportButton';
 import { exportDebateToPDF, exportToHTML, DebateExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
+
+interface AnalysisArgument {
+  participantName: string;
+  thesis: string;
+  strength: number;
+  coherence: number;
+  arguments: string[];
+}
 
 interface DebateChatProps {
   onClose?: () => void;
@@ -38,7 +46,6 @@ export default function DebateChat({ onClose }: DebateChatProps) {
     endSession,
     setDebateOpen,
     openAnalysis,
-    clearCurrentSession
   } = useDebateStore();
   const { createSession, updateSessionData, getSessionsByType } = useSessionStore();
 
@@ -147,7 +154,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
     // Wait a bit more to ensure all opening statements are processed
     await new Promise(resolve => setTimeout(resolve, 4000));
 
-    const moderatorTransition = addMessage({
+    addMessage({
       participantId: 'moderator',
       participantName: 'Moderador',
       text: 'Excelentes declaraciones de apertura. Ahora procederemos con el intercambio de ideas. Cada participante podrá responder y desarrollar sus argumentos.',
@@ -191,18 +198,6 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
           .map(msg => `${msg.participantName}: ${msg.text}`)
           .join('\n\n');
 
-        const moderatorPrompt = `Eres un moderador experto en debates filosóficos. El tema del debate es: "${currentSession.topic}".
-
-Últimas intervenciones:
-${recentMessages}
-
-Como moderador, debes:
-1. Resumir brevemente los puntos clave que se han discutido
-2. Identificar áreas de convergencia o divergencia
-3. Plantear una pregunta o reflexión que profundice el debate
-4. Mantener el foco en el tema central
-
-Responde en 100-150 palabras como moderador, manteniendo un tono académico pero accesible.`;
 
         const response = await fetch('/api/debate/moderate', {
           method: 'POST',
@@ -223,7 +218,7 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
           isLoading: false,
         });
 
-      } catch (error) {
+      } catch {
         updateMessage(moderatorMessageId, {
           text: 'Excelentes puntos. Continuemos explorando estas ideas desde diferentes perspectivas.',
           isLoading: false,
@@ -275,7 +270,7 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
       // Move to next speaker
       nextSpeaker();
 
-    } catch (error) {
+    } catch {
       // Remove loading message and show error
       updateMessage(loadingMessageId, {
         text: 'Lo siento, no pude generar mi respuesta en este momento.',
@@ -413,7 +408,7 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
 
     try {
       // Add user message to the conversation
-      const userMessageId = addMessage({
+      addMessage({
         participantId: 'user',
         participantName: 'Usuario',
         text: userInput.trim(),
@@ -531,7 +526,7 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
           let participantId = 'moderator';
           if (turn.speaker !== 'Moderador') {
             const foundParticipant = Object.entries(philosophicalData).find(
-              ([_, participant]) => participant.name === turn.speaker
+              ([, participant]) => participant.name === turn.speaker
             );
             if (foundParticipant) {
               participantId = foundParticipant[0];
@@ -628,7 +623,7 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
       content += `ANÁLISIS DEL DEBATE\n\n`;
 
       content += `ARGUMENTOS PRINCIPALES:\n\n`;
-      currentAnalysis.arguments.forEach((arg: any, index: number) => {
+      currentAnalysis.arguments.forEach((arg: AnalysisArgument, index: number) => {
         content += `${index + 1}. ${arg.participantName}\n`;
         content += `   Tesis: ${arg.thesis}\n`;
         content += `   Fuerza: ${arg.strength}/10 | Coherencia: ${arg.coherence}/10\n`;

@@ -24,13 +24,13 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
 
     // Build participant details
-    const participantDetails = participants.map((p: any) => 
+    const participantDetails = participants.map((p: { name: string; year: number; coreIdea: string }) => 
       `- ${p.name} (${p.year > 0 ? p.year : `${Math.abs(p.year)} a.C.`}): ${p.coreIdea.substring(0, 200)}...`
     ).join('\n');
 
     // Build conversation history
     const history = conversationHistory.length > 0
-      ? conversationHistory.map((msg: any) => `${msg.participantName}: ${msg.text}`).join('\n\n---\n\n')
+      ? conversationHistory.map((msg: { participantName: string; text: string }) => `${msg.participantName}: ${msg.text}`).join('\n\n---\n\n')
       : '';
 
     // Handle user input
