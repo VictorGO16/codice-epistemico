@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BeakerIcon, PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon } from '@heroicons/react/24/outline';
 import { useParadigmLab } from '@/lib/hooks/useGemini';
 import { useUIStore } from '@/lib/stores/ui-store';
+import { useSessionStore } from '@/lib/stores/session-store';
 import ExportButton from '@/components/ui/ExportButton';
 import { exportParadigmToPDF, exportToHTML, ParadigmExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
@@ -62,6 +63,19 @@ export default function ParadigmLab() {
   
   const { analyzeWithParadigm, isLoading } = useParadigmLab();
   const { addNotification } = useUIStore();
+  const { getActiveSession, updateSessionData } = useSessionStore();
+  
+  // Restaurar estado de la sesión activa
+  const activeSession = getActiveSession();
+  
+  // Cargar datos de la sesión si existe
+  React.useEffect(() => {
+    if (activeSession && activeSession.type === 'paradigm' && activeSession.data) {
+      setSelectedParadigm(activeSession.data.selectedParadigm || '');
+      setObjectOfStudy(activeSession.data.objectOfStudy || '');
+      setAnalysis(activeSession.data.analysis || null);
+    }
+  }, [activeSession]);
 
   const handleSubmit = async () => {
     setErrors([]);
@@ -87,6 +101,15 @@ export default function ParadigmLab() {
       const result = await analyzeWithParadigm(selectedParadigm, objectOfStudy.trim());
       setAnalysis(result.analysis);
       
+      // Guardar en la sesión activa
+      if (activeSession && activeSession.type === 'paradigm') {
+        updateSessionData(activeSession.id, {
+          selectedParadigm,
+          objectOfStudy: objectOfStudy.trim(),
+          analysis: result.analysis
+        });
+      }
+      
       addNotification({
         type: 'success',
         title: 'Análisis Completado',
@@ -106,6 +129,15 @@ export default function ParadigmLab() {
     setObjectOfStudy('');
     setAnalysis(null);
     setErrors([]);
+    
+    // Limpiar datos de la sesión activa
+    if (activeSession && activeSession.type === 'paradigm') {
+      updateSessionData(activeSession.id, {
+        selectedParadigm: '',
+        objectOfStudy: '',
+        analysis: null
+      });
+    }
   };
 
   const handleExportPDF = async () => {
@@ -200,7 +232,16 @@ export default function ParadigmLab() {
                 {paradigms.map((paradigm) => (
                   <button
                     key={paradigm.id}
-                    onClick={() => setSelectedParadigm(paradigm.id)}
+                    onClick={() => {
+                      setSelectedParadigm(paradigm.id);
+                      // Guardar en la sesión activa
+                      if (activeSession && activeSession.type === 'paradigm') {
+                        updateSessionData(activeSession.id, {
+                          ...activeSession.data,
+                          selectedParadigm: paradigm.id
+                        });
+                      }
+                    }}
                     className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
                       selectedParadigm === paradigm.id
                         ? 'border-purple-500 bg-purple-500/20 text-white'
@@ -224,7 +265,16 @@ export default function ParadigmLab() {
               </label>
               <textarea
                 value={objectOfStudy}
-                onChange={(e) => setObjectOfStudy(e.target.value)}
+                onChange={(e) => {
+                  setObjectOfStudy(e.target.value);
+                  // Guardar en la sesión activa
+                  if (activeSession && activeSession.type === 'paradigm') {
+                    updateSessionData(activeSession.id, {
+                      ...activeSession.data,
+                      objectOfStudy: e.target.value
+                    });
+                  }
+                }}
                 placeholder="Ej: La ansiedad en adolescentes, El aprendizaje de idiomas, La creatividad artística, etc."
                 className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                 rows={3}

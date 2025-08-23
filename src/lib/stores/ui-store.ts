@@ -26,6 +26,11 @@ interface UIState {
   setSidebarOpen: (open: boolean) => void;
   toggleSidebar: () => void;
 
+  // Right sidebar management
+  rightSidebarOpen: boolean;
+  setRightSidebarOpen: (open: boolean) => void;
+  toggleRightSidebar: () => void;
+
   // Loading states
   isLoading: boolean;
   loadingMessage: string;
@@ -76,6 +81,11 @@ export const useUIStore = create<UIState>()(
       sidebarOpen: false,
       setSidebarOpen: (open: boolean) => set({ sidebarOpen: open }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+
+      // Right sidebar management
+      rightSidebarOpen: false,
+      setRightSidebarOpen: (open: boolean) => set({ rightSidebarOpen: open }),
+      toggleRightSidebar: () => set((state) => ({ rightSidebarOpen: !state.rightSidebarOpen })),
 
       // Loading states
       isLoading: false,

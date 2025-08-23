@@ -6,7 +6,7 @@ import { useConceptStore } from '@/lib/stores/concept-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 
 export default function MobileHeader() {
-  const { toggleSidebar, isMobile } = useUIStore();
+  const { toggleSidebar } = useUIStore();
   const { currentConcept } = useConceptStore();
 
   const concept = currentConcept ? philosophicalData[currentConcept] : null;
@@ -18,13 +18,13 @@ export default function MobileHeader() {
         <button
           onClick={toggleSidebar}
           className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Abrir menú de navegación"
+          aria-label="Abrir explorador de conceptos"
         >
           <Bars3Icon className="w-6 h-6" />
         </button>
 
         {/* Title */}
-        <div className="flex-1 text-center">
+        <div className="flex-1 text-center px-4">
           {concept ? (
             <div>
               <h1 className="text-lg font-semibold text-white truncate">
@@ -41,10 +41,8 @@ export default function MobileHeader() {
           )}
         </div>
 
-        {/* Actions */}
-        <div className="w-10 flex justify-end">
-          {/* Future: Add mobile-specific actions like share, bookmark, etc. */}
-        </div>
+        {/* Right space for balance - navigation is now in right sidebar */}
+        <div className="w-10"></div>
       </div>
     </header>
   );

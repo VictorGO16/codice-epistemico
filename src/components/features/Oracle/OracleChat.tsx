@@ -5,6 +5,7 @@ import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useOracle } from '@/lib/hooks/useGemini';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useOracleStore } from '@/lib/stores/oracle-store';
+import { useSessionStore } from '@/lib/stores/session-store';
 import ExportButton from '@/components/ui/ExportButton';
 import { exportOracleToPDF, exportToHTML, OracleExportData } from '@/lib/utils/export';
 import { philosophicalData } from '@/lib/data/philosophical-data';
