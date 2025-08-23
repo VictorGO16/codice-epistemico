@@ -44,11 +44,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         setSidebarOpen(false);
       }
       
-      // Auto-open right sidebar on desktop, close on mobile/tablet
+      // Auto-open right sidebar on desktop only
       if (!isTablet && !rightSidebarOpen) {
         setRightSidebarOpen(true);
-      } else if (isTablet && rightSidebarOpen) {
-        setRightSidebarOpen(false);
       }
       
       // Reset collapsed states on mobile
