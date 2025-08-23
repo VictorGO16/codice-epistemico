@@ -53,6 +53,7 @@ Proporciona un análisis estructurado desde este paradigma en el siguiente forma
   "ontological": "Análisis ontológico: ¿Qué es la naturaleza de este objeto de estudio según este paradigma? ¿Cómo existe? ¿Cuál es su realidad fundamental? (200-300 palabras)",
   "epistemological": "Análisis epistemológico: ¿Cómo se puede conocer este objeto de estudio según este paradigma? ¿Qué métodos de conocimiento son válidos? ¿Cuáles son los criterios de verdad? (200-300 palabras)",
   "methodological": "Análisis metodológico: ¿Qué métodos de investigación son apropiados para estudiar este objeto según este paradigma? ¿Cómo se debe abordar su estudio? ¿Qué técnicas y procedimientos son válidos? (200-300 palabras)",
+  "researchProposal": "Propuesta de investigación: Diseña una propuesta concreta de investigación que refleje cómo se aplicarían los aspectos ontológicos, epistemológicos y metodológicos de este paradigma al estudio del objeto. Incluye objetivos, hipótesis (si aplica), metodología específica, y consideraciones éticas. (250-350 palabras)",
   "summary": "Síntesis: Resume cómo este paradigma ofrece una perspectiva única y coherente sobre el objeto de estudio, integrando los aspectos ontológicos, epistemológicos y metodológicos. (150-200 palabras)"
 }
 
@@ -64,6 +65,9 @@ CRITERIOS IMPORTANTES:
 5. Mantén un tono académico pero accesible
 6. Responde en español
 7. Asegúrate de que cada sección tenga la extensión solicitada
+8. FORMATO CRUCIAL: Usa párrafos separados con saltos de línea dobles (\\n\\n) para mejorar la legibilidad
+9. Incluye viñetas o numeraciones con sus respectivos saltos de línea cuando sea apropiado
+10. Estructura el texto con subtítulos cuando sea necesario usando markdown (##, ###)
 
 Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
 
@@ -78,7 +82,7 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       const analysis = JSON.parse(text);
       
       // Validate the structure
-      if (!analysis.ontological || !analysis.epistemological || !analysis.methodological || !analysis.summary) {
+      if (!analysis.ontological || !analysis.epistemological || !analysis.methodological || !analysis.researchProposal || !analysis.summary) {
         throw new Error('Estructura de análisis inválida');
       }
 
@@ -93,10 +97,11 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       
       // Fallback: create a basic analysis structure
       const fallbackAnalysis = {
-        ontological: `Desde la perspectiva de ${paradigm.name}, el objeto de estudio "${objectOfStudy}" se concibe como una entidad que debe ser analizada según los principios fundamentales de este paradigma. Su naturaleza ontológica se define por las características específicas que este enfoque filosófico considera relevantes para comprender la realidad.`,
-        epistemological: `El conocimiento sobre "${objectOfStudy}" se obtiene siguiendo los criterios epistemológicos de ${paradigm.name}. Este paradigma establece métodos específicos para validar el conocimiento y determinar qué constituye una comprensión legítima del objeto de estudio.`,
-        methodological: `La investigación de "${objectOfStudy}" desde ${paradigm.name} requiere el uso de métodos específicos que sean coherentes con los principios del paradigma. Estos métodos aseguran que el estudio sea válido y confiable según los estándares establecidos por este enfoque.`,
-        summary: `${paradigm.name} ofrece una perspectiva única sobre "${objectOfStudy}" que integra consideraciones ontológicas, epistemológicas y metodológicas específicas. Esta aproximación proporciona un marco coherente para comprender y estudiar el objeto desde esta tradición filosófica particular.`
+        ontological: `Desde la perspectiva de ${paradigm.name}, el objeto de estudio "${objectOfStudy}" se concibe como una entidad que debe ser analizada según los principios fundamentales de este paradigma.\n\nSu naturaleza ontológica se define por las características específicas que este enfoque filosófico considera relevantes para comprender la realidad.`,
+        epistemological: `El conocimiento sobre "${objectOfStudy}" se obtiene siguiendo los criterios epistemológicos de ${paradigm.name}.\n\nEste paradigma establece métodos específicos para validar el conocimiento y determinar qué constituye una comprensión legítima del objeto de estudio.`,
+        methodological: `La investigación de "${objectOfStudy}" desde ${paradigm.name} requiere el uso de métodos específicos que sean coherentes con los principios del paradigma.\n\nEstos métodos aseguran que el estudio sea válido y confiable según los estándares establecidos por este enfoque.`,
+        researchProposal: `## Propuesta de Investigación\n\n**Objetivo General:**\nInvestigar "${objectOfStudy}" aplicando los principios de ${paradigm.name}.\n\n**Metodología:**\nAplicación de métodos coherentes con este paradigma para obtener conocimiento válido.\n\n**Consideraciones:**\nEsta propuesta refleja los fundamentos ontológicos, epistemológicos y metodológicos del paradigma seleccionado.`,
+        summary: `${paradigm.name} ofrece una perspectiva única sobre "${objectOfStudy}" que integra consideraciones ontológicas, epistemológicas y metodológicas específicas.\n\nEsta aproximación proporciona un marco coherente para comprender y estudiar el objeto desde esta tradición filosófica particular.`
       };
 
       return NextResponse.json({

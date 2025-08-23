@@ -40,7 +40,6 @@ export default function HomePage() {
         <StaggerItem>
           <p className="text-xl text-gray-300 mb-12 leading-relaxed">
             Explora la filosofía de la ciencia y psicología a través de una interfaz interactiva.
-            Selecciona un concepto del menú lateral para comenzar tu exploración intelectual.
           </p>
         </StaggerItem>
 

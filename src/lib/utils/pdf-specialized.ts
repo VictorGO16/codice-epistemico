@@ -44,6 +44,7 @@ export interface ParadigmExportData {
     ontological: string;
     epistemological: string;
     methodological: string;
+    researchProposal: string;
   };
   timestamp: Date;
 }
@@ -897,6 +898,37 @@ export class ParadigmAnalysisPDF {
       '[METODOLÓGICA]',
       'methodological'
     );
+
+    // Research Proposal section
+    this.checkPageBreak(40);
+    
+    this.setFillColor(this.colors.sectionBg);
+    this.pdf.rect(15, this.currentY, this.pageWidth - 30, 15, 'F');
+    
+    // Left accent bar with orange color for research proposal
+    this.setFillColor('#ea580c'); // Orange for research proposal
+    this.pdf.rect(15, this.currentY, 5, 15, 'F');
+    
+    this.setColor('#ea580c');
+    this.pdf.setFontSize(13);
+    this.pdf.setFont('helvetica', 'bold');
+    this.pdf.text('[INVESTIGACIÓN] PROPUESTA DE INVESTIGACIÓN', 25, this.currentY + 10);
+    
+    this.currentY += 20;
+    
+    // Research proposal content
+    this.setColor(this.colors.text);
+    this.pdf.setFontSize(10);
+    this.pdf.setFont('helvetica', 'normal');
+    
+    const researchLines = this.pdf.splitTextToSize(cleanText(data.analysis.researchProposal), this.pageWidth - 50);
+    for (const line of researchLines) {
+      this.checkPageBreak();
+      this.pdf.text(line, 25, this.currentY);
+      this.currentY += 5;
+    }
+    
+    this.currentY += 15;
 
     // Synthesis with distinctive color
     this.checkPageBreak(40);

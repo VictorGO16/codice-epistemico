@@ -28,7 +28,6 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isAutoMode, setIsAutoMode] = useState(false);
   const [autoInterval, setAutoInterval] = useState<NodeJS.Timeout | null>(null);
-  const [showAnalysis, setShowAnalysis] = useState(false);
   const [isGeneratingOpenings, setIsGeneratingOpenings] = useState(false);
   const hasGeneratedOpeningsRef = useRef<string | null>(null);
   const [userInput, setUserInput] = useState('');
@@ -40,11 +39,13 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   const {
     currentSession,
     currentAnalysis,
+    isAnalysisOpen,
     addMessage,
     updateMessage,
     nextSpeaker,
     endSession,
     setDebateOpen,
+    setAnalysisOpen,
     openAnalysis,
   } = useDebateStore();
   const { createSession, updateSessionData, getSessionsByType } = useSessionStore();
@@ -703,7 +704,6 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
             />
             <button
               onClick={() => {
-                setShowAnalysis(true);
                 openAnalysis();
               }}
               disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 3}
@@ -901,10 +901,10 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
       </div>
 
       {/* Analysis Modal */}
-      {showAnalysis && (
+      {isAnalysisOpen && (
         <DebateAnalysis
           session={currentSession}
-          onClose={() => setShowAnalysis(false)}
+          onClose={() => setAnalysisOpen(false)}
         />
       )}
     </div>

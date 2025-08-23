@@ -63,6 +63,7 @@ export interface ParadigmExportData {
     ontological: string;
     epistemological: string;
     methodological: string;
+    researchProposal: string;
   };
   timestamp: Date;
 }
@@ -603,6 +604,10 @@ class ProfessionalPDFDesigner {
     this.addSection('Dimensión Metodológica', 
       `¿Cómo investigamos según este paradigma?\n\n${data.analysis.methodological}`, 
       'methodological');
+      
+    this.addSection('Propuesta de Investigación', 
+      data.analysis.researchProposal, 
+      'research');
 
     const synthesisText = `Este análisis revela las estructuras fundamentales del paradigma ${data.paradigm} aplicado al estudio de "${data.objectOfStudy}". La integración de las dimensiones ontológica, epistemológica y metodológica proporciona una comprensión holística de cómo este marco conceptual estructura tanto la realidad como nuestro acceso a ella.`;
     

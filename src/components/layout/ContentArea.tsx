@@ -111,7 +111,7 @@ export default function ContentArea() {
         />
       )}
       
-      {!isDebateOpen && isAnalysisOpen && currentSession && currentAnalysis && (
+      {isAnalysisOpen && currentSession && (
         <DebateAnalysis
           session={currentSession}
           onClose={() => {

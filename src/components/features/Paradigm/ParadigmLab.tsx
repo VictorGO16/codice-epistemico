@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BeakerIcon, PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon } from '@heroicons/react/24/outline';
+import { BeakerIcon, PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
 import { useParadigmLab } from '@/lib/hooks/useGemini';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useSessionStore } from '@/lib/stores/session-store';
@@ -13,6 +13,7 @@ interface ParadigmAnalysis {
   ontological: string;
   epistemological: string;
   methodological: string;
+  researchProposal: string;
   summary: string;
 }
 
@@ -151,7 +152,8 @@ export default function ParadigmLab() {
       analysis: {
         ontological: analysis.ontological,
         epistemological: analysis.epistemological,
-        methodological: analysis.methodological
+        methodological: analysis.methodological,
+        researchProposal: analysis.researchProposal
       },
       timestamp: new Date()
     };
@@ -184,7 +186,15 @@ export default function ParadigmLab() {
     content += `${'-'.repeat(30)}\n\n`;
 
     content += `ANÁLISIS METODOLÓGICO\n\n`;
-    content += `${analysis.methodological}\n`;
+    content += `${analysis.methodological}\n\n`;
+    content += `${'-'.repeat(30)}\n\n`;
+
+    content += `PROPUESTA DE INVESTIGACIÓN\n\n`;
+    content += `${analysis.researchProposal}\n\n`;
+    content += `${'-'.repeat(30)}\n\n`;
+
+    content += `SÍNTESIS\n\n`;
+    content += `${analysis.summary}\n`;
 
     exportToHTML({
       title: `Paradigma: ${paradigmName}`,
@@ -375,6 +385,15 @@ export default function ParadigmLab() {
                 </div>
                 <EnhancedRichContent content={analysis.methodological} />
               </div>
+            </div>
+
+            {/* Research Proposal */}
+            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <ClipboardDocumentListIcon className="w-8 h-8 text-orange-400" />
+                <h3 className="text-xl font-bold text-white">Propuesta de Investigación</h3>
+              </div>
+              <EnhancedRichContent content={analysis.researchProposal} />
             </div>
 
             {/* Summary */}
