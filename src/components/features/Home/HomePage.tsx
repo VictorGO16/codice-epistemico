@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <PageTransition className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <StaggerContainer className="text-center max-w-4xl mx-auto px-6">
+      <StaggerContainer className="text-center w-full mx-auto px-6">
         <StaggerItem>
           <motion.div 
             className="text-8xl mb-8"
@@ -45,7 +45,7 @@ export default function HomePage() {
         </StaggerItem>
 
         <StaggerItem>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl border border-gray-600 hover:border-teal-500 transition-all duration-300 hover:transform hover:scale-105">
               <div className="text-4xl mb-4">💭</div>
               <h3 className="text-xl font-semibold text-white mb-3">Conceptos Filosóficos</h3>

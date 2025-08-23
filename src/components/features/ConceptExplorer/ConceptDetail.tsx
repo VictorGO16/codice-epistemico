@@ -98,7 +98,7 @@ export default function ConceptDetail() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="w-full mx-auto">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-gray-700 relative">
         <div className="flex items-start gap-4 mb-4">
@@ -262,7 +262,7 @@ export default function ConceptDetail() {
                 <h2 className="text-3xl font-bold text-white mb-4">
                   Oráculo de {concept.name}
                 </h2>
-                <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                   Conversa con una simulación inteligente de {concept.name}.
                   Plantea tus preguntas filosóficas y recibe respuestas basadas en su pensamiento y obra.
                 </p>

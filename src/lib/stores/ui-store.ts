@@ -25,11 +25,17 @@ interface UIState {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   toggleSidebar: () => void;
+  sidebarCollapsed: boolean;
+  setSidebarCollapsed: (collapsed: boolean) => void;
+  toggleSidebarCollapse: () => void;
 
   // Right sidebar management
   rightSidebarOpen: boolean;
   setRightSidebarOpen: (open: boolean) => void;
   toggleRightSidebar: () => void;
+  rightSidebarCollapsed: boolean;
+  setRightSidebarCollapsed: (collapsed: boolean) => void;
+  toggleRightSidebarCollapse: () => void;
 
   // Loading states
   isLoading: boolean;
@@ -81,11 +87,17 @@ export const useUIStore = create<UIState>()(
       sidebarOpen: false,
       setSidebarOpen: (open: boolean) => set({ sidebarOpen: open }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+      sidebarCollapsed: false,
+      setSidebarCollapsed: (collapsed: boolean) => set({ sidebarCollapsed: collapsed }),
+      toggleSidebarCollapse: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
 
       // Right sidebar management
       rightSidebarOpen: false,
       setRightSidebarOpen: (open: boolean) => set({ rightSidebarOpen: open }),
       toggleRightSidebar: () => set((state) => ({ rightSidebarOpen: !state.rightSidebarOpen })),
+      rightSidebarCollapsed: false,
+      setRightSidebarCollapsed: (collapsed: boolean) => set({ rightSidebarCollapsed: collapsed }),
+      toggleRightSidebarCollapse: () => set((state) => ({ rightSidebarCollapsed: !state.rightSidebarCollapsed })),
 
       // Loading states
       isLoading: false,
@@ -142,6 +154,8 @@ export const useUIStore = create<UIState>()(
         isDarkMode: state.isDarkMode,
         particlesEnabled: state.particlesEnabled,
         animationsEnabled: state.animationsEnabled,
+        sidebarCollapsed: state.sidebarCollapsed,
+        rightSidebarCollapsed: state.rightSidebarCollapsed,
       }),
     }
   )

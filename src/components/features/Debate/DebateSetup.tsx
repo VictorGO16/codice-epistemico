@@ -17,9 +17,14 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   const [selectedParticipants, setSelectedParticipants] = useState<string[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [hasError, setHasError] = useState(false);
-  const { addNotification, setActiveTab } = useUIStore();
+  const { addNotification, setActiveTab, sidebarCollapsed, rightSidebarCollapsed } = useUIStore();
   const { startSession } = useDebateStore();
   const { createSession, switchToSession } = useSessionStore();
+
+  // Grid columns for modal layout
+  const getGridColumns = () => {
+    return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+  };
 
   // Error boundary effect
   useEffect(() => {
@@ -51,7 +56,7 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   if (hasError) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="w-full mx-auto px-4">
           <div className="bg-gray-900 rounded-xl border border-gray-700 p-6 text-center">
             <h2 className="text-xl font-bold text-white mb-4">Error Inesperado</h2>
             <p className="text-gray-400">Ha ocurrido un error al cargar el componente.</p>
@@ -72,7 +77,7 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   if (!philosophicalData || availableThinkers.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="w-full mx-auto px-4">
           <div className="bg-gray-900 rounded-xl border border-gray-700 p-6 text-center">
             <h2 className="text-xl font-bold text-white mb-4">Error de Carga</h2>
             <p className="text-gray-400">No se pudieron cargar los datos filosóficos.</p>
@@ -161,25 +166,26 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">Configurar Debate</h2>
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </button>
-            )}
-          </div>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-gray-900 rounded-xl border border-gray-700 w-full max-w-5xl h-[85vh] flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-700">
+          <h2 className="text-2xl font-bold text-white">Configurar Debate</h2>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-gray-800"
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
+          )}
+        </div>
 
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto p-6">
           {/* Topic Input */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-3">
               Tema del Debate
             </label>
             <input
@@ -193,58 +199,60 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
 
           {/* Participants Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-3">
               Participantes (2-4)
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto">
-              {availableThinkers.map((thinker) => (
-                <button
-                  key={thinker.id}
-                  onClick={() => handleParticipantToggle(thinker.id)}
-                  className={`p-3 rounded-lg border text-left transition-all ${
-                    selectedParticipants.includes(thinker.id)
-                      ? 'bg-teal-500/20 border-teal-500 text-teal-300'
-                      : 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500'
-                  }`}
-                >
-                  <div className="font-medium">{thinker.name}</div>
-                  <div className="text-sm opacity-75">
-                    {thinker.year > 0 ? thinker.year : `${Math.abs(thinker.year)} a.C.`}
-                  </div>
-                </button>
-              ))}
+            <div className={'grid ' + getGridColumns() + ' gap-3 max-h-80 overflow-y-auto'}>
+            {availableThinkers.map((thinker) => (
+              <button
+                key={thinker.id}
+                onClick={() => handleParticipantToggle(thinker.id)}
+                className={'p-3 rounded-lg border text-left transition-all ' + 
+                  (selectedParticipants.includes(thinker.id)
+                    ? 'bg-teal-500/20 border-teal-500 text-teal-300'
+                    : 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500'
+                  )}
+              >
+                <div className="font-medium">{thinker.name}</div>
+                <div className="text-sm opacity-75">
+                  {thinker.year > 0 ? thinker.year : Math.abs(thinker.year) + ' a.C.'}
+                </div>
+              </button>
+            ))}
             </div>
           </div>
 
           {/* Errors */}
           {errors.length > 0 && (
-            <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-              <ul className="text-red-300 text-sm space-y-1">
-                {errors.map((error, index) => (
-                  <li key={index}>• {error}</li>
-                ))}
-              </ul>
+            <div className="mb-6">
+              <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
+                <ul className="text-red-300 text-sm space-y-1">
+                  {errors.map((error, index) => (
+                    <li key={index}>• {error}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
+        </div>
 
-          {/* Actions */}
-          <div className="flex gap-4">
+        {/* Actions Footer */}
+        <div className="flex gap-4 p-6 border-t border-gray-700">
+          <button
+            onClick={handleStartDebate}
+            disabled={selectedParticipants.length < 2 || !topic.trim()}
+            className="flex-1 px-6 py-3 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+          >
+            Iniciar Debate
+          </button>
+          {onClose && (
             <button
-              onClick={handleStartDebate}
-              disabled={selectedParticipants.length < 2 || !topic.trim()}
-              className="flex-1 px-6 py-3 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+              onClick={onClose}
+              className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors"
             >
-              Iniciar Debate
+              Cancelar
             </button>
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors"
-              >
-                Cancelar
-              </button>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </div>
