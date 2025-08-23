@@ -68,6 +68,49 @@ export interface ParadigmExportData {
   timestamp: Date;
 }
 
+// Subtle markdown processing for PDFs - preserve structure without decoration
+function formatMarkdownForPDF(text: string): string {
+  if (!text || typeof text !== 'string') {
+    return '';
+  }
+
+  let formatted = text;
+
+  // Convert markdown headers to just the text with spacing (no decorative lines)
+  formatted = formatted
+    .replace(/^### (.*?)$/gm, '\n\n$1\n')
+    .replace(/^## (.*?)$/gm, '\n\n$1\n')
+    .replace(/^# (.*?)$/gm, '\n\n$1\n');
+
+  // Convert markdown lists to bullet points with proper spacing
+  formatted = formatted
+    .replace(/^- (.*?)$/gm, '\n• $1')
+    .replace(/^\* (.*?)$/gm, '\n• $1')
+    .replace(/^\d+\. (.*?)$/gm, '\n$1');
+
+  // Remove bold and italic markers but keep content
+  formatted = formatted
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/_(.*?)_/g, '$1');
+
+  // Preserve paragraph breaks but normalize spacing
+  formatted = formatted
+    .replace(/\n\n\n+/g, '\n\n')
+    .replace(/\n\s*\n/g, '\n\n');
+
+  // Clean up but preserve line structure - remove problematic chars but keep formatting
+  return formatted
+    .replace(/[""]/g, '"')
+    .replace(/['']/g, "'")
+    .replace(/…/g, '...')
+    .replace(/[–—]/g, '-')
+    // Remove problematic characters but keep basic structure including line breaks
+    .replace(/[^\w\s\.,;:!?¿¡()[\]{}'"áéíóúñüÁÉÍÓÚÑÜ•\-\n]/g, '')
+    .trim();
+}
+
 // Professional PDF Designer Class
 class ProfessionalPDFDesigner {
   private pdf: jsPDF;
@@ -238,7 +281,7 @@ class ProfessionalPDFDesigner {
   }
 
   // Professional section headers
-  private addSection(title: string, content: string, iconKey?: string): void {
+  private addSection(title: string, content: string, iconKey?: string, processMarkdown: boolean = false): void {
     this.checkPageBreak(30);
     
     const margin = this.template.layout.pageMargin;
@@ -264,14 +307,14 @@ class ProfessionalPDFDesigner {
     
     // Content
     if (content.trim()) {
-      this.addFormattedContent(content);
+      this.addFormattedContent(content, processMarkdown);
     }
     
     this.currentY += this.template.layout.sectionSpacing;
   }
 
   // Intelligent content formatting
-  private addFormattedContent(content: string): void {
+  private addFormattedContent(content: string, processMarkdown: boolean = false): void {
     const margin = this.template.layout.pageMargin + this.template.layout.contentMargin;
     const maxWidth = this.pageWidth - 2 * margin;
     
@@ -291,7 +334,7 @@ class ProfessionalPDFDesigner {
       } else if (paragraph.includes(':') && paragraph.split(':')[0].length < 60) {
         this.addKeyValuePair(paragraph, margin, maxWidth);
       } else {
-        this.addParagraph(paragraph, margin, maxWidth);
+        this.addParagraph(paragraph, margin, maxWidth, processMarkdown);
       }
       
       if (i < paragraphs.length - 1) {
@@ -300,8 +343,9 @@ class ProfessionalPDFDesigner {
     }
   }
 
-  private addParagraph(text: string, leftMargin: number, maxWidth: number): void {
-    const lines = this.pdf.splitTextToSize(this.cleanText(text), maxWidth);
+  private addParagraph(text: string, leftMargin: number, maxWidth: number, processMarkdown: boolean = false): void {
+    const processedText = processMarkdown ? formatMarkdownForPDF(text) : this.cleanText(text);
+    const lines = this.pdf.splitTextToSize(processedText, maxWidth);
     
     for (const line of lines) {
       this.checkPageBreak();
@@ -595,19 +639,19 @@ class ProfessionalPDFDesigner {
     
     this.addSection('Dimensión Ontológica', 
       `¿Qué existe según este paradigma?\n\n${data.analysis.ontological}`, 
-      'ontological');
+      'ontological', true);
       
     this.addSection('Dimensión Epistemológica', 
       `¿Cómo conocemos según este paradigma?\n\n${data.analysis.epistemological}`, 
-      'epistemological');
+      'epistemological', true);
       
     this.addSection('Dimensión Metodológica', 
       `¿Cómo investigamos según este paradigma?\n\n${data.analysis.methodological}`, 
-      'methodological');
+      'methodological', true);
       
     this.addSection('Propuesta de Investigación', 
       data.analysis.researchProposal, 
-      'research');
+      'research', true);
 
     const synthesisText = `Este análisis revela las estructuras fundamentales del paradigma ${data.paradigm} aplicado al estudio de "${data.objectOfStudy}". La integración de las dimensiones ontológica, epistemológica y metodológica proporciona una comprensión holística de cómo este marco conceptual estructura tanto la realidad como nuestro acceso a ella.`;
     

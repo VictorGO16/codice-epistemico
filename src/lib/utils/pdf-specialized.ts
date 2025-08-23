@@ -49,6 +49,49 @@ export interface ParadigmExportData {
   timestamp: Date;
 }
 
+// Subtle markdown processing for PDFs - preserve structure without decoration
+function formatMarkdownForPDF(text: string): string {
+  if (!text || typeof text !== 'string') {
+    return '';
+  }
+
+  let formatted = text;
+
+  // Convert markdown headers to just the text with spacing (no decorative lines)
+  formatted = formatted
+    .replace(/^### (.*?)$/gm, '\n\n$1\n')
+    .replace(/^## (.*?)$/gm, '\n\n$1\n')
+    .replace(/^# (.*?)$/gm, '\n\n$1\n');
+
+  // Convert markdown lists to bullet points with proper spacing
+  formatted = formatted
+    .replace(/^- (.*?)$/gm, '\n• $1')
+    .replace(/^\* (.*?)$/gm, '\n• $1')
+    .replace(/^\d+\. (.*?)$/gm, '\n$1');
+
+  // Remove bold and italic markers but keep content
+  formatted = formatted
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/_(.*?)_/g, '$1');
+
+  // Preserve paragraph breaks but normalize spacing
+  formatted = formatted
+    .replace(/\n\n\n+/g, '\n\n')
+    .replace(/\n\s*\n/g, '\n\n');
+
+  // Clean up but preserve line structure - do NOT call cleanText as it collapses formatting
+  return formatted
+    .replace(/[""]/g, '"')
+    .replace(/['']/g, "'")
+    .replace(/…/g, '...')
+    .replace(/[–—]/g, '-')
+    // Remove problematic characters but keep basic structure
+    .replace(/[^\w\s\.,;:!?¿¡()[\]{}'"áéíóúñüÁÉÍÓÚÑÜ•\-\n]/g, '')
+    .trim();
+}
+
 // Ultra-aggressive text cleaning utility - handles all encoding issues
 function cleanText(text: string): string {
   if (!text || typeof text !== 'string') {
@@ -864,7 +907,7 @@ export class ParadigmAnalysisPDF {
     this.pdf.setFontSize(10);
     this.pdf.setFont('helvetica', 'normal');
 
-    const lines = this.pdf.splitTextToSize(cleanText(content), this.pageWidth - 50);
+    const lines = this.pdf.splitTextToSize(formatMarkdownForPDF(content), this.pageWidth - 50);
     for (const line of lines) {
       this.checkPageBreak();
       this.pdf.text(line, 25, this.currentY);
@@ -921,7 +964,7 @@ export class ParadigmAnalysisPDF {
     this.pdf.setFontSize(10);
     this.pdf.setFont('helvetica', 'normal');
     
-    const researchLines = this.pdf.splitTextToSize(cleanText(data.analysis.researchProposal), this.pageWidth - 50);
+    const researchLines = this.pdf.splitTextToSize(formatMarkdownForPDF(data.analysis.researchProposal), this.pageWidth - 50);
     for (const line of researchLines) {
       this.checkPageBreak();
       this.pdf.text(line, 25, this.currentY);
