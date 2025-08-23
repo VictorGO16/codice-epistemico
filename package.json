@@ -9,19 +9,38 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@heroicons/react": "^2.2.0",
+    "@types/dompurify": "^3.0.5",
+    "@types/katex": "^0.16.7",
+    "@types/pdfmake": "^0.2.11",
+    "dompurify": "^3.2.6",
+    "framer-motion": "^12.23.12",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "katex": "^0.16.22",
+    "marked": "^16.2.0",
+    "next": "15.5.0",
+    "pdfkit": "^0.17.1",
+    "pdfmake": "^0.2.20",
+    "puppeteer": "^24.17.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.0"
+    "react-katex": "^3.1.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
