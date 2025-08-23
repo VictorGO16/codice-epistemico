@@ -93,7 +93,18 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
     removeSession,
     duplicateSession 
   } = useSessionStore();
-  const { startSession: startDebateSession, setDebateOpen } = useDebateStore();
+  const { 
+    startSession: startDebateSession, 
+    restoreSession,
+    setDebateOpen, 
+    currentSession, 
+    currentAnalysis, 
+    openAnalysis, 
+    returnToDebate,
+    isDebateOpen,
+    isAnalysisOpen,
+    setCurrentAnalysis
+  } = useDebateStore();
   const [showSessionMenu, setShowSessionMenu] = useState<string | null>(null);
 
   const concept = currentConcept ? philosophicalData[currentConcept] : null;
@@ -225,6 +236,44 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                           <div className="text-xs text-gray-500 font-medium">
                             Sesiones ({sessionsOfType.length})
                           </div>
+                          
+                          {/* Show current debate and analysis options if available */}
+                          {item.id === 'debate' && currentSession && (
+                            <div className="space-y-1 mb-2 p-2 bg-gray-800/20 rounded-lg border border-gray-700/30">
+                              <div className="text-xs text-gray-400 font-medium mb-1">
+                                Debate Actual
+                              </div>
+                              <button
+                                onClick={() => {
+                                  returnToDebate();
+                                  handleNavigation('debate');
+                                }}
+                                className={`w-full text-left text-xs p-2 rounded border transition-all ${
+                                  isDebateOpen 
+                                    ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
+                                    : 'bg-gray-700/30 border-gray-600/50 text-gray-300 hover:bg-gray-600/30'
+                                }`}
+                              >
+                                💬 {currentSession.topic.slice(0, 30)}...
+                              </button>
+                              {currentAnalysis && (
+                                <button
+                                  onClick={() => {
+                                    openAnalysis();
+                                    handleNavigation('debate');
+                                  }}
+                                  className={`w-full text-left text-xs p-2 rounded border transition-all ${
+                                    isAnalysisOpen 
+                                      ? 'bg-purple-500/20 border-purple-500/50 text-purple-300'
+                                      : 'bg-gray-700/30 border-gray-600/50 text-gray-300 hover:bg-gray-600/30'
+                                  }`}
+                                >
+                                  📊 Análisis del debate
+                                </button>
+                              )}
+                            </div>
+                          )}
+                          
                           {sessionsOfType.map((session) => (
                             <div
                               key={session.id}
@@ -240,10 +289,21 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                   handleNavigation(session.type);
                                   
                                   // Restaurar el estado específico según el tipo de sesión
-                                  if (session.type === 'debate' && session.data?.status === 'active') {
-                                    // Restaurar el debate activo
-                                    if (session.data.topic && session.data.participants) {
-                                      startDebateSession(session.data.topic, session.data.participants);
+                                  if (session.type === 'debate' && session.data) {
+                                    // Restaurar el debate desde la sesión guardada
+                                    if (session.data.topic && session.data.participants && session.data.messages) {
+                                      const restoredSession = {
+                                        id: session.data.sessionId as string,
+                                        topic: session.data.topic as string,
+                                        participantIds: session.data.participants as string[],
+                                        messages: session.data.messages as any[],
+                                        isActive: false,
+                                        currentSpeaker: 0,
+                                        createdAt: new Date(session.createdAt),
+                                        lastActivity: new Date(session.data.lastActivity as string || session.lastAccessed),
+                                      };
+                                      
+                                      restoreSession(restoredSession, session.data.analysis);
                                       setDebateOpen(true);
                                     }
                                   }
@@ -352,10 +412,21 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                     handleNavigation(session.type);
                                     
                                     // Restaurar el estado específico según el tipo de sesión
-                                    if (session.type === 'debate' && session.data?.status === 'active') {
-                                      // Restaurar el debate activo
-                                      if (session.data.topic && session.data.participants) {
-                                        startDebateSession(session.data.topic, session.data.participants);
+                                    if (session.type === 'debate' && session.data) {
+                                      // Restaurar el debate desde la sesión guardada
+                                      if (session.data.topic && session.data.participants && session.data.messages) {
+                                        const restoredSession = {
+                                          id: session.data.sessionId as string,
+                                          topic: session.data.topic as string,
+                                          participantIds: session.data.participants as string[],
+                                          messages: session.data.messages as any[],
+                                          isActive: false,
+                                          currentSpeaker: 0,
+                                          createdAt: new Date(session.createdAt),
+                                          lastActivity: new Date(session.data.lastActivity as string || session.lastAccessed),
+                                        };
+                                        
+                                        restoreSession(restoredSession, session.data.analysis);
                                         setDebateOpen(true);
                                       }
                                     }

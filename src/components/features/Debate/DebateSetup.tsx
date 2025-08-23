@@ -19,7 +19,7 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   const [hasError, setHasError] = useState(false);
   const { addNotification, setActiveTab, sidebarCollapsed, rightSidebarCollapsed } = useUIStore();
   const { startSession } = useDebateStore();
-  const { createSession, switchToSession } = useSessionStore();
+  const { updateSession, getActiveSession } = useSessionStore();
 
   // Grid columns for modal layout
   const getGridColumns = () => {
@@ -124,19 +124,29 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
     if (!validateSetup()) return;
     
     try {
-      // Crear una nueva sesión de debate
-      const sessionName = `Debate: ${topic.substring(0, 30)}${topic.length > 30 ? '...' : ''}`;
-      const sessionId = createSession('debate', sessionName, {
-        topic,
-        participants: selectedParticipants,
-        status: 'active'
-      });
-      
-      // Cambiar a la nueva sesión
-      switchToSession(sessionId);
-      
-      // Iniciar el debate en el debate store
+      // Iniciar el debate directamente
       startSession(topic, selectedParticipants);
+      
+      // Actualizar la sesión existente con los datos del debate (incluyendo sessionId)
+      const activeSession = getActiveSession();
+      if (activeSession && activeSession.type === 'debate') {
+        // Necesitamos obtener el sessionId del debate que acabamos de crear
+        setTimeout(() => {
+          // El startSession crea el currentSession con un ID
+          const currentSession = JSON.parse(localStorage.getItem('debate-session') || '{}').state?.currentSession;
+          if (currentSession) {
+            updateSession(activeSession.id, {
+              name: `Debate: ${topic.slice(0, 30)}${topic.length > 30 ? '...' : ''}`,
+              data: {
+                sessionId: currentSession.id, // ¡CLAVE! Agregar el sessionId
+                topic,
+                participants: selectedParticipants,
+                status: 'active'
+              }
+            });
+          }
+        }, 100); // Pequeño delay para que se procese el startSession
+      }
       
       // Cambiar a la tab de debate
       setActiveTab('debate');

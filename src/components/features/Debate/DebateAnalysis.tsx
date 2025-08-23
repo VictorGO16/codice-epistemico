@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { XMarkIcon, ChartBarIcon, DocumentTextIcon, ArrowPathIcon, DocumentArrowDownIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ChartBarIcon, DocumentTextIcon, ArrowPathIcon, DocumentArrowDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useDebateStore, DebateSession } from '@/lib/stores/debate-store';
+import { useSessionStore } from '@/lib/stores/session-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { exportToHTML, exportDebateToPDF, DebateExportData } from '@/lib/utils/export';
@@ -11,7 +12,6 @@ import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
 interface DebateAnalysisProps {
   session: DebateSession;
   onClose: () => void;
-  onAnalysisGenerated?: (analysis: AnalysisResult) => void;
 }
 
 interface ArgumentCard {
@@ -32,17 +32,24 @@ interface AnalysisResult {
   overallAnalysis: string;
 }
 
-export default function DebateAnalysis({ session, onClose, onAnalysisGenerated }: DebateAnalysisProps) {
+export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps) {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedArgument, setSelectedArgument] = useState<string | null>(null);
   
   const { addNotification } = useUIStore();
+  const { returnToDebate, setCurrentAnalysis, currentAnalysis } = useDebateStore();
+  const { updateSessionData, getSessionsByType } = useSessionStore();
 
   useEffect(() => {
-    generateAnalysis();
-  }, [session]);
+    // Use existing analysis if available
+    if (currentAnalysis) {
+      setAnalysis(currentAnalysis);
+    } else {
+      generateAnalysis();
+    }
+  }, [session, currentAnalysis]);
 
   const generateAnalysis = async () => {
     setIsLoading(true);
@@ -77,9 +84,22 @@ export default function DebateAnalysis({ session, onClose, onAnalysisGenerated }
       }
 
       setAnalysis(data.analysis);
-      if (onAnalysisGenerated) {
-        onAnalysisGenerated(data.analysis);
+      setCurrentAnalysis(data.analysis); // Store in global state
+      
+      // Save analysis to session if exists
+      const debateSessions = getSessionsByType('debate');
+      const currentDebateSession = debateSessions.find(s => 
+        s.data?.sessionId === session.id
+      );
+      
+      if (currentDebateSession) {
+        updateSessionData(currentDebateSession.id, {
+          hasAnalysis: true,
+          analysis: data.analysis
+        });
       }
+      
+      // Analysis is now stored in global state via setCurrentAnalysis
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido');
     } finally {
@@ -271,6 +291,17 @@ export default function DebateAnalysis({ session, onClose, onAnalysisGenerated }
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                returnToDebate();
+                onClose();
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium"
+              title="Volver al debate"
+            >
+              <ArrowLeftIcon className="w-4 h-4" />
+              Volver al Debate
+            </button>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleExportHTML}

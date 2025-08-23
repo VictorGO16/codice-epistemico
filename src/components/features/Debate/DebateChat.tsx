@@ -5,6 +5,7 @@ import { XMarkIcon, PlayIcon, PauseIcon, ChartBarIcon } from '@heroicons/react/2
 import { useDebate } from '@/lib/hooks/useDebate';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useDebateStore } from '@/lib/stores/debate-store';
+import { useSessionStore } from '@/lib/stores/session-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import DebateAnalysis from './DebateAnalysis';
 import ExportButton from '@/components/ui/ExportButton';
@@ -20,7 +21,6 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   const [isAutoMode, setIsAutoMode] = useState(false);
   const [autoInterval, setAutoInterval] = useState<NodeJS.Timeout | null>(null);
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
   const [isGeneratingOpenings, setIsGeneratingOpenings] = useState(false);
   const hasGeneratedOpeningsRef = useRef<string | null>(null);
   const [userInput, setUserInput] = useState('');
@@ -31,12 +31,16 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   const { addNotification } = useUIStore();
   const {
     currentSession,
+    currentAnalysis,
     addMessage,
     updateMessage,
     nextSpeaker,
     endSession,
-    setDebateOpen
+    setDebateOpen,
+    openAnalysis,
+    clearCurrentSession
   } = useDebateStore();
+  const { createSession, updateSessionData, getSessionsByType } = useSessionStore();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -123,6 +127,8 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
           currentSession.participantIds
         );
 
+        console.log(`💬 Generated opening for ${participant.name}:`, response);
+
         // Update with actual response
         updateMessage(loadingMessageId, {
           text: response,
@@ -130,6 +136,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         });
 
       } catch (error) {
+        console.error(`❌ Error generating opening for ${participant.name}:`, error);
         updateMessage(loadingMessageId, {
           text: 'Lo siento, no pude generar mi declaración de apertura en este momento.',
           isLoading: false,
@@ -137,8 +144,8 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
       }
     }
 
-    // Moderator transition after opening statements
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Wait a bit more to ensure all opening statements are processed
+    await new Promise(resolve => setTimeout(resolve, 4000));
 
     const moderatorTransition = addMessage({
       participantId: 'moderator',
@@ -146,6 +153,8 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
       text: 'Excelentes declaraciones de apertura. Ahora procederemos con el intercambio de ideas. Cada participante podrá responder y desarrollar sus argumentos.',
       isLoading: false,
     });
+    
+    console.log('✅ Opening statements generation completed');
 
     setIsGeneratingOpenings(false);
   };
@@ -302,16 +311,68 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
   };
 
   const handleClose = () => {
+    // Stop auto mode immediately
     if (autoInterval) {
       clearInterval(autoInterval);
+      setAutoInterval(null);
     }
-    endSession();
+    
+    // Close the debate UI FIRST
     setDebateOpen(false);
-
-    // Call the onClose prop if provided
+    
+    // Call the onClose prop immediately
     if (onClose) {
       onClose();
     }
+    
+    // Save session in background (non-blocking)
+    setTimeout(() => {
+      try {
+        if (currentSession) {
+          // Check if a session already exists for this debate
+          const existingDebateSessions = getSessionsByType('debate');
+          const existingSession = existingDebateSessions.find(s => 
+            s.data?.sessionId === currentSession.id
+          );
+          
+          if (existingSession) {
+            // Update existing session
+            updateSessionData(existingSession.id, {
+              sessionId: currentSession.id,
+              topic: currentSession.topic,
+              participants: currentSession.participantIds,
+              messages: currentSession.messages,
+              status: 'paused',
+              hasAnalysis: !!currentAnalysis,
+              lastActivity: new Date()
+            });
+          } else {
+            // Create new session
+            createSession(
+              'debate',
+              `Debate: ${currentSession.topic.slice(0, 30)}${currentSession.topic.length > 30 ? '...' : ''}`,
+              {
+                sessionId: currentSession.id,
+                topic: currentSession.topic,
+                participants: currentSession.participantIds,
+                messages: currentSession.messages,
+                status: 'paused',
+                hasAnalysis: !!currentAnalysis,
+                lastActivity: new Date()
+              }
+            );
+          }
+        }
+        
+        // End the session (mark as inactive) after saving
+        endSession();
+        
+      } catch (error) {
+        console.error('Error saving session:', error);
+        // End session anyway
+        endSession();
+      }
+    }, 0);
   };
 
   const getTypeIcon = (type: string) => {
@@ -618,8 +679,14 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-gray-900 rounded-xl border border-gray-700 w-full max-w-6xl h-[85vh] flex flex-col">
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      onClick={handleClose}
+    >
+      <div 
+        className="bg-gray-900 rounded-xl border border-gray-700 w-full max-w-6xl h-[85vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <div className="flex items-center gap-3">
@@ -640,7 +707,10 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
               variant="ghost"
             />
             <button
-              onClick={() => setShowAnalysis(true)}
+              onClick={() => {
+                setShowAnalysis(true);
+                openAnalysis();
+              }}
               disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 3}
               className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium"
             >
@@ -840,7 +910,6 @@ Responde en 100-150 palabras como moderador, manteniendo un tono académico pero
         <DebateAnalysis
           session={currentSession}
           onClose={() => setShowAnalysis(false)}
-          onAnalysisGenerated={(analysis) => setCurrentAnalysis(analysis)}
         />
       )}
     </div>

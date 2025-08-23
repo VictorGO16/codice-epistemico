@@ -19,6 +19,7 @@ interface SessionState {
   createSession: (type: TabId, name: string, data?: Record<string, unknown>) => string;
   removeSession: (sessionId: string) => void;
   switchToSession: (sessionId: string) => void;
+  clearActiveSession: () => void;
   updateSession: (sessionId: string, updates: Partial<Session>) => void;
   duplicateSession: (sessionId: string) => string;
   
@@ -84,6 +85,10 @@ export const useSessionStore = create<SessionState>()(
             activeSessionId: sessionId
           };
         });
+      },
+
+      clearActiveSession: () => {
+        set({ activeSessionId: null });
       },
 
       updateSession: (sessionId: string, updates: Partial<Session>) => {

@@ -71,8 +71,8 @@ export default function ParadigmLab() {
   // Cargar datos de la sesión si existe
   React.useEffect(() => {
     if (activeSession && activeSession.type === 'paradigm' && activeSession.data) {
-      setSelectedParadigm(activeSession.data.selectedParadigm || '');
-      setObjectOfStudy(activeSession.data.objectOfStudy || '');
+      setSelectedParadigm((activeSession.data.selectedParadigm as string) || '');
+      setObjectOfStudy((activeSession.data.objectOfStudy as string) || '');
       setAnalysis(activeSession.data.analysis || null);
     }
   }, [activeSession]);

@@ -22,36 +22,40 @@ export interface DebateSession {
 }
 
 interface DebateState {
-  // Current session
+  // Current session (only one at a time)
   currentSession: DebateSession | null;
   
-  // Session history
-  sessions: Record<string, DebateSession>;
+  // Current analysis (linked to current session)
+  currentAnalysis: any | null;
   
   // UI state
   isDebateOpen: boolean;
+  isAnalysisOpen: boolean;
   
   // Actions
   startSession: (topic: string, participantIds: string[]) => void;
+  restoreSession: (session: DebateSession, analysis?: any) => void;
   endSession: () => void;
   addMessage: (message: Omit<DebateMessage, 'id' | 'timestamp'>) => string;
   updateMessage: (messageId: string, updates: Partial<DebateMessage>) => void;
   nextSpeaker: () => void;
-  clearSession: (sessionId: string) => void;
-  clearAllSessions: () => void;
   setDebateOpen: (open: boolean) => void;
+  setAnalysisOpen: (open: boolean) => void;
+  setCurrentAnalysis: (analysis: any) => void;
+  clearCurrentSession: () => void;
   
-  // Getters
-  getSessionHistory: (sessionId: string) => DebateSession | null;
-  getAllSessions: () => DebateSession[];
+  // Navigation between debate and analysis
+  returnToDebate: () => void;
+  openAnalysis: () => void;
 }
 
 export const useDebateStore = create<DebateState>()(
   persist(
     (set, get) => ({
       currentSession: null,
-      sessions: {},
+      currentAnalysis: null,
       isDebateOpen: false,
+      isAnalysisOpen: false,
 
       startSession: (topic: string, participantIds: string[]) => {
         const sessionId = `debate-${Date.now()}`;
@@ -69,11 +73,22 @@ export const useDebateStore = create<DebateState>()(
 
         set({
           currentSession: newSession,
-          sessions: {
-            ...get().sessions,
-            [sessionId]: newSession,
-          },
+          currentAnalysis: null, // Reset analysis when starting new debate
           isDebateOpen: true,
+          isAnalysisOpen: false,
+        });
+      },
+
+      restoreSession: (session: DebateSession, analysis?: any) => {
+        set({
+          currentSession: {
+            ...session,
+            isActive: true,
+            lastActivity: new Date(),
+          },
+          currentAnalysis: analysis || null,
+          isDebateOpen: false, // Don't auto-open, let the caller decide
+          isAnalysisOpen: false,
         });
       },
 
@@ -87,11 +102,7 @@ export const useDebateStore = create<DebateState>()(
           };
 
           set({
-            currentSession: null,
-            sessions: {
-              ...get().sessions,
-              [currentSession.id]: updatedSession,
-            },
+            currentSession: updatedSession, // Keep session for potential analysis
             isDebateOpen: false,
           });
         }
@@ -115,10 +126,6 @@ export const useDebateStore = create<DebateState>()(
 
         set({
           currentSession: updatedSession,
-          sessions: {
-            ...get().sessions,
-            [currentSession.id]: updatedSession,
-          },
         });
 
         return newMessage.id;
@@ -140,10 +147,6 @@ export const useDebateStore = create<DebateState>()(
 
         set({
           currentSession: updatedSession,
-          sessions: {
-            ...get().sessions,
-            [currentSession.id]: updatedSession,
-          },
         });
       },
 
@@ -162,54 +165,64 @@ export const useDebateStore = create<DebateState>()(
 
         set({
           currentSession: updatedSession,
-          sessions: {
-            ...get().sessions,
-            [currentSession.id]: updatedSession,
-          },
         });
       },
 
-      clearSession: (sessionId) => {
-        const { sessions, currentSession } = get();
-        const newSessions = { ...sessions };
-        delete newSessions[sessionId];
-
+      clearCurrentSession: () => {
         set({
-          sessions: newSessions,
-          currentSession: currentSession?.id === sessionId ? null : currentSession,
-          isDebateOpen: currentSession?.id === sessionId ? false : get().isDebateOpen,
-        });
-      },
-
-      clearAllSessions: () => {
-        set({
-          sessions: {},
           currentSession: null,
+          currentAnalysis: null,
           isDebateOpen: false,
+          isAnalysisOpen: false,
         });
       },
 
       setDebateOpen: (open) => {
-        set({ isDebateOpen: open });
+        set({ 
+          isDebateOpen: open,
+          isAnalysisOpen: false // Close analysis when opening debate
+        });
         if (!open) {
           get().endSession();
         }
       },
 
-      getSessionHistory: (sessionId) => {
-        return get().sessions[sessionId] || null;
+      setAnalysisOpen: (open) => {
+        set({ 
+          isAnalysisOpen: open,
+          isDebateOpen: false // Close debate when opening analysis
+        });
       },
 
-      getAllSessions: () => {
-        return Object.values(get().sessions).sort(
-          (a, b) => b.lastActivity.getTime() - a.lastActivity.getTime()
-        );
+      setCurrentAnalysis: (analysis) => {
+        set({ currentAnalysis: analysis });
+      },
+
+      returnToDebate: () => {
+        const { currentSession } = get();
+        if (currentSession) {
+          set({
+            isDebateOpen: true,
+            isAnalysisOpen: false,
+          });
+        }
+      },
+
+      openAnalysis: () => {
+        const { currentSession, currentAnalysis } = get();
+        if (currentSession) {
+          set({
+            isDebateOpen: false,
+            isAnalysisOpen: true,
+          });
+        }
       },
     }),
     {
-      name: 'debate-sessions',
+      name: 'debate-session',
       partialize: (state) => ({
-        sessions: state.sessions,
+        currentSession: state.currentSession,
+        currentAnalysis: state.currentAnalysis,
       }),
     }
   )

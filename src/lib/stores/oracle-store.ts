@@ -69,7 +69,7 @@ export const useOracleStore = create<OracleState>()(
             conceptName,
             messages: [
               {
-                id: '1',
+                id: `welcome-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
                 speaker: 'ai',
                 text: `Saludos. Soy ${conceptName}. ¿Qué cuestiones filosóficas te inquietan? Estoy aquí para compartir contigo mis reflexiones y dialogar sobre los grandes temas del pensamiento.`,
                 timestamp: new Date(),
@@ -117,7 +117,7 @@ export const useOracleStore = create<OracleState>()(
 
         const newMessage: ChatMessage = {
           ...message,
-          id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          id: `oracle-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${performance.now()}`,
           timestamp: new Date(),
         };
 

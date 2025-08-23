@@ -8,14 +8,22 @@ import ConceptDetail from '@/components/features/ConceptExplorer/ConceptDetail';
 import HomePage from '@/components/features/Home/HomePage';
 import DebateSetup from '@/components/features/Debate/DebateSetup';
 import DebateChat from '@/components/features/Debate/DebateChat';
+import DebateAnalysis from '@/components/features/Debate/DebateAnalysis';
 import ParadigmLab from '@/components/features/Paradigm/ParadigmLab';
 import OracleChat from '@/components/features/Oracle/OracleChat';
 
 export default function ContentArea() {
   const { activeTab, setActiveTab } = useUIStore();
   const { currentConcept } = useConceptStore();
-  const { isDebateOpen, currentSession, setDebateOpen } = useDebateStore();
-  const { getActiveSession } = useSessionStore();
+  const { 
+    isDebateOpen, 
+    isAnalysisOpen, 
+    currentSession, 
+    currentAnalysis,
+    setDebateOpen, 
+    setAnalysisOpen 
+  } = useDebateStore();
+  const { getActiveSession, clearActiveSession } = useSessionStore();
   
   const activeSession = getActiveSession();
 
@@ -24,24 +32,15 @@ export default function ContentArea() {
     if (activeSession && activeSession.type === activeTab) {
       switch (activeSession.type) {
         case 'debate':
-          // Si hay una sesión de debate activa, mostrar el chat del debate
-          if (activeSession.data?.status === 'active') {
-            return (
-              <DebateChat 
-                onClose={() => setDebateOpen(false)}
-              />
-            );
-          } else {
-            // Si la sesión existe pero no está activa, mostrar el setup
-            return (
-              <DebateSetup 
-                onClose={() => setActiveTab('home')}
-                onStartDebate={(topic, participantIds) => {
-                  // This will be handled by the DebateSetup component itself
-                }}
-              />
-            );
-          }
+          // Always show setup for session-based debates, modal handles active debates
+          return (
+            <DebateSetup 
+              onClose={() => setActiveTab('home')}
+              onStartDebate={(topic, participantIds) => {
+                // This will be handled by the DebateSetup component itself
+              }}
+            />
+          );
         case 'paradigm':
           return <ParadigmLab />;
         case 'oracle':
@@ -64,6 +63,17 @@ export default function ContentArea() {
       case 'home':
         return <HomePage />;
       case 'debate':
+        // Show analysis if it's open and available
+        if (isAnalysisOpen && currentSession && currentAnalysis) {
+          return (
+            <DebateAnalysis
+              session={currentSession}
+              onClose={() => setAnalysisOpen(false)}
+            />
+          );
+        }
+        // Don't render debate as page content, always use modal
+        // Default to setup
         return (
           <DebateSetup 
             onClose={() => setActiveTab('home')}
@@ -90,10 +100,25 @@ export default function ContentArea() {
         {renderContent()}
       </div>
       
-      {/* Debate Chat Modal - Solo mostrar si no está siendo renderizado como contenido principal */}
-      {isDebateOpen && currentSession && (!activeSession || activeSession.type !== 'debate') && (
+      {/* SOLO UN MODAL A LA VEZ */}
+      {isDebateOpen && currentSession && (
         <DebateChat 
-          onClose={() => setDebateOpen(false)}
+          onClose={() => {
+            setDebateOpen(false);
+            setActiveTab('home');
+            clearActiveSession(); // Desactivar sesión activa
+          }}
+        />
+      )}
+      
+      {!isDebateOpen && isAnalysisOpen && currentSession && currentAnalysis && (
+        <DebateAnalysis
+          session={currentSession}
+          onClose={() => {
+            setAnalysisOpen(false);
+            setActiveTab('home');
+            clearActiveSession(); // Desactivar sesión activa
+          }}
         />
       )}
     </>
