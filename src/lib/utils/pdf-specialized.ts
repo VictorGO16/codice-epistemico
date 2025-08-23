@@ -364,7 +364,7 @@ export class OracleChatPDF {
     if (philosopher.year) {
       this.pdf.setFontSize(9);
       this.setColor(this.colors.lightText);
-      this.pdf.text(`Período: ${philosopher.year}`, 20, this.currentY + 30);
+      this.pdf.text(`Período: ${philosopher.year}`, 20, lineY + 4);
     }
 
     this.currentY += 45;
