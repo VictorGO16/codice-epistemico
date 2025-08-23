@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+PROGRESS_SUMMARY.md
+.prettierignore
+
 
 # debug
 npm-debug.log*
