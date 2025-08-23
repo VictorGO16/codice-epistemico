@@ -402,13 +402,6 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                               <div className="text-xs opacity-75">{item.description}</div>
                             </div>
                           </button>
-                          <button
-                            onClick={() => handleCreateSession(item.id)}
-                            className="p-1 text-gray-400 hover:text-teal-400 transition-colors flex-shrink-0"
-                            title="Nueva sesión"
-                          >
-                            <PlusIcon className="w-4 h-4" />
-                          </button>
                         </div>
 
                         {/* Active Sessions */}
