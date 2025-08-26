@@ -26,8 +26,6 @@ interface DebateChatProps {
 
 export default function DebateChat({ onClose }: DebateChatProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [isAutoMode, setIsAutoMode] = useState(false);
-  const [autoInterval, setAutoInterval] = useState<NodeJS.Timeout | null>(null);
   const [isGeneratingOpenings, setIsGeneratingOpenings] = useState(false);
   const hasGeneratedOpeningsRef = useRef<string | null>(null);
   const [userInput, setUserInput] = useState('');
@@ -71,13 +69,6 @@ export default function DebateChat({ onClose }: DebateChatProps) {
     }
   }, [currentSession?.id, currentSession?.messages?.length, isLoading, isGeneratingOpenings]);
 
-  useEffect(() => {
-    return () => {
-      if (autoInterval) {
-        clearInterval(autoInterval);
-      }
-    };
-  }, [autoInterval]);
 
   const generateOpeningStatements = async () => {
     if (!currentSession || isGeneratingOpenings) return;
@@ -286,33 +277,8 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
     }
   };
 
-  const toggleAutoMode = () => {
-    if (isAutoMode) {
-      // Stop auto mode
-      if (autoInterval) {
-        clearInterval(autoInterval);
-        setAutoInterval(null);
-      }
-      setIsAutoMode(false);
-    } else {
-      // Start auto mode
-      setIsAutoMode(true);
-      const interval = setInterval(() => {
-        if (!isLoading) {
-          handleNextResponse();
-        }
-      }, 8000); // 8 seconds between responses
-      setAutoInterval(interval);
-    }
-  };
 
   const handleClose = () => {
-    // Stop auto mode immediately
-    if (autoInterval) {
-      clearInterval(autoInterval);
-      setAutoInterval(null);
-    }
-    
     // Close the debate UI FIRST
     setDebateOpen(false);
     
@@ -713,25 +679,6 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
               Analizar
             </button>
             <button
-              onClick={toggleAutoMode}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${isAutoMode
-                ? 'bg-red-500 hover:bg-red-600 text-white'
-                : 'bg-green-500 hover:bg-green-600 text-white'
-                }`}
-            >
-              {isAutoMode ? (
-                <>
-                  <PauseIcon className="w-4 h-4" />
-                  Pausar
-                </>
-              ) : (
-                <>
-                  <PlayIcon className="w-4 h-4" />
-                  Auto
-                </>
-              )}
-            </button>
-            <button
               onClick={handleClose}
               className="text-gray-400 hover:text-white transition-colors p-2"
             >
@@ -863,24 +810,19 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         <div className="p-6 border-t border-gray-700">
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-400">
-              {isAutoMode ? (
-                <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  Modo automático activo - Respuestas cada 8 segundos
-                </span>
-              ) : isContinuingDebate ? (
+              {isContinuingDebate ? (
                 <span className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
                   Generando nueva ronda de intervenciones...
                 </span>
               ) : (
-                'Modo manual - Usa el campo de arriba para dirigir el debate o haz clic en los botones'
+                'Usa el campo de arriba para dirigir el debate o haz clic en los botones'
               )}
             </div>
             <div className="flex gap-3">
               <button
                 onClick={handleContinueDebate}
-                disabled={isLoading || isAutoMode || isContinuingDebate}
+                disabled={isLoading || isContinuingDebate}
                 className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
               >
                 {isContinuingDebate && (
@@ -890,7 +832,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
               </button>
               <button
                 onClick={handleNextResponse}
-                disabled={isLoading || isAutoMode || isContinuingDebate}
+                disabled={isLoading || isContinuingDebate}
                 className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-6 rounded-lg transition-colors"
               >
                 {isLoading ? 'Generando...' : 'Siguiente Respuesta'}
