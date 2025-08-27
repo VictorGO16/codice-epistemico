@@ -66,6 +66,10 @@ interface UIState {
   isMobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
   toggleMobileMenu: () => void;
+
+  // Modal management for z-index
+  isModalActive: boolean;
+  setModalActive: (active: boolean) => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -146,6 +150,10 @@ export const useUIStore = create<UIState>()(
       isMobileMenuOpen: false,
       setMobileMenuOpen: (open: boolean) => set({ isMobileMenuOpen: open }),
       toggleMobileMenu: () => set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
+
+      // Modal management for z-index
+      isModalActive: false,
+      setModalActive: (active: boolean) => set({ isModalActive: active }),
     }),
     {
       name: 'ui-preferences',

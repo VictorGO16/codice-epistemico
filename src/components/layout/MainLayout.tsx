@@ -32,6 +32,21 @@ export default function MainLayout({ children }: MainLayoutProps) {
     toggleRightSidebarCollapse
   } = useUIStore();
 
+  // Handle mutual exclusion of sidebars on mobile/tablet
+  const handleLeftSidebarToggle = () => {
+    if (window.innerWidth < 1024 && rightSidebarOpen) {
+      setRightSidebarOpen(false);
+    }
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleRightSidebarToggle = () => {
+    if (window.innerWidth < 1024 && sidebarOpen) {
+      setSidebarOpen(false);
+    }
+    toggleRightSidebar();
+  };
+
   // Handle responsive behavior
   useEffect(() => {
     const handleResize = () => {
@@ -70,7 +85,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <ParticleBackground />
 
       {/* Mobile Header */}
-      <MobileHeader />
+      <MobileHeader onLeftSidebarToggle={handleLeftSidebarToggle} />
 
       <div className="flex h-screen pt-16 md:pt-0 relative z-10">
         {/* Left Sidebar */}
@@ -131,7 +146,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
       {/* Right Sidebar Toggle (Mobile/Tablet) */}
       <RightSidebarToggle 
-        onClick={toggleRightSidebar}
+        onClick={handleRightSidebarToggle}
         isOpen={rightSidebarOpen}
       />
 

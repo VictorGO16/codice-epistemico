@@ -17,7 +17,7 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
   const [selectedParticipants, setSelectedParticipants] = useState<string[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [hasError, setHasError] = useState(false);
-  const { addNotification, setActiveTab, sidebarCollapsed, rightSidebarCollapsed } = useUIStore();
+  const { addNotification, setActiveTab, sidebarCollapsed, rightSidebarCollapsed, setModalActive } = useUIStore();
   const { startSession } = useDebateStore();
   const { updateSession, getActiveSession } = useSessionStore();
 
@@ -36,6 +36,12 @@ export default function DebateSetup({ onClose, onStartDebate }: DebateSetupProps
     window.addEventListener('error', handleError);
     return () => window.removeEventListener('error', handleError);
   }, []);
+
+  useEffect(() => {
+    // Notify that modal is active
+    setModalActive(true);
+    return () => setModalActive(false);
+  }, [setModalActive]);
 
   // Get available thinkers (philosophers and scientists)
   const availableThinkers = useMemo(() => {

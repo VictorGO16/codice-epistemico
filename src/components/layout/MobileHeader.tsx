@@ -5,7 +5,11 @@ import { useUIStore } from '@/lib/stores/ui-store';
 import { useConceptStore } from '@/lib/stores/concept-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 
-export default function MobileHeader() {
+interface MobileHeaderProps {
+  onLeftSidebarToggle?: () => void;
+}
+
+export default function MobileHeader({ onLeftSidebarToggle }: MobileHeaderProps) {
   const { toggleSidebar } = useUIStore();
   const { currentConcept } = useConceptStore();
 
@@ -16,7 +20,7 @@ export default function MobileHeader() {
       <div className="flex items-center justify-between px-4 py-3">
         {/* Menu Button */}
         <button
-          onClick={toggleSidebar}
+          onClick={onLeftSidebarToggle || toggleSidebar}
           className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
           aria-label="Abrir explorador de conceptos"
         >

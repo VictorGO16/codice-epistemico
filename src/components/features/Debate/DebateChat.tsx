@@ -33,7 +33,7 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   const [isContinuingDebate, setIsContinuingDebate] = useState(false);
 
   const { generateDebateResponse, generateOpeningStatement, isLoading } = useDebate();
-  const { addNotification } = useUIStore();
+  const { addNotification, setModalActive } = useUIStore();
   const {
     currentSession,
     currentAnalysis,
@@ -55,6 +55,12 @@ export default function DebateChat({ onClose }: DebateChatProps) {
   useEffect(() => {
     scrollToBottom();
   }, [currentSession?.messages]);
+
+  useEffect(() => {
+    // Notify that modal is active
+    setModalActive(true);
+    return () => setModalActive(false);
+  }, [setModalActive]);
 
   useEffect(() => {
     // Start with opening statements when debate begins - only once per session
@@ -646,51 +652,58 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
       onClick={handleClose}
     >
       <div 
-        className="bg-gray-900 rounded-xl border border-gray-700 w-full max-w-6xl h-[85vh] flex flex-col"
+        className="bg-gray-900 rounded-xl border border-gray-700 w-full max-w-6xl md:h-[85vh] h-[95vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <div className="flex items-center gap-3">
-            <div className="text-3xl">🗣️</div>
-            <div>
-              <h2 className="text-xl font-bold text-white">Debate Filosófico</h2>
-              <p className="text-sm text-gray-400 max-w-2xl truncate">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 border-b border-gray-700 gap-4">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="text-2xl md:text-3xl flex-shrink-0">🗣️</div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold text-white">Debate Filosófico</h2>
+              <p className="text-xs sm:text-sm text-gray-400 truncate">
                 {currentSession.topic}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <ExportButton
-              onExportPDF={handleExportPDF}
-              onExportHTML={handleExportHTML}
-              disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 2}
-              size="sm"
-              variant="ghost"
-            />
+          
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            {/* Mobile: Hide export button, show only on desktop */}
+            <div className="hidden md:block">
+              <ExportButton
+                onExportPDF={handleExportPDF}
+                onExportHTML={handleExportHTML}
+                disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 2}
+                size="sm"
+                variant="ghost"
+              />
+            </div>
+            
             <button
               onClick={() => {
                 openAnalysis();
               }}
               disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 3}
-              className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium"
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium text-sm min-h-[44px]"
             >
               <ChartBarIcon className="w-4 h-4" />
-              Analizar
+              <span className="hidden sm:inline">Analizar Debate</span>
+              <span className="sm:hidden">Analizar</span>
             </button>
+            
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-white transition-colors p-2"
+              className="text-gray-400 hover:text-white transition-colors p-2 self-center sm:self-auto min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              <XMarkIcon className="w-6 h-6" />
+              <XMarkIcon className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
         </div>
 
         {/* Participants Bar */}
-        <div className="p-4 border-b border-gray-700 bg-gray-800/30">
-          <div className="flex items-center gap-4 overflow-x-auto">
-            <span className="text-sm font-medium text-gray-400 whitespace-nowrap">
+        <div className="p-3 md:p-4 border-b border-gray-700 bg-gray-800/30">
+          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide">
+            <span className="text-xs md:text-sm font-medium text-gray-400 whitespace-nowrap flex-shrink-0">
               Participantes:
             </span>
             {currentSession.participantIds.map((participantId, index) => {
@@ -702,15 +715,15 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
               return (
                 <div
                   key={participantId}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all ${isCurrentSpeaker
+                  className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 rounded-lg whitespace-nowrap transition-all flex-shrink-0 ${isCurrentSpeaker
                     ? 'bg-teal-500/20 border border-teal-500/50 text-teal-300'
                     : 'bg-gray-700/50 text-gray-300'
                     }`}
                 >
-                  <span>{getTypeIcon(participant.type)}</span>
-                  <span className="text-sm font-medium">{participant.name}</span>
+                  <span className="text-lg md:text-base">{getTypeIcon(participant.type)}</span>
+                  <span className="text-xs md:text-sm font-medium">{participant.name}</span>
                   {isCurrentSpeaker && (
-                    <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
+                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-teal-400 rounded-full animate-pulse"></div>
                   )}
                 </div>
               );
@@ -719,7 +732,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-4 md:space-y-6">
           {currentSession.messages.map((message) => {
             const participant = philosophicalData[message.participantId];
             // Allow moderator, user, and system messages even if not in philosophicalData
@@ -733,9 +746,9 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
             if (isSystem && !message.text && !message.isLoading) return null;
 
             return (
-              <div key={message.id} className={`flex gap-4 ${isUser ? 'flex-row-reverse' : ''} ${isSystem ? 'justify-center' : ''}`}>
+              <div key={message.id} className={`flex gap-3 md:gap-4 ${isUser ? 'flex-row-reverse' : ''} ${isSystem ? 'justify-center' : ''}`}>
                 <div className="flex-shrink-0">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${isModerator
+                  <div className={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lg md:text-2xl ${isModerator
                     ? 'bg-purple-600'
                     : isUser
                       ? 'bg-blue-600'
@@ -747,12 +760,12 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                   </div>
                 </div>
                 <div className={`flex-1 min-w-0 ${isUser ? 'text-right' : ''} ${isSystem ? 'text-center' : ''}`}>
-                  <div className={`flex items-center gap-2 mb-2 ${isUser ? 'justify-end' : ''} ${isSystem ? 'justify-center' : ''}`}>
-                    <h3 className="font-semibold text-white">
+                  <div className={`flex items-center gap-1 md:gap-2 mb-1 md:mb-2 ${isUser ? 'justify-end' : ''} ${isSystem ? 'justify-center' : ''}`}>
+                    <h3 className="font-semibold text-white text-sm md:text-base">
                       {isModerator ? 'Moderador' : isUser ? 'Usuario' : isSystem ? 'Sistema' : participant?.name || 'Desconocido'}
                     </h3>
                     {!isModerator && !isUser && !isSystem && participant && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 hidden sm:inline">
                         {participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}
                       </span>
                     )}
@@ -760,7 +773,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                       {new Date(message.timestamp).toLocaleTimeString()}
                     </span>
                   </div>
-                  <div className={`rounded-lg p-4 border ${isUser
+                  <div className={`rounded-lg p-3 md:p-4 border ${isUser
                     ? 'bg-blue-900/30 border-blue-700/50'
                     : isSystem
                       ? 'bg-orange-900/30 border-orange-700/50'
@@ -785,21 +798,21 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         </div>
 
         {/* User Input */}
-        <div className="p-4 border-t border-gray-700 bg-gray-800/30">
-          <div className="flex gap-3">
+        <div className="p-3 md:p-4 border-t border-gray-700 bg-gray-800/30">
+          <div className="flex gap-2 md:gap-3">
             <input
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleUserInput()}
-              placeholder="Escribe para dirigir el debate, añadir información o hacer preguntas..."
-              className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500"
+              placeholder="Escribe para dirigir el debate..."
+              className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 text-sm md:text-base"
               disabled={isSubmittingInput}
             />
             <button
               onClick={handleUserInput}
               disabled={!userInput.trim() || isSubmittingInput}
-              className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+              className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap"
             >
               {isSubmittingInput ? 'Enviando...' : 'Enviar'}
             </button>
@@ -807,33 +820,43 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         </div>
 
         {/* Controls */}
-        <div className="p-6 border-t border-gray-700">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-400">
+        <div className="p-3 md:p-6 border-t border-gray-700">
+          <div className="flex flex-col md:flex-row items-center md:justify-between gap-3 md:gap-0">
+            <div className="text-xs md:text-sm text-gray-400 text-center md:text-left">
               {isContinuingDebate ? (
                 <span className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-                  Generando nueva ronda de intervenciones...
+                  Generando nueva ronda...
                 </span>
               ) : (
-                'Usa el campo de arriba para dirigir el debate o haz clic en los botones'
+                <span className="hidden md:inline">Usa el campo de arriba para dirigir el debate o haz clic en los botones</span>
               )}
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-3 w-full md:w-auto">
+              {/* Mobile: Show Export Button */}
+              <div className="md:hidden w-full">
+                <ExportButton
+                  onExportPDF={handleExportPDF}
+                  onExportHTML={handleExportHTML}
+                  disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 2}
+                  size="sm"
+                  variant="ghost"
+                />
+              </div>
               <button
                 onClick={handleContinueDebate}
                 disabled={isLoading || isContinuingDebate}
-                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
+                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
               >
                 {isContinuingDebate && (
-                  <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                  <div className="animate-spin w-3 h-3 md:w-4 md:h-4 border-2 border-white border-t-transparent rounded-full"></div>
                 )}
-                {isContinuingDebate ? 'Generando Ronda...' : 'Continuar Debate'}
+                <span className="truncate">{isContinuingDebate ? 'Generando...' : 'Continuar Debate'}</span>
               </button>
               <button
                 onClick={handleNextResponse}
                 disabled={isLoading || isContinuingDebate}
-                className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+                className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-6 rounded-lg transition-colors text-sm md:text-base"
               >
                 {isLoading ? 'Generando...' : 'Siguiente Respuesta'}
               </button>

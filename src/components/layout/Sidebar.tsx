@@ -17,7 +17,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavorites, setShowFavorites] = useState(false);
   const { currentConcept, setCurrentConcept } = useConceptStore();
-  const { setActiveTab } = useUIStore();
+  const { setActiveTab, isModalActive } = useUIStore();
   const { favorites, getFavoritesCount } = useFavoritesStore();
 
   const handleConceptSelect = (conceptId: string) => {
@@ -40,12 +40,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     ? favorites.map(id => philosophicalData[id]).filter(Boolean)
     : null;
 
+  // Dynamic z-index based on modal state
+  const sidebarZIndex = isModalActive ? "z-[55]" : "z-40";
+  const overlayZIndex = isModalActive ? "z-[50]" : "z-35";
+
   return (
     <>
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className={`fixed inset-0 bg-black bg-opacity-50 ${overlayZIndex} md:hidden`}
           onClick={onClose}
         />
       )}
@@ -53,7 +57,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={`
-          fixed top-0 left-0 h-full w-80 bg-gray-900 border-r border-gray-700 z-50 transform transition-transform duration-300 ease-in-out
+          fixed top-0 left-0 h-full w-80 bg-gray-900 border-r border-gray-700 ${sidebarZIndex} transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           md:relative md:translate-x-0 md:z-auto
         `}

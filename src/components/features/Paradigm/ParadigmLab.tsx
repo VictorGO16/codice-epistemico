@@ -341,7 +341,7 @@ export default function ParadigmLab() {
                   <span className="font-semibold">Objeto de estudio:</span> {objectOfStudy}
                 </p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3 flex-wrap">
                 <ExportButton
                   onExportPDF={handleExportPDF}
                   onExportHTML={handleExportHTML}
@@ -350,7 +350,7 @@ export default function ParadigmLab() {
                 />
                 <button
                   onClick={resetForm}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium"
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-3 md:px-4 py-2 rounded-lg font-medium text-sm md:text-base whitespace-nowrap"
                 >
                   Nuevo Análisis
                 </button>

@@ -105,7 +105,7 @@ const conceptNavigationItems: NavigationItem[] = [
 ];
 
 export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
-  const { activeTab, setActiveTab } = useUIStore();
+  const { activeTab, setActiveTab, isModalActive } = useUIStore();
   const { currentConcept } = useConceptStore();
   const { 
     sessions, 
@@ -118,6 +118,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
   const { 
     restoreSession,
     setDebateOpen, 
+    setAnalysisOpen,
     currentSession, 
     currentAnalysis, 
     openAnalysis, 
@@ -129,7 +130,17 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
 
   const concept = currentConcept ? philosophicalData[currentConcept] : null;
 
+  // Dynamic z-index based on modal state
+  const sidebarZIndex = isModalActive ? "z-[55]" : "z-40";
+  const overlayZIndex = isModalActive ? "z-[50]" : "z-35";
+
   const handleNavigation = (tabId: TabId) => {
+    // Cerrar debate/análisis si navegamos fuera del tab debate
+    if (tabId !== 'debate' && (isDebateOpen || isAnalysisOpen)) {
+      setDebateOpen(false);
+      setAnalysisOpen(false);
+    }
+    
     setActiveTab(tabId);
     if (window.innerWidth < 1024) {
       onClose();
@@ -182,7 +193,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
       {/* Overlay for mobile/tablet */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className={`fixed inset-0 bg-black bg-opacity-50 ${overlayZIndex} lg:hidden`}
           onClick={onClose}
         />
       )}
@@ -190,7 +201,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
       {/* Right Sidebar */}
       <div
         className={`
-          fixed top-0 right-0 h-full w-80 bg-gray-900 border-l border-gray-700 z-50 transform transition-transform duration-300 ease-in-out
+          fixed top-0 right-0 h-full w-80 bg-gray-900 border-l border-gray-700 ${sidebarZIndex} transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
           lg:relative lg:translate-x-0 lg:z-auto
         `}
