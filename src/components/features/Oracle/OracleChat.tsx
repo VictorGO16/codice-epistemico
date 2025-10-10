@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { PaperAirplaneIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useOracle } from '@/lib/hooks/useGemini';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useOracleStore } from '@/lib/stores/oracle-store';
@@ -26,12 +26,14 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
   
   const { askOracle, isLoading, error } = useOracle();
   const { addNotification } = useUIStore();
-  const { 
-    currentSession, 
-    addMessage, 
-    updateMessage, 
+  const {
+    currentSession,
+    addMessage,
+    updateMessage,
     endSession,
-    setOracleOpen 
+    setOracleOpen,
+    clearSession,
+    startSession
   } = useOracleStore();
 
   const scrollToBottom = () => {
@@ -49,6 +51,16 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
   const handleClose = () => {
     endSession();
     setOracleOpen(false);
+  };
+
+  const handleRestart = () => {
+    clearSession(conceptId);
+    startSession(conceptId, conceptName);
+    addNotification({
+      type: 'success',
+      title: 'Conversación Reiniciada',
+      message: 'Has iniciado una nueva conversación con el oráculo'
+    });
   };
 
   const handleExportPDF = async () => {
@@ -192,6 +204,13 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={handleRestart}
+              className="text-gray-400 hover:text-teal-400 transition-colors p-2"
+              title="Reiniciar conversación"
+            >
+              <ArrowPathIcon className="w-6 h-6" />
+            </button>
             <ExportButton
               onExportPDF={handleExportPDF}
               onExportHTML={handleExportHTML}
@@ -202,6 +221,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             <button
               onClick={handleClose}
               className="text-gray-400 hover:text-white transition-colors p-2"
+              title="Cerrar"
             >
               <XMarkIcon className="w-6 h-6" />
             </button>
