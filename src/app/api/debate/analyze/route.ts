@@ -21,10 +21,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 
     // Build the debate transcript
-    const transcript = messages.map((msg: { participantName: string; text: string }) => 
+    const transcript = messages.map((msg: { participantName: string; text: string }) =>
       `${msg.participantName}: ${msg.text}`
     ).join('\n\n');
 

@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 
     // Build context about other participants
     const otherParticipantsContext = otherParticipants.length > 0 
