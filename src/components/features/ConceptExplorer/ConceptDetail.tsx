@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { ComponentType } from 'react';
 import { useConceptStore } from '@/lib/stores/concept-store';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useOracleStore } from '@/lib/stores/oracle-store';
@@ -15,7 +16,20 @@ import DebateSetup from '@/components/features/Debate/DebateSetup';
 import DebateChat from '@/components/features/Debate/DebateChat';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
+import {
+  TypeIcon,
+  IconBook,
+  IconMind,
+  IconMethod,
+  IconDialogue,
+  IconLightbulb,
+  IconLink,
+  IconAnalysis,
+  IconWarning,
+  IconClose,
+} from '@/components/ui/Icons';
 
+type IconProps = { size?: number | string; className?: string };
 
 export default function ConceptDetail() {
   const { currentConcept } = useConceptStore();
@@ -34,7 +48,7 @@ export default function ConceptDetail() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">📖</div>
+          <IconBook size={52} className="text-gray-600 mb-4 mx-auto" />
           <h2 className="text-2xl font-bold text-white mb-2">Selecciona un Concepto</h2>
           <p className="text-gray-400">Elige un concepto del menú lateral para explorar su contenido.</p>
         </div>
@@ -47,7 +61,7 @@ export default function ConceptDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">❌</div>
+          <IconWarning size={52} className="text-red-800/50 mb-4 mx-auto" />
           <h2 className="text-2xl font-bold text-red-400 mb-2">Concepto no encontrado</h2>
           <p className="text-gray-400">El concepto solicitado no existe en la base de datos.</p>
         </div>
@@ -55,45 +69,34 @@ export default function ConceptDetail() {
     );
   }
 
-  // Find related connections
   const relatedConnections = conceptConnections.filter(
     (conn) => conn.source === currentConcept || conn.target === currentConcept
   );
 
-  const tabs = [
-    { id: 'context', label: 'Contexto', icon: '📖' },
-    { id: 'psychology', label: 'Psicología', icon: '🧠' },
-    { id: 'methodology', label: 'Metodología', icon: '🔬' },
-    { id: 'oracle', label: 'Oráculo', icon: '🔮' },
+  const tabs: { id: string; label: string; Icon: ComponentType<IconProps> }[] = [
+    { id: 'context',     label: 'Contexto',    Icon: IconBook },
+    { id: 'psychology',  label: 'Psicología',  Icon: IconMind },
+    { id: 'methodology', label: 'Metodología', Icon: IconMethod },
+    { id: 'oracle',      label: 'Diálogo',     Icon: IconDialogue },
   ];
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'philosopher': return '👤';
-      case 'scientist': return '🔬';
-      case 'concept': return '💭';
-      case 'method': return '📊';
-      default: return '📖';
-    }
-  };
 
   const getTypeLabel = (type: string) => {
     switch (type) {
       case 'philosopher': return 'Filósofo';
-      case 'scientist': return 'Científico';
-      case 'concept': return 'Concepto';
-      case 'method': return 'Método';
-      default: return type;
+      case 'scientist':   return 'Científico';
+      case 'concept':     return 'Concepto';
+      case 'method':      return 'Método';
+      default:            return type;
     }
   };
 
   const getConnectionTypeLabel = (type: string) => {
     switch (type) {
-      case 'influence': return 'Influencia';
-      case 'critique': return 'Crítica';
+      case 'influence':    return 'Influencia';
+      case 'critique':     return 'Crítica';
       case 'continuation': return 'Continuación';
-      case 'application': return 'Aplicación';
-      default: return type;
+      case 'application':  return 'Aplicación';
+      default:             return type;
     }
   };
 
@@ -102,16 +105,18 @@ export default function ConceptDetail() {
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-gray-700 relative">
         <div className="flex items-start gap-4 mb-4">
-          <div className="text-5xl">{getTypeIcon(concept.type)}</div>
+          <div className="mt-1 shrink-0">
+            <TypeIcon type={concept.type} size={44} className="text-teal-400/70" />
+          </div>
           <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">
               {concept.name}
             </h1>
             <div className="flex items-center gap-4 text-gray-400">
               <span className="bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full text-sm font-medium">
                 {getTypeLabel(concept.type)}
               </span>
-              <span className="text-lg">
+              <span className="text-base">
                 {concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}
               </span>
             </div>
@@ -137,7 +142,7 @@ export default function ConceptDetail() {
 
       {/* Tabs */}
       <div className="mb-8">
-        <nav className="flex space-x-1 bg-gray-800/50 p-1 rounded-lg overflow-x-auto">
+        <nav className="flex space-x-1 bg-gray-800/50 p-1 rounded-lg overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -145,12 +150,12 @@ export default function ConceptDetail() {
               className={`
                 flex items-center gap-2 px-4 py-3 rounded-md font-medium text-sm transition-all duration-200 whitespace-nowrap
                 ${activeTab === tab.id
-                  ? 'bg-teal-500 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                  ? 'bg-teal-500/15 text-teal-300 border border-teal-500/30'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50 border border-transparent'
                 }
               `}
             >
-              <span>{tab.icon}</span>
+              <tab.Icon size={15} className="shrink-0" />
               {tab.label}
             </button>
           ))}
@@ -162,8 +167,8 @@ export default function ConceptDetail() {
         {activeTab === 'context' && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold text-teal-400 mb-6 flex items-center gap-2">
-                <span>💡</span>
+              <h2 className="text-xl font-semibold text-teal-400 mb-6 flex items-center gap-2.5">
+                <IconLightbulb size={18} className="text-teal-400 shrink-0" />
                 Idea Central
               </h2>
               <EnhancedRichContent content={concept.coreIdea} />
@@ -171,8 +176,8 @@ export default function ConceptDetail() {
 
             {relatedConnections.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-                  <span>🔗</span>
+                <h2 className="text-xl font-semibold text-blue-400 mb-6 flex items-center gap-2.5">
+                  <IconLink size={18} className="text-blue-400 shrink-0" />
                   Relaciones Conceptuales
                 </h2>
                 <div className="grid gap-4">
@@ -186,7 +191,7 @@ export default function ConceptDetail() {
                     return (
                       <div key={index} className="bg-gray-700/50 p-5 rounded-lg border border-gray-600/50 hover:border-teal-500/50 transition-all duration-200">
                         <div className="flex items-start gap-4">
-                          <div className="text-3xl">{getTypeIcon(relatedConcept.type)}</div>
+                          <TypeIcon type={relatedConcept.type} size={28} className="text-gray-400/70 mt-0.5 shrink-0" />
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
                               <span className="text-sm font-medium text-gray-400 bg-gray-600/50 px-2 py-1 rounded">
@@ -197,7 +202,7 @@ export default function ConceptDetail() {
                               </span>
                             </div>
                             <button
-                              className="text-xl font-semibold text-teal-400 hover:text-teal-300 transition-colors mb-2 text-left"
+                              className="text-lg font-semibold text-teal-400 hover:text-teal-300 transition-colors mb-2 text-left"
                               onClick={() => useConceptStore.getState().setCurrentConcept(relatedId)}
                             >
                               {relatedConcept.name}
@@ -218,15 +223,15 @@ export default function ConceptDetail() {
 
         {activeTab === 'psychology' && (
           <div>
-            <h2 className="text-2xl font-bold text-purple-400 mb-6 flex items-center gap-2">
-              <span>🧠</span>
+            <h2 className="text-xl font-semibold text-purple-400 mb-6 flex items-center gap-2.5">
+              <IconMind size={18} className="text-purple-400 shrink-0" />
               Conexiones con la Psicología
             </h2>
             {concept.psychologyLink ? (
               <EnhancedRichContent content={concept.psychologyLink} />
             ) : (
               <div className="text-center py-12">
-                <div className="text-6xl mb-4 opacity-50">🤔</div>
+                <IconMind size={48} className="text-gray-700 mb-4 mx-auto" />
                 <p className="text-gray-400 text-lg">
                   La conexión directa con la psicología no está especificada para este concepto.
                 </p>
@@ -237,15 +242,15 @@ export default function ConceptDetail() {
 
         {activeTab === 'methodology' && (
           <div>
-            <h2 className="text-2xl font-bold text-orange-400 mb-6 flex items-center gap-2">
-              <span>🔬</span>
+            <h2 className="text-xl font-semibold text-orange-400 mb-6 flex items-center gap-2.5">
+              <IconMethod size={18} className="text-orange-400 shrink-0" />
               Metodología de Investigación
             </h2>
             {concept.methodologyLink ? (
               <EnhancedRichContent content={concept.methodologyLink} />
             ) : (
               <div className="text-center py-12">
-                <div className="text-6xl mb-4 opacity-50">📊</div>
+                <IconAnalysis size={48} className="text-gray-700 mb-4 mx-auto" />
                 <p className="text-gray-400 text-lg">
                   La traducción metodológica no está especificada para este concepto.
                 </p>
@@ -258,29 +263,29 @@ export default function ConceptDetail() {
           <div>
             {concept.type === 'philosopher' || concept.type === 'scientist' ? (
               <div className="text-center py-12">
-                <div className="text-8xl mb-6 animate-pulse">🔮</div>
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  Oráculo de {concept.name}
+                <IconDialogue size={56} className="text-teal-400/50 mb-6 mx-auto" />
+                <h2 className="font-display text-3xl font-bold text-white mb-4 tracking-tight">
+                  Diálogo con {concept.name}
                 </h2>
-                <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-lg mx-auto">
                   Conversa con una simulación inteligente de {concept.name}.
                   Plantea tus preguntas filosóficas y recibe respuestas basadas en su pensamiento y obra.
                 </p>
                 <button
                   onClick={() => startSession(concept.id, concept.name)}
-                  className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg"
                 >
                   Iniciar Conversación
                 </button>
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="text-6xl mb-4 opacity-50">🚫</div>
-                <h3 className="text-xl font-semibold text-gray-400 mb-2">
-                  Oráculo no disponible
+                <IconClose size={40} className="text-gray-700 mb-4 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-400 mb-2">
+                  Diálogo no disponible
                 </h3>
                 <p className="text-gray-500">
-                  El Oráculo solo está disponible para filósofos y científicos individuales.
+                  El Diálogo solo está disponible para filósofos y científicos individuales.
                 </p>
               </div>
             )}

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useConceptStore } from '@/lib/stores/concept-store';
 import ConceptTree from '@/components/features/ConceptExplorer/ConceptTree';
+import { IconForum, IconParadigm } from '@/components/ui/Icons';
 
 export default function MobileMenu() {
   const { isMobileMenuOpen, setMobileMenuOpen, setActiveTab } = useUIStore();
@@ -90,7 +91,7 @@ export default function MobileMenu() {
               }}
               className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
             >
-              <span>🗣️</span>
+              <IconForum size={16} className="shrink-0" />
               Iniciar Debate
             </button>
             <button 
@@ -100,8 +101,8 @@ export default function MobileMenu() {
               }}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
             >
-              <span>🔬</span>
-              Laboratorio Paradigmático
+              <IconParadigm size={16} className="shrink-0" />
+              Análisis Paradigmático
             </button>
           </div>
         </div>

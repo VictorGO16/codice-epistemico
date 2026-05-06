@@ -21,6 +21,7 @@ import { useSessionStore } from '@/lib/stores/session-store';
 import { useDebateStore } from '@/lib/stores/debate-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { TabId } from '@/types';
+import { IconForum, IconAnalysis } from '@/components/ui/Icons';
 
 interface DebateMessage {
   id: string;
@@ -65,7 +66,7 @@ const mainNavigationItems: NavigationItem[] = [
   },
   {
     id: 'paradigm',
-    label: 'Laboratorio',
+    label: 'Análisis',
     icon: BeakerIcon,
     description: 'Análisis paradigmático'
   },
@@ -98,7 +99,7 @@ const conceptNavigationItems: NavigationItem[] = [
   },
   {
     id: 'oracle',
-    label: 'Oráculo',
+    label: 'Diálogo',
     icon: SparklesIcon,
     description: 'Chat con el pensador'
   }
@@ -132,7 +133,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
 
   // Dynamic z-index based on modal state
   const sidebarZIndex = isModalActive ? "z-[55]" : "z-40";
-  const overlayZIndex = isModalActive ? "z-[50]" : "z-35";
+  const overlayZIndex = isModalActive ? "z-[50]" : "z-[35]";
 
   const handleNavigation = (tabId: TabId) => {
     // Cerrar debate/análisis si navegamos fuera del tab debate
@@ -285,7 +286,10 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                     : 'bg-gray-700/30 border-gray-600/50 text-gray-300 hover:bg-gray-600/30'
                                 }`}
                               >
-                                💬 {currentSession.topic.slice(0, 30)}...
+                                <span className="inline-flex items-center gap-1.5">
+                                  <IconForum size={12} className="shrink-0 opacity-60" />
+                                  {currentSession.topic.slice(0, 30)}...
+                                </span>
                               </button>
                               {currentAnalysis && (
                                 <button
@@ -299,7 +303,10 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                       : 'bg-gray-700/30 border-gray-600/50 text-gray-300 hover:bg-gray-600/30'
                                   }`}
                                 >
-                                  📊 Análisis del debate
+                                  <span className="inline-flex items-center gap-1.5">
+                                    <IconAnalysis size={12} className="shrink-0 opacity-60" />
+                                    Análisis del debate
+                                  </span>
                                 </button>
                               )}
                             </div>

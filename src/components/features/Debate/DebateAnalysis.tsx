@@ -8,6 +8,7 @@ import { philosophicalData } from '@/lib/data/philosophical-data';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { exportToHTML, exportDebateToPDF, DebateExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
+import { TypeIcon, IconAnalysis, IconTarget } from '@/components/ui/Icons';
 
 interface DebateAnalysisProps {
   session: DebateSession;
@@ -171,13 +172,6 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
     return colors[index % colors.length];
   };
 
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'philosopher': return '👤';
-      case 'scientist': return '🔬';
-      default: return '📖';
-    }
-  };
 
   const handleExportHTML = () => {
     if (!analysis) return;
@@ -310,13 +304,13 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
               onClick={() => setSelectedArgument(isSelected ? null : argument.id)}
             >
               <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                <span className="text-lg md:text-2xl flex-shrink-0">{getTypeIcon(participant?.type || 'concept')}</span>
+                <TypeIcon type={participant?.type || 'concept'} size={20} className="shrink-0 text-gray-400/70 mt-0.5" />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-sm md:text-base truncate">{argument.participantName}</h4>
                   <div className="flex items-center gap-1 md:gap-2 text-xs">
-                    <span>💪 {argument.strength}/10</span>
+                    <span>Fuerza: {argument.strength}/10</span>
                     <span>•</span>
-                    <span>🧠 {argument.coherence}/10</span>
+                    <span>Coherencia: {argument.coherence}/10</span>
                   </div>
                 </div>
               </div>
@@ -363,7 +357,10 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
   // Component: Evaluation Panel
   const EvaluationPanel = ({ className = "" }: { className?: string }) => (
     <div className={`overflow-y-auto ${className}`}>
-      <h3 className="text-lg font-bold text-white mb-4">📊 Evaluación</h3>
+      <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <IconAnalysis size={18} className="text-teal-400 shrink-0" />
+        Evaluación
+      </h3>
       
       {/* Participant Scores */}
       <div className="mb-6">
@@ -375,7 +372,7 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
             
             return (
               <div key={participantId} className="flex items-center gap-3">
-                <span className="text-xl">{getTypeIcon(participant.type)}</span>
+                <TypeIcon type={participant.type} size={20} className="shrink-0 text-gray-400/70" />
                 <div className="flex-1">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm font-medium text-white">{participant.name}</span>
@@ -396,7 +393,10 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
 
       {/* Moderator Conclusion */}
       <div className="mb-6">
-        <h4 className="font-semibold text-white mb-3">🎯 Conclusión del Moderador</h4>
+        <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+          <IconTarget size={16} className="text-teal-400 shrink-0" />
+          Conclusión del Moderador
+        </h4>
         <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
           <EnhancedRichContent 
             content={analysis!.moderatorConclusion}
@@ -547,7 +547,7 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
                   : 'text-gray-400 hover:text-gray-300'
               }`}
             >
-              📊 Evaluación
+              Evaluación
             </button>
           </div>
         )}

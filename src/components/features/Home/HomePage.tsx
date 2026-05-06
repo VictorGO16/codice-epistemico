@@ -1,76 +1,63 @@
 'use client';
 
 import { useUIStore } from '@/lib/stores/ui-store';
-import { useDebateStore } from '@/lib/stores/debate-store';
 import PageTransition from '@/components/ui/PageTransition';
 import StaggerContainer, { StaggerItem } from '@/components/ui/StaggerContainer';
 import { AnimatedButton } from '@/components/ui/AnimatedCard';
-import { motion } from 'framer-motion';
+import { IconConcept, IconForum, IconParadigm } from '@/components/ui/Icons';
 
 export default function HomePage() {
   const { setActiveTab } = useUIStore();
-  const { startSession: startDebateSession } = useDebateStore();
 
   return (
     <PageTransition className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <StaggerContainer className="text-center w-full mx-auto px-6">
         <StaggerItem>
-          <motion.div 
-            className="text-8xl mb-8"
-            animate={{ 
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, -5, 0]
-            }}
-            transition={{ 
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            🧠
-          </motion.div>
+          <div className="flex justify-center mb-8">
+            <IconParadigm size={48} className="text-teal-400/40" />
+          </div>
         </StaggerItem>
-        
+
         <StaggerItem>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
             El Códice Epistémico
           </h1>
         </StaggerItem>
-        
+
         <StaggerItem>
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+          <p className="text-lg text-gray-400 mb-14 leading-relaxed max-w-xl mx-auto">
             Explora la filosofía de la ciencia y psicología a través de una interfaz interactiva.
           </p>
         </StaggerItem>
 
         <StaggerItem>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl border border-gray-600 hover:border-teal-500 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="text-4xl mb-4">💭</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Conceptos Filosóficos</h3>
-              <p className="text-gray-400 leading-relaxed">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            <div className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-teal-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left">
+              <IconConcept size={32} className="mb-4 text-teal-400/70" />
+              <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Conceptos Filosóficos</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
                 Explora ideas fundamentales desde la filosofía antigua hasta el pensamiento contemporáneo
               </p>
             </div>
 
             <button
               onClick={() => setActiveTab('debate')}
-              className="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl border border-gray-600 hover:border-purple-500 transition-all duration-300 hover:transform hover:scale-105 text-left"
+              className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-purple-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left"
             >
-              <div className="text-4xl mb-4">🗣️</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Debates Simulados</h3>
-              <p className="text-gray-400 leading-relaxed">
+              <IconForum size={32} className="mb-4 text-purple-400/70" />
+              <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Debates Filosóficos</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
                 Presencia debates entre grandes pensadores históricos sobre temas fundamentales
               </p>
             </button>
 
             <button
               onClick={() => setActiveTab('paradigm')}
-              className="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl border border-gray-600 hover:border-orange-500 transition-all duration-300 hover:transform hover:scale-105 text-left"
+              className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-orange-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left"
             >
-              <div className="text-4xl mb-4">🔬</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Laboratorio de Paradigmas</h3>
-              <p className="text-gray-400 leading-relaxed">
+              <IconParadigm size={32} className="mb-4 text-orange-400/70" />
+              <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Análisis Paradigmático</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
                 Analiza objetos de estudio desde diferentes paradigmas epistemológicos
               </p>
             </button>
@@ -78,22 +65,22 @@ export default function HomePage() {
         </StaggerItem>
 
         <StaggerItem>
-          <div className="mt-12 flex justify-center gap-4">
+          <div className="mt-10 flex justify-center gap-3">
             <AnimatedButton
               onClick={() => setActiveTab('debate')}
-              variant="primary"
-              className="bg-purple-500 hover:bg-purple-600 flex items-center gap-2"
+              variant="secondary"
+              className="flex items-center gap-2"
             >
-              <span>🗣️</span>
+              <IconForum size={15} className="shrink-0" />
               Iniciar Debate
             </AnimatedButton>
             <AnimatedButton
               onClick={() => setActiveTab('paradigm')}
-              variant="primary"
-              className="bg-orange-500 hover:bg-orange-600 flex items-center gap-2"
+              variant="secondary"
+              className="flex items-center gap-2"
             >
-              <span>🔬</span>
-              Laboratorio
+              <IconParadigm size={15} className="shrink-0" />
+              Análisis
             </AnimatedButton>
           </div>
         </StaggerItem>

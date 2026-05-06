@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon, HeartIcon } from '@heroicons/react/24/outline';
 import ConceptTree from '@/components/features/ConceptExplorer/ConceptTree';
+import { TypeIcon } from '@/components/ui/Icons';
 import { useConceptStore } from '@/lib/stores/concept-store';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useFavoritesStore } from '@/lib/stores/favorites-store';
@@ -42,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   // Dynamic z-index based on modal state
   const sidebarZIndex = isModalActive ? "z-[55]" : "z-40";
-  const overlayZIndex = isModalActive ? "z-[50]" : "z-35";
+  const overlayZIndex = isModalActive ? "z-[50]" : "z-[35]";
 
   return (
     <>
@@ -140,11 +141,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="text-2xl flex-shrink-0">
-                          {concept.type === 'philosopher' ? '👤' : 
-                           concept.type === 'scientist' ? '🔬' : 
-                           concept.type === 'concept' ? '💭' : '📖'}
-                        </div>
+                        <TypeIcon type={concept.type} size={22} className="text-gray-400/70 mt-0.5 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <h3 className="font-semibold text-sm mb-1 truncate">{concept.name}</h3>
                           <p className="text-xs opacity-75 line-clamp-2">
@@ -186,11 +183,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <div className="text-2xl flex-shrink-0">
-                            {concept.type === 'philosopher' ? '👤' : 
-                             concept.type === 'scientist' ? '🔬' : 
-                             concept.type === 'concept' ? '💭' : '📖'}
-                          </div>
+                          <TypeIcon type={concept.type} size={22} className="text-gray-400/70 mt-0.5 shrink-0" />
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-sm mb-1 truncate">{concept.name}</h3>
                             <p className="text-xs opacity-75 line-clamp-2">

@@ -11,6 +11,7 @@ import DebateAnalysis from './DebateAnalysis';
 import ExportButton from '@/components/ui/ExportButton';
 import { exportDebateToPDF, exportToHTML, DebateExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
+import { IconForum, IconScale, IconPerson, IconSettings, TypeIcon } from '@/components/ui/Icons';
 
 interface AnalysisArgument {
   participantName: string;
@@ -343,13 +344,6 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
     }, 0);
   };
 
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'philosopher': return '👤';
-      case 'scientist': return '🔬';
-      default: return '📖';
-    }
-  };
 
   const handleExportPDF = async () => {
     if (!currentSession) return;
@@ -545,7 +539,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
 
       } else {
         updateMessage(loadingMessageId, {
-          text: '❌ No se pudo generar la continuación del debate',
+          text: 'No se pudo generar la continuación del debate',
           isLoading: false,
         });
       }
@@ -658,7 +652,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 border-b border-gray-700 gap-4">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="text-2xl md:text-3xl flex-shrink-0">🗣️</div>
+            <IconForum size={26} className="text-teal-400/70 shrink-0" />
             <div className="flex-1 min-w-0">
               <h2 className="text-lg sm:text-xl font-bold text-white">Debate Filosófico</h2>
               <p className="text-xs sm:text-sm text-gray-400 truncate">
@@ -720,7 +714,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                     : 'bg-gray-700/50 text-gray-300'
                     }`}
                 >
-                  <span className="text-lg md:text-base">{getTypeIcon(participant.type)}</span>
+                  <TypeIcon type={participant.type} size={16} className="shrink-0" />
                   <span className="text-xs md:text-sm font-medium">{participant.name}</span>
                   {isCurrentSpeaker && (
                     <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-teal-400 rounded-full animate-pulse"></div>
@@ -748,7 +742,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
             return (
               <div key={message.id} className={`flex gap-3 md:gap-4 ${isUser ? 'flex-row-reverse' : ''} ${isSystem ? 'justify-center' : ''}`}>
                 <div className="flex-shrink-0">
-                  <div className={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lg md:text-2xl ${isModerator
+                  <div className={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center ${isModerator
                     ? 'bg-purple-600'
                     : isUser
                       ? 'bg-blue-600'
@@ -756,7 +750,10 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                         ? 'bg-orange-600'
                         : 'bg-gray-700'
                     }`}>
-                    {isModerator ? '⚖️' : isUser ? '👤' : isSystem ? '⚙️' : getTypeIcon(participant?.type || 'concept')}
+                    {isModerator ? <IconScale size={16} className="text-white" />
+                      : isUser ? <IconPerson size={16} className="text-white" />
+                      : isSystem ? <IconSettings size={16} className="text-white" />
+                      : <TypeIcon type={participant?.type || 'concept'} size={16} className="text-white" />}
                   </div>
                 </div>
                 <div className={`flex-1 min-w-0 ${isUser ? 'text-right' : ''} ${isSystem ? 'text-center' : ''}`}>

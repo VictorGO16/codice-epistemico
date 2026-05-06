@@ -16,6 +16,7 @@
 
 @theme inline {
   --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
 * {
@@ -28,17 +29,16 @@ body {
   color: var(--color-text);
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  display: flex;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   body {
-    display: block;
     overflow: auto;
+    height: auto;
   }
 }
 

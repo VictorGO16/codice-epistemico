@@ -1,7 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BeakerIcon, PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+import type { ComponentType } from 'react';
+import { PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+import {
+  IconParadigm, IconMethod, IconTarget, IconEye,
+  IconBook, IconStructure, IconFlex,
+} from '@/components/ui/Icons';
 import { useParadigmLab } from '@/lib/hooks/useGemini';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useSessionStore } from '@/lib/stores/session-store';
@@ -17,42 +22,44 @@ interface ParadigmAnalysis {
   summary: string;
 }
 
-const paradigms = [
+type IconProps = { size?: number | string; className?: string };
+
+const paradigms: { id: string; name: string; description: string; Icon: ComponentType<IconProps> }[] = [
   {
     id: 'positivismo_logico',
     name: 'Positivismo Lógico',
     description: 'Enfoque científico basado en la verificación empírica y la lógica formal',
-    icon: '🔬',
+    Icon: IconMethod,
   },
   {
     id: 'postpositivismo',
     name: 'Post-positivismo',
     description: 'Realismo crítico con falibilismo y falsacionismo',
-    icon: '🎯',
+    Icon: IconTarget,
   },
   {
     id: 'fenomenologia',
     name: 'Fenomenología',
     description: 'Estudio de las estructuras de la experiencia y la conciencia',
-    icon: '👁️',
+    Icon: IconEye,
   },
   {
     id: 'hermeneutica',
     name: 'Hermenéutica',
     description: 'Interpretación y comprensión de significados en contexto',
-    icon: '📖',
+    Icon: IconBook,
   },
   {
     id: 'construccionismo',
     name: 'Construccionismo Social',
     description: 'La realidad como construcción social a través del lenguaje',
-    icon: '🏗️',
+    Icon: IconStructure,
   },
   {
     id: 'enactivismo',
     name: 'Enactivismo',
     description: 'Cognición como acción corporizada y situada',
-    icon: '🤸',
+    Icon: IconFlex,
   },
 ];
 
@@ -220,8 +227,8 @@ export default function ParadigmLab() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BeakerIcon className="w-12 h-12 text-purple-400" />
-            <h1 className="text-4xl font-bold text-white">Laboratorio Paradigmático</h1>
+            <IconParadigm size={44} className="text-teal-400" />
+            <h1 className="font-display text-4xl font-bold text-white tracking-tight">Análisis Paradigmático</h1>
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Analiza cualquier objeto de estudio desde diferentes paradigmas filosóficos y científicos
@@ -259,7 +266,10 @@ export default function ParadigmLab() {
                     }`}
                   >
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-3xl">{paradigm.icon}</span>
+                      <paradigm.Icon
+                        size={26}
+                        className={selectedParadigm === paradigm.id ? 'text-teal-400' : 'text-gray-400'}
+                      />
                       <h3 className="font-semibold">{paradigm.name}</h3>
                     </div>
                     <p className="text-sm opacity-80">{paradigm.description}</p>

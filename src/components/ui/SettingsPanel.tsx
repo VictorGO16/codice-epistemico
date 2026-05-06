@@ -101,7 +101,7 @@ export default function SettingsPanel() {
               {/* Performance Note */}
               <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                 <p className="text-sm text-yellow-300">
-                  💡 <strong>Consejo:</strong> Desactiva las partículas y animaciones si experimentas problemas de rendimiento.
+                  <strong>Consejo:</strong> Desactiva las partículas y animaciones si experimentas problemas de rendimiento.
                 </p>
               </div>
             </div>

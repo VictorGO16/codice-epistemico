@@ -17,10 +17,10 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  const { 
-    sidebarOpen, 
-    setSidebarOpen, 
-    rightSidebarOpen, 
+  const {
+    sidebarOpen,
+    setSidebarOpen,
+    rightSidebarOpen,
     setRightSidebarOpen,
     toggleRightSidebar,
     setIsMobile,
@@ -29,10 +29,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
     toggleSidebarCollapse,
     rightSidebarCollapsed,
     setRightSidebarCollapsed,
-    toggleRightSidebarCollapse
+    toggleRightSidebarCollapse,
   } = useUIStore();
 
-  // Handle mutual exclusion of sidebars on mobile/tablet
   const handleLeftSidebarToggle = () => {
     if (window.innerWidth < 1024 && rightSidebarOpen) {
       setRightSidebarOpen(false);
@@ -47,62 +46,60 @@ export default function MainLayout({ children }: MainLayoutProps) {
     toggleRightSidebar();
   };
 
-  // Handle responsive behavior
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 768;
       const isTablet = window.innerWidth < 1024;
       setIsMobile(isMobile);
-      
-      // Auto-close sidebars on mobile when resizing to desktop
+
       if (!isMobile && sidebarOpen) {
         setSidebarOpen(false);
       }
-      
-      // Auto-open right sidebar on desktop only
+
       if (!isTablet && !rightSidebarOpen) {
         setRightSidebarOpen(true);
       }
-      
-      // Reset collapsed states on mobile
+
       if (isMobile) {
         setSidebarCollapsed(false);
         setRightSidebarCollapsed(false);
       }
     };
 
-    // Set initial state
     handleResize();
-
-    // Listen for resize events
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [setIsMobile, sidebarOpen, setSidebarOpen, rightSidebarOpen, setRightSidebarOpen, setSidebarCollapsed, setRightSidebarCollapsed]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative">
-      {/* Particle Background */}
+    // h-screen + overflow-hidden: single source of truth for viewport height
+    <div className="h-screen w-full overflow-hidden bg-gray-900 text-white relative">
       <ParticleBackground />
-
-      {/* Mobile Header */}
       <MobileHeader onLeftSidebarToggle={handleLeftSidebarToggle} />
 
-      <div className="flex h-screen pt-16 md:pt-0 relative z-10">
-        {/* Left Sidebar */}
+      {/*
+        flex row filling the full height.
+        pt-16 md:pt-0: offset for the fixed mobile header on small screens.
+        min-h-0: allows flex children to shrink below their content size,
+                 fixing the h-full inheritance chain for overflow-y-auto descendants.
+      */}
+      <div className="flex h-full pt-16 md:pt-0 relative z-10 min-h-0">
+
+        {/* Left sidebar — shrink-0 prevents it from collapsing under flex pressure */}
         {sidebarCollapsed ? (
-          <div className="hidden md:block">
-            <CollapsedSidebarIndicator 
-              position="left" 
-              onExpand={() => setSidebarCollapsed(false)} 
+          <div className="hidden md:block shrink-0">
+            <CollapsedSidebarIndicator
+              position="left"
+              onExpand={() => setSidebarCollapsed(false)}
             />
           </div>
         ) : (
-          <div className="relative">
-            <Sidebar 
-              isOpen={sidebarOpen} 
-              onClose={() => setSidebarOpen(false)} 
+          <div className="relative shrink-0">
+            <Sidebar
+              isOpen={sidebarOpen}
+              onClose={() => setSidebarOpen(false)}
             />
-            <SidebarCollapseButton 
+            <SidebarCollapseButton
               isCollapsed={sidebarCollapsed}
               onToggle={toggleSidebarCollapse}
               position="left"
@@ -111,8 +108,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </div>
         )}
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-hidden">
+        {/*
+          Main content area.
+          flex-1: fills remaining horizontal space.
+          min-w-0: critical — without this, a flex-1 item cannot shrink
+                   below its content width when both sidebars are open.
+          overflow-hidden: clips content at the main boundary.
+        */}
+        <main className="flex-1 min-w-0 overflow-hidden">
           <div className="h-full overflow-y-auto">
             <div className="w-full px-4 py-6 md:px-6 md:py-8">
               {children}
@@ -120,21 +123,21 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </div>
         </main>
 
-        {/* Right Sidebar */}
+        {/* Right sidebar — shrink-0 prevents collapsing */}
         {rightSidebarCollapsed ? (
-          <div className="hidden lg:block">
-            <CollapsedSidebarIndicator 
-              position="right" 
-              onExpand={() => setRightSidebarCollapsed(false)} 
+          <div className="hidden lg:block shrink-0">
+            <CollapsedSidebarIndicator
+              position="right"
+              onExpand={() => setRightSidebarCollapsed(false)}
             />
           </div>
         ) : (
-          <div className="relative">
-            <RightSidebar 
-              isOpen={rightSidebarOpen} 
-              onClose={() => setRightSidebarOpen(false)} 
+          <div className="relative shrink-0">
+            <RightSidebar
+              isOpen={rightSidebarOpen}
+              onClose={() => setRightSidebarOpen(false)}
             />
-            <SidebarCollapseButton 
+            <SidebarCollapseButton
               isCollapsed={rightSidebarCollapsed}
               onToggle={toggleRightSidebarCollapse}
               position="right"
@@ -144,16 +147,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
         )}
       </div>
 
-      {/* Right Sidebar Toggle (Mobile/Tablet) */}
-      <RightSidebarToggle 
+      <RightSidebarToggle
         onClick={handleRightSidebarToggle}
         isOpen={rightSidebarOpen}
       />
-
-      {/* Notifications */}
       <NotificationContainer />
-      
-      {/* Settings Panel */}
       <SettingsPanel />
     </div>
   );

@@ -8,6 +8,7 @@ import { useOracleStore } from '@/lib/stores/oracle-store';
 import { useSessionStore } from '@/lib/stores/session-store';
 import ExportButton from '@/components/ui/ExportButton';
 import { exportOracleToPDF, exportToHTML, OracleExportData } from '@/lib/utils/export';
+import { IconDialogue } from '@/components/ui/Icons';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import AnimatedLoader from '@/components/ui/AnimatedLoader';
 import { AnimatedButton } from '@/components/ui/AnimatedCard';
@@ -197,9 +198,9 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="text-3xl">🔮</div>
+            <IconDialogue size={28} className="text-teal-400/70 shrink-0" />
             <div>
-              <h2 className="text-xl font-bold text-white">Oráculo de {conceptName}</h2>
+              <h2 className="font-display text-xl font-bold text-white tracking-tight">Diálogo con {conceptName}</h2>
               <p className="text-sm text-gray-400">Conversación filosófica interactiva</p>
             </div>
           </div>
