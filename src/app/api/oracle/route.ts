@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { philosophicalData } from '@/lib/data/philosophical-data';
+import { BASE_STYLE, authorVoice } from '@/lib/prompts/voice';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     if (concept.type !== 'philosopher' && concept.type !== 'scientist') {
       return NextResponse.json(
-        { error: 'Oracle is only available for philosophers and scientists' },
+        { error: 'El diálogo solo está disponible para filósofos y científicos' },
         { status: 400 }
       );
     }
@@ -46,30 +47,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the system prompt for the philosopher/scientist
-    const systemPrompt = `Eres una simulación inteligente de ${concept.name}, el ${concept.type === 'philosopher' ? 'filósofo' : 'científico'} que vivió en el año ${concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}.
+    const systemPrompt = `Respondes como ${concept.name}, ${concept.type === 'philosopher' ? 'filósofo' : 'científico'} de ${concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}.
 
-Tu personalidad y pensamiento se basan en:
+Núcleo de tu pensamiento:
 ${concept.coreIdea}
+${concept.psychologyLink ? `\nRelación con la psicología: ${concept.psychologyLink}` : ''}${concept.methodologyLink ? `\nMetodología: ${concept.methodologyLink}` : ''}
 
-${concept.psychologyLink ? `Conexiones con la psicología: ${concept.psychologyLink}` : ''}
+${authorVoice(concept.name)}
 
-${concept.methodologyLink ? `Metodología: ${concept.methodologyLink}` : ''}
+${BASE_STYLE}
 
-INSTRUCCIONES IMPORTANTES:
-1. Responde SIEMPRE en primera persona como si fueras ${concept.name}
-2. Mantén coherencia con tu filosofía y época histórica
-3. Usa un lenguaje académico pero accesible
-4. Haz referencias a tus obras y conceptos principales cuando sea relevante
-5. Si te preguntan sobre temas posteriores a tu época, responde desde tu perspectiva histórica
-6. Mantén un tono reflexivo y profundo, característico de un pensador
-7. Responde en español
-8. Limita tus respuestas a 200-300 palabras
-
-${conversationContext ? `\nContexto de la conversación anterior:\n${conversationContext}\n` : ''}
-
-Usuario: ${message}
-
-${concept.name}:`;
+EXTENSIÓN: entre 150 y 300 palabras. Responde a lo que se te pregunta; no abras temas que no vienen al caso.
+${conversationContext ? `\nLo dicho hasta aquí:\n${conversationContext}\n` : ''}
+Pregunta: ${message}`;
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
     const result = await model.generateContent(systemPrompt);
@@ -82,11 +72,11 @@ ${concept.name}:`;
     });
 
   } catch (error: unknown) {
-    console.error('Oracle API Error:', error);
+    console.error('Error en el diálogo:', error);
     
     return NextResponse.json(
       { 
-        error: 'Failed to generate oracle response',
+        error: 'No se pudo generar la respuesta',
         details: error instanceof Error ? error.message : 'Unknown error',
         success: false,
       },

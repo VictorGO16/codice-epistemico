@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { MODERATOR_VOICE } from '@/lib/prompts/voice';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface ConversationMessage {
@@ -40,33 +41,11 @@ export async function POST(request: NextRequest) {
       ? `\n\nInstrucción del usuario para dirigir el debate:\n"${userInput}"`
       : '';
 
-    const prompt = `Eres un director y moderador experto de debates filosóficos de alto nivel.
+    const prompt = `Moderas una discusión sobre: "${topic}"${historyContext}${userInputContext}
 
-**Principios Fundamentales:**
-1. **Realismo Filosófico:** Cada pensador debe argumentar exclusivamente desde su marco de pensamiento
-2. **Conflicto Productivo:** El debate debe ser crudo y directo
-3. **Moderador Activo:** Eres un participante activo que reorienta la discusión si es necesario
-4. **Facilitador Inteligente:** Identificas puntos de tensión y los exploras
+${MODERATOR_VOICE}
 
-**Tema del Debate:** "${topic}"${historyContext}${userInputContext}
-
-**Tu rol como moderador:**
-- Resumir brevemente los puntos clave discutidos
-- Identificar áreas de convergencia o divergencia
-- Plantear preguntas que profundicen el debate
-- Mantener el foco en el tema central
-- Incorporar las instrucciones del usuario si las hay
-- Crear tensión intelectual productiva
-
-**Instrucciones:**
-1. Responde como moderador en primera persona
-2. Mantén un tono académico pero accesible y apasionado
-3. Limita tu respuesta a 150-200 palabras máximo
-4. Si hay instrucción del usuario, incorpórala de manera natural
-5. Plantea una pregunta específica o reflexión para continuar el debate
-6. Responde en español
-
-Moderador:`;
+ESTA INTERVENCIÓN: nombra el punto exacto en que los participantes discrepan y formula la pregunta que los obliga a pronunciarse sobre él. Si hay una indicación de quien modera desde fuera, redirige la discusión hacia ahí sin comentarla.`;
 
     const result = await model.generateContent(prompt);
     const response = result.response;

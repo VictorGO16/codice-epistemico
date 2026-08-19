@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { BASE_STYLE, MODERATOR_VOICE } from '@/lib/prompts/voice';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
@@ -38,13 +39,16 @@ export async function POST(request: NextRequest) {
       ? `\n\n**Instrucción del Usuario para Continuar:**\n"${userInput}"`
       : '';
 
-    const prompt = `Eres un director y simulador de debates filosóficos de alto nivel.
+    const prompt = `Generas la siguiente ronda de una discusión filosófica.
 
-**Principios Fundamentales:**
-1. **Realismo Filosófico:** Cada pensador debe argumentar exclusivamente desde su marco de pensamiento.
-2. **Conflicto Productivo:** El debate debe ser crudo y directo.
-3. **Moderador Estricto:** El moderador es un participante activo que reorienta la discusión si es necesario.
-4. **Formato del Texto:** Dentro del campo 'text', formatea la respuesta con párrafos claros usando \\n\\n.
+CÓMO ESCRIBE CADA PENSADOR:
+- Cada uno argumenta desde su propio marco y en su propio registro: su léxico técnico, la construcción de sus periodos y sus recursos habituales. No es una imitación de época ni un disfraz retórico: es su manera de razonar.
+- El desacuerdo es directo. Cada intervención cita el argumento concreto al que responde.
+- Dentro del campo 'text', separa los párrafos con \\n\\n.
+
+${BASE_STYLE}
+
+${MODERATOR_VOICE}
 
 **Pensadores Participantes:**
 ${participantDetails}
@@ -61,15 +65,15 @@ Continúa el debate basándote en la instrucción del usuario y el historial. Ge
 **Formato de Salida Obligatorio:**
 Responde con un array de objetos JSON, donde cada objeto tiene las claves "speaker" y "text".
 
-Ejemplo:
+Ejemplo de forma (no de contenido):
 [
   {
     "speaker": "Moderador",
-    "text": "Excelentes puntos. Ahora exploremos..."
+    "text": "El desacuerdo está en si el criterio de demarcación es lógico o histórico. ¿Puede una teoría refutada seguir siendo científica?"
   },
   {
     "speaker": "Kant",
-    "text": "Desde mi perspectiva del imperativo categórico..."
+    "text": "La objeción supone que la experiencia se nos da sin forma previa, y eso es justamente lo que niego..."
   }
 ]`;
 

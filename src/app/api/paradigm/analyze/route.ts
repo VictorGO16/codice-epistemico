@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { BASE_STYLE } from '@/lib/prompts/voice';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 
-    const analysisPrompt = `Eres un experto en filosofía de la ciencia y epistemología. Analiza el siguiente objeto de estudio desde la perspectiva del paradigma especificado.
+    const analysisPrompt = `Analizas un objeto de estudio desde un paradigma epistemológico determinado, para un curso de epistemología y metodología.
 
 PARADIGMA: ${paradigm.name}
 DESCRIPCIÓN DEL PARADIGMA:
@@ -54,20 +55,17 @@ Proporciona un análisis estructurado desde este paradigma en el siguiente forma
   "epistemological": "Análisis epistemológico: ¿Cómo se puede conocer este objeto de estudio según este paradigma? ¿Qué métodos de conocimiento son válidos? ¿Cuáles son los criterios de verdad? (200-300 palabras)",
   "methodological": "Análisis metodológico: ¿Qué métodos de investigación son apropiados para estudiar este objeto según este paradigma? ¿Cómo se debe abordar su estudio? ¿Qué técnicas y procedimientos son válidos? (200-300 palabras)",
   "researchProposal": "Propuesta de investigación: Diseña una propuesta concreta de investigación que refleje cómo se aplicarían los aspectos ontológicos, epistemológicos y metodológicos de este paradigma al estudio del objeto. Incluye objetivos, hipótesis (si aplica), metodología específica, y consideraciones éticas. (250-350 palabras)",
-  "summary": "Síntesis: Resume cómo este paradigma ofrece una perspectiva única y coherente sobre el objeto de estudio, integrando los aspectos ontológicos, epistemológicos y metodológicos. (150-200 palabras)"
+  "summary": "Síntesis: hilo que une las tres dimensiones anteriores. Qué queda decidido sobre el objeto al adoptar este paradigma, y qué queda fuera de su alcance. (150-200 palabras)"
 }
 
-CRITERIOS IMPORTANTES:
-1. Mantén coherencia estricta con los principios del paradigma
-2. Usa terminología específica del paradigma cuando sea apropiado
-3. Haz referencias a conceptos clave del paradigma
-4. Considera las implicaciones prácticas para la investigación
-5. Mantén un tono académico pero accesible
-6. Responde en español
-7. Asegúrate de que cada sección tenga la extensión solicitada
-8. FORMATO CRUCIAL: Usa párrafos separados con saltos de línea dobles (\\n\\n) para mejorar la legibilidad
-9. Incluye viñetas o numeraciones con sus respectivos saltos de línea cuando sea apropiado
-10. Estructura el texto con subtítulos cuando sea necesario usando markdown (##, ###)
+CRITERIOS:
+1. Coherencia estricta con los supuestos del paradigma, incluidas sus limitaciones: di también qué NO puede afirmar desde él.
+2. Terminología propia del paradigma, usada con precisión y no como adorno.
+3. Consecuencias concretas para el diseño de una investigación.
+4. Respeta la extensión pedida en cada campo.
+5. Separa los párrafos con saltos de línea dobles (\\n\\n). Usa listas con "- " cuando enumeres, y subtítulos con ## solo si la sección lo exige.
+
+${BASE_STYLE}
 
 Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
 
@@ -101,7 +99,7 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
         epistemological: `El conocimiento sobre "${objectOfStudy}" se obtiene siguiendo los criterios epistemológicos de ${paradigm.name}.\n\nEste paradigma establece métodos específicos para validar el conocimiento y determinar qué constituye una comprensión legítima del objeto de estudio.`,
         methodological: `La investigación de "${objectOfStudy}" desde ${paradigm.name} requiere el uso de métodos específicos que sean coherentes con los principios del paradigma.\n\nEstos métodos aseguran que el estudio sea válido y confiable según los estándares establecidos por este enfoque.`,
         researchProposal: `## Propuesta de Investigación\n\n**Objetivo General:**\nInvestigar "${objectOfStudy}" aplicando los principios de ${paradigm.name}.\n\n**Metodología:**\nAplicación de métodos coherentes con este paradigma para obtener conocimiento válido.\n\n**Consideraciones:**\nEsta propuesta refleja los fundamentos ontológicos, epistemológicos y metodológicos del paradigma seleccionado.`,
-        summary: `${paradigm.name} ofrece una perspectiva única sobre "${objectOfStudy}" que integra consideraciones ontológicas, epistemológicas y metodológicas específicas.\n\nEsta aproximación proporciona un marco coherente para comprender y estudiar el objeto desde esta tradición filosófica particular.`
+        summary: `Análisis de "${objectOfStudy}" desde ${paradigm.name}, en sus dimensiones ontológica, epistemológica y metodológica.\n\nNo se pudo generar el texto completo. Vuelve a intentarlo.`
       };
 
       return NextResponse.json({

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { BASE_STYLE, authorVoice } from '@/lib/prompts/voice';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Participant {
@@ -52,25 +53,20 @@ export async function POST(request: NextRequest) {
 
     const isOpeningStatement = conversationHistory.length === 0;
 
-    const prompt = `Eres una simulación inteligente de ${participant.name}, el ${participant.type === 'philosopher' ? 'filósofo' : 'científico'} que vivió en el año ${participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}.
+    const prompt = `Intervienes como ${participant.name}, ${participant.type === 'philosopher' ? 'filósofo' : 'científico'} de ${participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}, en una discusión sobre: ${topic}
 
-Tu perspectiva filosófica central:
-${participant.coreIdea}
+Núcleo de tu pensamiento:
+${participant.coreIdea}${otherParticipantsContext}${historyContext}
 
-TEMA DEL DEBATE: ${topic}${otherParticipantsContext}${historyContext}
+${authorVoice(participant.name)}
 
-INSTRUCCIONES IMPORTANTES:
-1. Responde SIEMPRE en primera persona como si fueras ${participant.name}
-2. Mantén coherencia con tu filosofía y época histórica específica
-3. ${isOpeningStatement ? 'Esta es tu DECLARACIÓN DE APERTURA - presenta tu posición inicial sobre el tema' : 'Responde a los argumentos previos desde tu perspectiva única'}
-4. Haz referencias a tus conceptos y métodos principales cuando sea relevante
-5. Mantén un tono académico pero accesible y apasionado
-6. Limita tu respuesta a 150-200 palabras máximo
-7. No uses conceptos o terminología que no existían en tu época
-8. Responde en español
-9. ${isOpeningStatement ? 'Establece claramente tu posición sobre el tema' : 'Puedes estar de acuerdo, en desacuerdo, o matizar los puntos de otros participantes'}
+${BASE_STYLE}
 
-${participant.name}:`;
+${isOpeningStatement
+  ? 'ESTA INTERVENCIÓN: fija tu posición. Una tesis y las razones que la sostienen. No anuncies que vas a fijar tu posición: fíjala.'
+  : 'ESTA INTERVENCIÓN: responde a lo que han dicho los demás. Cita el argumento concreto que discutes antes de refutarlo o aceptarlo. No repitas tu posición inicial.'}
+
+EXTENSIÓN: entre 120 y 200 palabras.`;
 
     const result = await model.generateContent(prompt);
     const response = result.response;
