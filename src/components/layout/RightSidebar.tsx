@@ -13,7 +13,8 @@ import {
   PlusIcon,
   EllipsisVerticalIcon,
   TrashIcon,
-  DocumentDuplicateIcon
+  DocumentDuplicateIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useConceptStore } from '@/lib/stores/concept-store';
@@ -137,7 +138,8 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
     createSession, 
     switchToSession, 
     removeSession,
-    duplicateSession 
+    duplicateSession,
+    updateSession
   } = useSessionStore();
   const { 
     restoreSession,
@@ -151,6 +153,8 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
     isAnalysisOpen
   } = useDebateStore();
   const [showSessionMenu, setShowSessionMenu] = useState<string | null>(null);
+  const [renamingId, setRenamingId] = useState<string | null>(null);
+  const [draftName, setDraftName] = useState('');
 
   const concept = currentConcept ? philosophicalData[currentConcept] : null;
 
@@ -201,8 +205,16 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
 
   const handleSessionAction = (action: string, sessionId: string) => {
     setShowSessionMenu(null);
-    
+
     switch (action) {
+      case 'rename': {
+        // Faltaba por completo: se podia duplicar y borrar, pero no renombrar,
+        // asi que las sesiones se quedaban con el nombre automatico.
+        const session = sessions.find((item) => item.id === sessionId);
+        setDraftName(session?.name ?? '');
+        setRenamingId(sessionId);
+        break;
+      }
       case 'duplicate':
         duplicateSession(sessionId);
         break;
@@ -210,6 +222,14 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
         removeSession(sessionId);
         break;
     }
+  };
+
+  const commitRename = () => {
+    if (renamingId) {
+      const name = draftName.trim();
+      if (name) updateSession(renamingId, { name });
+    }
+    setRenamingId(null);
   };
 
   return (
@@ -344,7 +364,22 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                   : 'bg-gray-800/30 border-gray-700/30 text-gray-400 hover:bg-gray-700/30'
                               }`}
                             >
+                              {renamingId === session.id ? (
+                                <input
+                                  autoFocus
+                                  value={draftName}
+                                  onChange={(e) => setDraftName(e.target.value)}
+                                  onBlur={commitRename}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter') commitRename();
+                                    if (e.key === 'Escape') setRenamingId(null);
+                                  }}
+                                  aria-label="Nombre de la sesión"
+                                  className="flex-1 min-w-0 bg-gray-900 border border-teal-500/50 rounded px-2 py-1 text-sm text-white focus:outline-none"
+                                />
+                              ) : (
                               <button
+                                onDoubleClick={() => handleSessionAction('rename', session.id)}
                                 onClick={() => {
                                   switchToSession(session.id);
                                   handleNavigation(session.type);
@@ -370,10 +405,12 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                   }
                                 }}
                                 className="flex-1 text-left text-sm truncate"
+                                title="Doble clic para renombrar"
                               >
                                 {session.name}
                               </button>
-                              
+                              )}
+
                               <div className="relative">
                                 <button
                                   onClick={() => setShowSessionMenu(
@@ -386,6 +423,13 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                                 
                                 {showSessionMenu === session.id && (
                                   <div className="absolute right-0 top-full mt-1 w-32 bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-10">
+                                    <button
+                                      onClick={() => handleSessionAction('rename', session.id)}
+                                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                                    >
+                                      <PencilIcon className="w-3 h-3" />
+                                      Renombrar
+                                    </button>
                                     <button
                                       onClick={() => handleSessionAction('duplicate', session.id)}
                                       className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
