@@ -90,10 +90,8 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     if (!currentSession) return;
 
     const concept = philosophicalData[conceptId];
-    // El contenido se entrega en markdown: exportToHTML lo convierte a un
-    // documento con jerarquia real. Antes se enviaba texto plano con reglas de
-    // guiones y se inyectaba en un <pre>, por lo que el markdown del modelo
-    // (los ** de la negrita) se leia en crudo.
+    // El contenido se entrega en markdown y exportToHTML lo convierte en un
+    // documento con jerarquía real.
     let content = '';
 
     if (concept?.coreIdea) {

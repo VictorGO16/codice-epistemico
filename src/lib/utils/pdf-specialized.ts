@@ -110,8 +110,8 @@ export function htmlToMarkdown(input: string): string {
 
 /**
  * jsPDF con las fuentes estándar solo cubre Latin-1. Los emojis y los signos
- * tipográficos fuera de ese rango salían como "Ø=ÞK" —de ahí la colección de
- * expresiones regulares que intentaba adivinar esa basura a posteriori—.
+ * tipográficos fuera de ese rango salían como "Ø=ÞK", de ahí la colección de
+ * expresiones regulares que intentaba adivinar esa basura a posteriori.
  * Aquí se normaliza antes de escribir, no después.
  */
 function toLatin1(text: string): string {
@@ -619,10 +619,7 @@ export async function exportToPDF(options: ExportOptions): Promise<void> {
 
 /* ==========================================================================
    4. Documento HTML
-
-   Antes el contenido se inyectaba crudo dentro de un <div> con
-   white-space: pre-wrap, así que el markdown del modelo se leía tal cual
-   (** sin renderizar). Ahora pasa por los mismos bloques que el PDF.
+   El contenido pasa por los mismos bloques que el PDF.
    ========================================================================== */
 
 interface HtmlSection { id: string; title: string; body: string }
@@ -840,7 +837,7 @@ export function buildHtmlDocument(options: ExportOptions): string {
     ${body}
   </article>
 
-  <footer>${escapeHtml(FOOTER)} — documento generado el ${created}. Este archivo es autónomo: no necesita conexión.</footer>
+  <footer>${escapeHtml(FOOTER)}. Documento generado el ${created}. Este archivo es autónomo: no necesita conexión.</footer>
 </div>
 
 <script>

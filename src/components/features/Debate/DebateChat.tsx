@@ -13,12 +13,8 @@ import { exportDebateToPDF, exportToHTML, DebateExportData } from '@/lib/utils/e
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
 import { IconForum, IconScale, IconPerson, IconSettings, TypeIcon } from '@/components/ui/Icons';
 
-/*
- * Decisión 3 — un color por hablante.
- * El teal es el acento de la app, así que la primera voz lo hereda y el resto
- * toma tonos distinguibles entre sí y sobre el fondo oscuro (todos por encima
- * de 7:1). El moderador queda deliberadamente en gris: comenta, no debate.
- */
+/* Un color por hablante, todos por encima de 7:1 sobre el fondo. El moderador
+   va en gris: comenta, no debate. */
 const SPEAKER_COLORS = ['#2dd4bf', '#e0b252', '#9ec1f7', '#d5a8ef'];
 
 function speakerColor(participantId: string, participantIds: string[]): string {
@@ -752,14 +748,8 @@ export default function DebateChat({ onClose }: DebateChatProps) {
         </div>
 
         {/*
-          Decisión 3 — Formato guion.
-          Antes los participantes compartían avatar gris, burbuja, color y lado:
-          en un debate, saber quién habla de un vistazo es LA función, y era lo
-          único que no estaba resuelto. (El sistema de color por hablante ya
-          existía en el código, pero solo se aplicaba al moderador.)
-          Ahora el nombre va en una columna a la izquierda, en versalitas y con
-          color propio por participante: se escanea vertical y escala igual con
-          dos que con cuatro voces, sin cambiar de diseño.
+          Formato guion: el nombre en una columna a la izquierda, en versalitas
+          y con color propio, para escanear quién habla en vertical.
         */}
         <div className="flex-1 overflow-y-auto px-3 md:px-8 py-2">
           {currentSession.messages.map((message) => {
@@ -792,7 +782,7 @@ export default function DebateChat({ onClose }: DebateChatProps) {
                 key={message.id}
                 className="flex flex-col md:flex-row gap-1 md:gap-6 py-4 md:py-5 border-b border-gray-800 last:border-b-0"
               >
-                {/* Columna de nombre — en móvil pasa arriba del texto */}
+                {/* Columna de nombre: en móvil pasa arriba del texto */}
                 <div className="w-full md:w-[150px] flex-shrink-0 md:text-right md:pt-0.5">
                   <span
                     className="text-[11px] font-bold uppercase tracking-[0.09em]"

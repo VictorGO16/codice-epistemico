@@ -3,7 +3,7 @@
 import React from 'react';
 
 /**
- * Códice — sistema de iconos de línea (1.25px stroke)
+ * Códice: sistema de iconos de línea (1.25px stroke)
  * Sin emojis. Todos los iconos heredan currentColor y se controlan con tamaño/clase.
  */
 type IconProps = {
@@ -40,7 +40,7 @@ export const IconForum = ({ size, className, strokeWidth, ...rest }: IconProps) 
 );
 
 export const IconParadigm = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Compás abierto — análisis paradigmático
+  // Compás abierto: análisis paradigmático
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <circle cx="12" cy="5" r="1.4" />
     <path d="M12 6.4v3" />
@@ -59,7 +59,7 @@ export const IconBook = ({ size, className, strokeWidth, ...rest }: IconProps) =
 );
 
 export const IconMind = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Órbita — psicología (sin cerebro literal)
+  // Órbita: psicología (sin cerebro literal)
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <ellipse cx="12" cy="12" rx="9" ry="4" />
     <ellipse cx="12" cy="12" rx="4" ry="9" transform="rotate(45 12 12)" />
@@ -77,7 +77,7 @@ export const IconMethod = ({ size, className, strokeWidth, ...rest }: IconProps)
 );
 
 export const IconDialogue = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Diálogo (ex-oráculo) — voces enfrentadas
+  // Diálogo: voces enfrentadas
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <path d="M4 6h9a2 2 0 012 2v4a2 2 0 01-2 2H8l-4 3V6z" />
     <path d="M20 18h-7" />
@@ -137,7 +137,7 @@ export const IconWarning = ({ size, className, strokeWidth, ...rest }: IconProps
 );
 
 export const IconScale = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Balanza — moderador / argumentos
+  // Balanza: moderador / argumentos
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <path d="M12 4v16" />
     <path d="M5 8h14" />
@@ -164,7 +164,7 @@ export const IconLink = ({ size, className, strokeWidth, ...rest }: IconProps) =
 );
 
 export const IconLightbulb = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Concepto / idea — sin literal lightbulb
+  // Concepto o idea: sin literal lightbulb
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <circle cx="12" cy="10" r="5" />
     <path d="M9 18h6" />
@@ -180,7 +180,7 @@ export const IconEye = ({ size, className, strokeWidth, ...rest }: IconProps) =>
 );
 
 export const IconStructure = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Pilares — estructura / paradigma
+  // Pilares: estructura / paradigma
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <path d="M3 6h18" />
     <path d="M5 6v14" />

@@ -301,10 +301,6 @@ export default function ParadigmLab() {
                         });
                       }
                     }}
-                    /* Decisión 5 — un solo acento: el morado de esta sección
-                       (y el naranja del debate) competían con el teal sin
-                       resolver ningún problema que el título y el icono no
-                       resolvieran ya. */
                     className={`p-4 rounded-lg border-2 transition-colors duration-200 text-left ${
                       selectedParadigm === paradigm.id
                         ? 'border-teal-400 bg-teal-400/15 text-white'
@@ -419,16 +415,7 @@ export default function ParadigmLab() {
               </div>
             </div>
 
-            {/*
-              Decisión 4 — Historia de esta pantalla:
-              (1) tres columnas de ~28 caracteres por línea con párrafos de 300
-                  palabras: tres scrolls paralelos e ilegibles;
-              (2) todo apilado a 68ch: legible pero un muro de texto, con el
-                  lado derecho muerto al ocultar los paneles y sin forma de
-                  moverse entre secciones que no fuera scrollear.
-              Ahora: índice fijo que sigue la lectura + secciones plegables.
-              El ancho sobrante se ocupa con navegación, no con vacío.
-            */}
+            {/* Índice fijo que sigue la lectura, más secciones plegables. */}
             <div className="grid gap-8 xl:gap-12 grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)]">
 
               {/* Índice: fijo en escritorio, tiras horizontales en móvil */}

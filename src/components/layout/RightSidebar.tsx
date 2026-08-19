@@ -474,14 +474,8 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                       {conceptCategoryLabel(concept.category)}
                     </div>
                   </button>
-{/*
-                    Decisión 1 — Aquí se repetían, una por una, las mismas
-                    pestañas (Contexto · Psicología · Metodología · Diálogo) que
-                    ya están en el centro de la pantalla, con el mismo estado
-                    activo: dos controles para el mismo estado, y 250 px fijos
-                    gastados en duplicar. Este panel deja de ser navegación y
-                    pasa a ser contexto: la ficha del concepto abierto.
-                  */}
+                  {/* Este panel es contexto, no navegación: la ficha del
+                      concepto abierto. */}
                   <dl className="px-2 space-y-0 text-sm">
                     <div className="flex items-center justify-between py-2 border-b border-gray-800">
                       <dt className="text-[#9aa6b8]">Tipo</dt>
