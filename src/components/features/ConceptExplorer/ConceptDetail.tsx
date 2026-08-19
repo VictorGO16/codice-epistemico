@@ -73,12 +73,20 @@ export default function ConceptDetail() {
     (conn) => conn.source === currentConcept || conn.target === currentConcept
   );
 
+  /*
+   * Decisión 2 — Las pestañas son las tres CARAS DEL CONTENIDO.
+   * "Diálogo" salió de aquí: no es una faceta del texto, es una herramienta,
+   * y mezclarla con las otras tres hacía que la fila significara dos cosas.
+   * Ahora es una acción primaria en la cabecera, disponible desde cualquier
+   * pestaña en lugar de estar escondida en la cuarta posición.
+   */
   const tabs: { id: string; label: string; Icon: ComponentType<IconProps> }[] = [
     { id: 'context',     label: 'Contexto',    Icon: IconBook },
     { id: 'psychology',  label: 'Psicología',  Icon: IconMind },
     { id: 'methodology', label: 'Metodología', Icon: IconMethod },
-    { id: 'oracle',      label: 'Diálogo',     Icon: IconDialogue },
   ];
+
+  const canDialogue = concept.type === 'philosopher' || concept.type === 'scientist';
 
   const getTypeLabel = (type: string) => {
     switch (type) {
@@ -101,7 +109,12 @@ export default function ConceptDetail() {
   };
 
   return (
-    <div className="w-full mx-auto">
+    /*
+      Decisión 1 — Antes el artículo ocupaba todo el ancho disponible: a 1920 px
+      las líneas llegaban a 145 caracteres (el rango legible es 65–75).
+      max-w-4xl acota la columna; el texto en sí queda en 68ch vía .rich-content.
+    */
+    <div className="w-full max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-gray-700 relative">
         <div className="flex items-start gap-4 mb-4">
@@ -122,22 +135,51 @@ export default function ConceptDetail() {
             </div>
           </div>
 
-          {/* Favorite Button */}
-          <button
-            onClick={() => toggleFavorite(concept.id)}
-            className={`p-3 rounded-full transition-all duration-200 hover:scale-110 ${isFavorite(concept.id)
-              ? 'text-red-400 hover:text-red-300 bg-red-500/10'
-              : 'text-gray-400 hover:text-red-400 hover:bg-red-500/10'
-              }`}
-            title={isFavorite(concept.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-          >
-            {isFavorite(concept.id) ? (
-              <HeartSolidIcon className="w-6 h-6" />
-            ) : (
-              <HeartIcon className="w-6 h-6" />
+          <div className="flex items-center gap-2 shrink-0">
+            {/*
+              Acción primaria única de la pantalla (Decisión 5: un solo acento).
+              Texto oscuro sobre el relleno teal: 9.4:1 en vez de los 2.42:1
+              que daba el texto blanco.
+            */}
+            {canDialogue && (
+              <button
+                onClick={() => startSession(concept.id, concept.name)}
+                className="hidden sm:flex items-center gap-2 bg-teal-400 hover:bg-teal-300 text-[#04211f] font-semibold px-4 py-2.5 rounded-lg transition-colors"
+              >
+                <IconDialogue size={17} className="shrink-0" />
+                Dialogar con {concept.name.split(' ').slice(-1)[0]}
+              </button>
             )}
-          </button>
+
+            {/* Favorite Button */}
+            <button
+              onClick={() => toggleFavorite(concept.id)}
+              className={`p-3 rounded-full transition-colors duration-200 ${isFavorite(concept.id)
+                ? 'text-red-400 hover:text-red-300 bg-red-500/10'
+                : 'text-gray-400 hover:text-red-400 hover:bg-red-500/10'
+                }`}
+              title={isFavorite(concept.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+              aria-pressed={isFavorite(concept.id)}
+            >
+              {isFavorite(concept.id) ? (
+                <HeartSolidIcon className="w-6 h-6" />
+              ) : (
+                <HeartIcon className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* En móvil la acción primaria va a ancho completo, bajo la cabecera */}
+        {canDialogue && (
+          <button
+            onClick={() => startSession(concept.id, concept.name)}
+            className="sm:hidden w-full flex items-center justify-center gap-2 bg-teal-400 hover:bg-teal-300 text-[#04211f] font-semibold px-4 py-3 rounded-lg transition-colors"
+          >
+            <IconDialogue size={17} className="shrink-0" />
+            Dialogar con {concept.name}
+          </button>
+        )}
       </div>
 
       {/* Tabs */}
@@ -167,8 +209,13 @@ export default function ConceptDetail() {
         {activeTab === 'context' && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-xl font-semibold text-teal-400 mb-6 flex items-center gap-2.5">
-                <IconLightbulb size={18} className="text-teal-400 shrink-0" />
+              {/*
+                Decisión 5 — Los encabezados de sección dejan de ser de color:
+                antes "Idea Central" y el enlace "David Hume" eran ambos teal,
+                así que no se distinguía un título de algo pulsable.
+              */}
+              <h2 className="section-label mb-5 flex items-center gap-2.5">
+                <IconLightbulb size={16} className="text-teal-400 shrink-0" />
                 Idea Central
               </h2>
               <EnhancedRichContent content={concept.coreIdea} />
@@ -176,8 +223,8 @@ export default function ConceptDetail() {
 
             {relatedConnections.length > 0 && (
               <div>
-                <h2 className="text-xl font-semibold text-blue-400 mb-6 flex items-center gap-2.5">
-                  <IconLink size={18} className="text-blue-400 shrink-0" />
+                <h2 className="section-label mb-5 flex items-center gap-2.5">
+                  <IconLink size={16} className="text-teal-400 shrink-0" />
                   Relaciones Conceptuales
                 </h2>
                 <div className="grid gap-4">
@@ -207,7 +254,7 @@ export default function ConceptDetail() {
                             >
                               {relatedConcept.name}
                             </button>
-                            <p className="text-gray-300 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed measure">
                               {connection.description}
                             </p>
                           </div>
@@ -223,8 +270,8 @@ export default function ConceptDetail() {
 
         {activeTab === 'psychology' && (
           <div>
-            <h2 className="text-xl font-semibold text-purple-400 mb-6 flex items-center gap-2.5">
-              <IconMind size={18} className="text-purple-400 shrink-0" />
+            <h2 className="section-label mb-5 flex items-center gap-2.5">
+              <IconMind size={16} className="text-teal-400 shrink-0" />
               Conexiones con la Psicología
             </h2>
             {concept.psychologyLink ? (
@@ -242,8 +289,8 @@ export default function ConceptDetail() {
 
         {activeTab === 'methodology' && (
           <div>
-            <h2 className="text-xl font-semibold text-orange-400 mb-6 flex items-center gap-2.5">
-              <IconMethod size={18} className="text-orange-400 shrink-0" />
+            <h2 className="section-label mb-5 flex items-center gap-2.5">
+              <IconMethod size={16} className="text-teal-400 shrink-0" />
               Metodología de Investigación
             </h2>
             {concept.methodologyLink ? (
@@ -273,7 +320,7 @@ export default function ConceptDetail() {
                 </p>
                 <button
                   onClick={() => startSession(concept.id, concept.name)}
-                  className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg"
+                  className="bg-teal-400 hover:bg-teal-300 text-[#04211f] font-semibold py-3 px-8 rounded-lg transition-colors duration-200"
                 >
                   Iniciar Conversación
                 </button>

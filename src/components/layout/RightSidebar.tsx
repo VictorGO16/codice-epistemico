@@ -78,6 +78,29 @@ const mainNavigationItems: NavigationItem[] = [
   }
 ];
 
+function conceptTypeLabel(type: string): string {
+  switch (type) {
+    case 'philosopher': return 'Filósofo';
+    case 'scientist':   return 'Científico';
+    case 'concept':     return 'Concepto';
+    case 'method':      return 'Método';
+    default:            return type;
+  }
+}
+
+function conceptCategoryLabel(category: string): string {
+  switch (category) {
+    case 'ancient':        return 'Filosofía antigua';
+    case 'pre-columbian':  return 'Pre-colombina';
+    case 'modernity':      return 'Modernidad';
+    case '19th_century':   return 'Siglo XIX';
+    case '20th_century':   return 'Siglo XX';
+    case 'contemporary':   return 'Contemporáneo';
+    case 'methods':        return 'Métodos';
+    default:               return category;
+  }
+}
+
 const conceptNavigationItems: NavigationItem[] = [
   {
     id: 'context',
@@ -396,113 +419,32 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                     {concept.name}
                   </div>
                   <div className="text-xs text-gray-500 px-2 mb-3">
-                    {concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`} • {concept.category}
+                    {conceptCategoryLabel(concept.category)}
                   </div>
-                  {conceptNavigationItems.map((item) => {
-                    const Icon = item.icon;
-                    const sessionsOfType = getSessionsByType(item.id);
-                    
-                    return (
-                      <div key={item.id} className="space-y-2">
-                        {/* Concept Navigation Button */}
-                        <div className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${
-                          activeTab === item.id
-                            ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
-                            : 'bg-gray-800/50 border-gray-700/50 text-gray-300 hover:bg-gray-700/50 hover:border-gray-600'
-                        }`}>
-                          <button
-                            onClick={() => handleNavigation(item.id)}
-                            className="flex items-center gap-3 flex-1 text-left hover:transform hover:scale-[1.02] transition-transform"
-                          >
-                            <Icon className="w-5 h-5 flex-shrink-0" />
-                            <div className="flex-1">
-                              <div className="font-medium">{item.label}</div>
-                              <div className="text-xs opacity-75">{item.description}</div>
-                            </div>
-                          </button>
-                        </div>
-
-                        {/* Active Sessions */}
-                        {sessionsOfType.length > 0 && (
-                          <div className="ml-8 space-y-1">
-                            <div className="text-xs text-gray-500 font-medium">
-                              Sesiones ({sessionsOfType.length})
-                            </div>
-                            {sessionsOfType.map((session) => (
-                              <div
-                                key={session.id}
-                                className={`relative flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
-                                  activeSessionId === session.id
-                                    ? 'bg-teal-500/10 border-teal-500/30 text-teal-400'
-                                    : 'bg-gray-800/30 border-gray-700/30 text-gray-400 hover:bg-gray-700/30'
-                                }`}
-                              >
-                                <button
-                                  onClick={() => {
-                                    switchToSession(session.id);
-                                    handleNavigation(session.type);
-                                    
-                                    // Restaurar el estado específico según el tipo de sesión
-                                    if (session.type === 'debate' && session.data) {
-                                      // Restaurar el debate desde la sesión guardada
-                                      if (session.data.topic && session.data.participants && session.data.messages) {
-                                        const restoredSession = {
-                                          id: session.data.sessionId as string,
-                                          topic: session.data.topic as string,
-                                          participantIds: session.data.participants as string[],
-                                          messages: session.data.messages as DebateMessage[],
-                                          isActive: false,
-                                          currentSpeaker: 0,
-                                          createdAt: new Date(session.createdAt),
-                                          lastActivity: new Date(session.data.lastActivity as string || session.lastAccessed),
-                                        };
-                                        
-                                        restoreSession(restoredSession, session.data.analysis as DebateAnalysis);
-                                        setDebateOpen(true);
-                                      }
-                                    }
-                                  }}
-                                  className="flex-1 text-left text-sm truncate"
-                                >
-                                  {session.name}
-                                </button>
-                                
-                                <div className="relative">
-                                  <button
-                                    onClick={() => setShowSessionMenu(
-                                      showSessionMenu === session.id ? null : session.id
-                                    )}
-                                    className="p-1 text-gray-500 hover:text-gray-300 transition-colors"
-                                  >
-                                    <EllipsisVerticalIcon className="w-3 h-3" />
-                                  </button>
-                                  
-                                  {showSessionMenu === session.id && (
-                                    <div className="absolute right-0 top-full mt-1 w-32 bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-10">
-                                      <button
-                                        onClick={() => handleSessionAction('duplicate', session.id)}
-                                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                      >
-                                        <DocumentDuplicateIcon className="w-3 h-3" />
-                                        Duplicar
-                                      </button>
-                                      <button
-                                        onClick={() => handleSessionAction('delete', session.id)}
-                                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors"
-                                      >
-                                        <TrashIcon className="w-3 h-3" />
-                                        Eliminar
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+{/*
+                    Decisión 1 — Aquí se repetían, una por una, las mismas
+                    pestañas (Contexto · Psicología · Metodología · Diálogo) que
+                    ya están en el centro de la pantalla, con el mismo estado
+                    activo: dos controles para el mismo estado, y 250 px fijos
+                    gastados en duplicar. Este panel deja de ser navegación y
+                    pasa a ser contexto: la ficha del concepto abierto.
+                  */}
+                  <dl className="px-2 space-y-0 text-sm">
+                    <div className="flex items-center justify-between py-2 border-b border-gray-800">
+                      <dt className="text-[#9aa6b8]">Tipo</dt>
+                      <dd className="text-gray-200">{conceptTypeLabel(concept.type)}</dd>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-gray-800">
+                      <dt className="text-[#9aa6b8]">Año</dt>
+                      <dd className="text-gray-200 tabular-nums">
+                        {concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between py-2 border-b border-gray-800">
+                      <dt className="text-[#9aa6b8]">Periodo</dt>
+                      <dd className="text-gray-200 text-right">{conceptCategoryLabel(concept.category)}</dd>
+                    </div>
+                  </dl>
                 </div>
               )}
             </div>
@@ -510,9 +452,9 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
 
           {/* Footer */}
           <div className="p-4 border-t border-gray-700">
-            <div className="text-xs text-gray-500 text-center">
-              <div>Sesiones paralelas</div>
-              <div>& Navegación rápida</div>
+            <div className="text-xs text-[#9aa6b8] text-center">
+              <div>Ficha del concepto</div>
+              <div>& sesiones abiertas</div>
             </div>
           </div>
         </div>
