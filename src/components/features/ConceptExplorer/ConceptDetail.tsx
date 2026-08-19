@@ -9,8 +9,10 @@ import { useDebateStore } from '@/lib/stores/debate-store';
 import { useFavoritesStore } from '@/lib/stores/favorites-store';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { conceptConnections } from '@/lib/data/connections';
+import { getExposition } from '@/lib/data/corpus';
 import { TabId } from '@/types';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
+import GlossaryText from '@/components/ui/GlossaryText';
 import OracleChat from '@/components/features/Oracle/OracleChat';
 import DebateSetup from '@/components/features/Debate/DebateSetup';
 import DebateChat from '@/components/features/Debate/DebateChat';
@@ -32,7 +34,7 @@ import {
 type IconProps = { size?: number | string; className?: string };
 
 export default function ConceptDetail() {
-  const { currentConcept } = useConceptStore();
+  const { currentConcept, setCurrentConcept } = useConceptStore();
   const { activeTab, setActiveTab } = useUIStore();
   const { toggleFavorite, isFavorite } = useFavoritesStore();
   const { startSession, isOracleOpen } = useOracleStore();
@@ -69,17 +71,14 @@ export default function ConceptDetail() {
     );
   }
 
+  const exposition = getExposition(currentConcept);
+
   const relatedConnections = conceptConnections.filter(
     (conn) => conn.source === currentConcept || conn.target === currentConcept
   );
 
-  /*
-   * Decisión 2 — Las pestañas son las tres CARAS DEL CONTENIDO.
-   * "Diálogo" salió de aquí: no es una faceta del texto, es una herramienta,
-   * y mezclarla con las otras tres hacía que la fila significara dos cosas.
-   * Ahora es una acción primaria en la cabecera, disponible desde cualquier
-   * pestaña en lugar de estar escondida en la cuarta posición.
-   */
+  /* Las tres caras del contenido. El diálogo no es una de ellas: es una
+     acción de la cabecera. */
   const tabs: { id: string; label: string; Icon: ComponentType<IconProps> }[] = [
     { id: 'context',     label: 'Contexto',    Icon: IconBook },
     { id: 'psychology',  label: 'Psicología',  Icon: IconMind },
@@ -108,12 +107,8 @@ export default function ConceptDetail() {
     }
   };
 
+  /* max-w-4xl acota la columna; el texto queda en 68ch vía .rich-content. */
   return (
-    /*
-      Decisión 1 — Antes el artículo ocupaba todo el ancho disponible: a 1920 px
-      las líneas llegaban a 145 caracteres (el rango legible es 65–75).
-      max-w-4xl acota la columna; el texto en sí queda en 68ch vía .rich-content.
-    */
     <div className="w-full max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-gray-700 relative">
@@ -136,11 +131,6 @@ export default function ConceptDetail() {
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            {/*
-              Acción primaria única de la pantalla (Decisión 5: un solo acento).
-              Texto oscuro sobre el relleno teal: 9.4:1 en vez de los 2.42:1
-              que daba el texto blanco.
-            */}
             {canDialogue && (
               <button
                 onClick={() => startSession(concept.id, concept.name)}
@@ -208,18 +198,113 @@ export default function ConceptDetail() {
       <div className="bg-gray-800/30 rounded-xl p-6 md:p-8 border border-gray-700/50">
         {activeTab === 'context' && (
           <div className="space-y-8">
-            <div>
-              {/*
-                Decisión 5 — Los encabezados de sección dejan de ser de color:
-                antes "Idea Central" y el enlace "David Hume" eran ambos teal,
-                así que no se distinguía un título de algo pulsable.
-              */}
-              <h2 className="section-label mb-5 flex items-center gap-2.5">
-                <IconLightbulb size={16} className="text-teal-400 shrink-0" />
-                Idea Central
-              </h2>
-              <EnhancedRichContent content={concept.coreIdea} />
-            </div>
+            {/* La ficha va de lo que se retiene en diez segundos a lo que
+                exige lectura sostenida. */}
+            {exposition ? (
+              <>
+                <div>
+                  <h2 className="section-label mb-3">Responde a</h2>
+                  <p className="text-[#9aa6b8] leading-relaxed measure">
+                    <GlossaryText text={exposition.problem} />
+                  </p>
+                </div>
+
+                <div>
+                  <h2 className="section-label mb-4 flex items-center gap-2.5">
+                    <IconLightbulb size={16} className="text-teal-400 shrink-0" />
+                    Tesis
+                  </h2>
+                  <p className="font-display text-xl md:text-[22px] leading-[1.5] text-white measure">
+                    <GlossaryText text={exposition.thesis} />
+                  </p>
+                </div>
+
+                <div>
+                  <h2 className="section-label mb-4">Nociones centrales</h2>
+                  <dl className="space-y-4 measure">
+                    {exposition.keyNotions.map((notion) => (
+                      <div key={notion.term} className="border-l-2 border-teal-400/40 pl-4">
+                        <dt className="text-teal-300 font-medium text-[15px] mb-1">
+                          {notion.conceptId ? (
+                            <button
+                              onClick={() => setCurrentConcept(notion.conceptId!)}
+                              className="hover:underline underline-offset-4"
+                            >
+                              {notion.term} →
+                            </button>
+                          ) : (
+                            notion.term
+                          )}
+                        </dt>
+                        <dd className="text-gray-300 text-[15px] leading-relaxed">
+                          <GlossaryText text={notion.gloss} />
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+
+                <div>
+                  <h2 className="section-label mb-4">Desarrollo</h2>
+                  <EnhancedRichContent
+                    content={exposition.development}
+                    className="rich-content--justified"
+                  />
+                </div>
+
+                {exposition.objections && exposition.objections.length > 0 && (
+                  <div>
+                    <h2 className="section-label mb-4">Objeciones</h2>
+                    <div className="space-y-3 measure">
+                      {exposition.objections.map((objection, i) => (
+                        <div key={i} className="bg-gray-900/50 border border-white/10 rounded-lg p-4">
+                          <div className="text-[13px] font-medium text-[#e0b252] mb-1.5">
+                            {objection.fromId && philosophicalData[objection.fromId] ? (
+                              <button
+                                onClick={() => setCurrentConcept(objection.fromId!)}
+                                className="hover:underline underline-offset-4"
+                              >
+                                {objection.from} →
+                              </button>
+                            ) : (
+                              objection.from
+                            )}
+                          </div>
+                          <p className="text-gray-300 text-[15px] leading-relaxed">{objection.claim}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {exposition.works && exposition.works.length > 0 && (
+                  <div>
+                    <h2 className="section-label mb-4">Obras</h2>
+                    <ul className="space-y-2 measure">
+                      {exposition.works.map((work) => (
+                        <li key={work.title} className="flex gap-3 text-[15px]">
+                          <span className="text-[#9aa6b8] tabular-nums shrink-0 w-16">
+                            {work.year < 0 ? `${Math.abs(work.year)} a.C.` : work.year}
+                          </span>
+                          <span>
+                            <em className="text-gray-200 not-italic font-medium">{work.title}</em>
+                            {work.note && <span className="text-[#9aa6b8]">. {work.note}</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div>
+                <h2 className="section-label mb-5 flex items-center gap-2.5">
+                  <IconLightbulb size={16} className="text-teal-400 shrink-0" />
+                  Idea Central
+                </h2>
+                <EnhancedRichContent content={concept.coreIdea} />
+              </div>
+            )}
 
             {relatedConnections.length > 0 && (
               <div>

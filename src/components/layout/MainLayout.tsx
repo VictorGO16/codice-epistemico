@@ -9,6 +9,7 @@ import RightSidebarToggle from '@/components/ui/RightSidebarToggle';
 import NotificationContainer from './NotificationContainer';
 import ParticleBackground from '@/components/ui/ParticleBackground';
 import SettingsPanel from '@/components/ui/SettingsPanel';
+import GlossaryPopover from '@/components/ui/GlossaryPopover';
 import SidebarCollapseButton from '@/components/ui/SidebarCollapseButton';
 import CollapsedSidebarIndicator from '@/components/ui/CollapsedSidebarIndicator';
 
@@ -85,7 +86,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       */}
       <div className="flex h-full pt-16 md:pt-0 relative z-10 min-h-0">
 
-        {/* Left sidebar — shrink-0 prevents it from collapsing under flex pressure */}
+        {/* Left sidebar: shrink-0 prevents it from collapsing under flex pressure */}
         {sidebarCollapsed ? (
           <div className="hidden md:block shrink-0">
             <CollapsedSidebarIndicator
@@ -111,7 +112,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         {/*
           Main content area.
           flex-1: fills remaining horizontal space.
-          min-w-0: critical — without this, a flex-1 item cannot shrink
+          min-w-0 is critical: without this, a flex-1 item cannot shrink
                    below its content width when both sidebars are open.
           overflow-hidden: clips content at the main boundary.
         */}
@@ -123,7 +124,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </div>
         </main>
 
-        {/* Right sidebar — shrink-0 prevents collapsing */}
+        {/* Right sidebar: shrink-0 prevents collapsing */}
         {rightSidebarCollapsed ? (
           <div className="hidden lg:block shrink-0">
             <CollapsedSidebarIndicator
@@ -153,6 +154,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       />
       <NotificationContainer />
       <SettingsPanel />
+      <GlossaryPopover />
     </div>
   );
 }

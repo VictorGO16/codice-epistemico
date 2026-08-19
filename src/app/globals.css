@@ -122,6 +122,33 @@ body {
   }
 }
 
+/* Término con definición al vuelo. Subrayado punteado en lugar de color de
+   enlace: señala que hay algo debajo sin competir con los enlaces reales. */
+.glossary-term {
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: help;
+  text-decoration: underline dotted;
+  text-decoration-color: rgb(45 212 191 / 0.55);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+
+.glossary-term:hover,
+.glossary-term:focus-visible {
+  color: var(--color-primary);
+  text-decoration-color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* Encabezado de sección: versalitas neutras.
    Antes cada sección usaba un color distinto (teal, azul, morado, naranja),
    con lo que un título y un enlace eran del mismo color. */

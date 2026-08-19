@@ -29,6 +29,13 @@ export default function EnhancedRichContent({ content, className = '' }: Enhance
   const processedContent = useMemo(() => {
     // First, handle LaTeX math expressions
     let processedText = content;
+
+    // Términos de glosario: [[clave]] o [[clave|texto visible]]
+    processedText = processedText.replace(
+      /\[\[([a-z0-9_-]+)(?:\|([^\]]+))?\]\]/gi,
+      (_, key: string, label?: string) =>
+        `<button type="button" class="glossary-term" data-glossary="${key}">${label ?? key}</button>`,
+    );
     
     // Handle inline math: $...$
     processedText = processedText.replace(/\$([^$]+)\$/g, (_, formula) => {
