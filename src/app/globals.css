@@ -104,6 +104,24 @@ body {
   margin-bottom: 0.85em;
 }
 
+/* Texto justificado.
+   En español, justificar sin partición de palabras abre rios blancos entre
+   palabras largas ("epistemologicamente", "metodologicamente"). hyphens: auto
+   usa el diccionario del idioma declarado en <html lang="es">. */
+.rich-content--justified :where(p) {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  text-wrap: pretty;
+}
+
+/* Solo se justifica con columna ancha: por debajo de eso el justificado abre
+   huecos entre palabras en lugar de alinear. */
+@media (min-width: 1024px) {
+  .rich-content--justified :where(p) {
+    text-align: justify;
+  }
+}
+
 /* Encabezado de sección: versalitas neutras.
    Antes cada sección usaba un color distinto (teal, azul, morado, naranja),
    con lo que un título y un enlace eran del mismo color. */

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { ComponentType } from 'react';
-import { PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+import { PlayIcon, DocumentTextIcon, LightBulbIcon, CogIcon, ClipboardDocumentListIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import {
   IconParadigm, IconMethod, IconTarget, IconEye,
   IconBook, IconStructure, IconFlex,
@@ -68,6 +68,49 @@ export default function ParadigmLab() {
   const [objectOfStudy, setObjectOfStudy] = useState<string>('');
   const [analysis, setAnalysis] = useState<ParadigmAnalysis | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [activeSection, setActiveSection] = useState<string>('sintesis');
+  const sectionRefs = React.useRef<Record<string, HTMLElement | null>>({});
+
+  const sections = analysis
+    ? [
+        { id: 'sintesis',       label: 'Síntesis',                   Icon: null,                        content: analysis.summary },
+        { id: 'ontologico',     label: 'Ontológico',                 Icon: LightBulbIcon,               content: analysis.ontological },
+        { id: 'epistemologico', label: 'Epistemológico',             Icon: DocumentTextIcon,            content: analysis.epistemological },
+        { id: 'metodologico',   label: 'Metodológico',               Icon: CogIcon,                     content: analysis.methodological },
+        { id: 'propuesta',      label: 'Propuesta de investigación', Icon: ClipboardDocumentListIcon,   content: analysis.researchProposal },
+      ].filter((section) => Boolean(section.content))
+    : [];
+
+  const toggleSection = (id: string) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  /* El índice sigue a la lectura. El scroll ocurre en un contenedor interno,
+     pero observar contra el viewport funciona igual porque las secciones se
+     desplazan dentro de él. */
+  React.useEffect(() => {
+    if (!analysis) return;
+    const nodes = sections.map((s) => sectionRefs.current[s.id]).filter(Boolean) as HTMLElement[];
+    if (!nodes.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible?.target.id) setActiveSection(visible.target.id);
+      },
+      { rootMargin: '-10% 0px -70% 0px', threshold: 0 },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [analysis, collapsed]);  // eslint-disable-line react-hooks/exhaustive-deps
   
   const { analyzeWithParadigm, isLoading } = useParadigmLab();
   const { addNotification } = useUIStore();
@@ -176,8 +219,6 @@ export default function ParadigmLab() {
   const handleExportHTML = () => {
     if (!analysis || !selectedParadigm || !objectOfStudy) return;
 
-    const paradigmName = paradigms.find(p => p.id === selectedParadigm)?.name || selectedParadigm;
-    
     // Markdown: exportToHTML lo convierte en un documento con jerarquía real.
     let content = `## Síntesis\n\n${analysis.summary}\n\n`;
     content += `## Ontológico\n\n${analysis.ontological}\n\n`;
@@ -204,22 +245,28 @@ export default function ParadigmLab() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8">
+    /* Sin fondo opaco: el lienzo de partículas vive detrás (z-0) y un
+       gradiente sólido lo tapaba por completo. */
+    <div className="min-h-full py-8">
       <div className="w-full mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <IconParadigm size={44} className="text-teal-400" />
-            <h1 className="font-display text-4xl font-bold text-white tracking-tight">Análisis Paradigmático</h1>
+        {/* La portada solo tiene sentido antes de generar: con resultados en
+            pantalla repetia el titulo de la ficha y empujaba el contenido
+            fuera de la vista. */}
+        {!analysis && (
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <IconParadigm size={44} className="text-teal-400" />
+              <h1 className="font-display text-4xl font-bold text-white tracking-tight">Análisis Paradigmático</h1>
+            </div>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Analiza cualquier objeto de estudio desde diferentes paradigmas filosóficos y científicos
+            </p>
           </div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Analiza cualquier objeto de estudio desde diferentes paradigmas filosóficos y científicos
-          </p>
-        </div>
+        )}
 
         {!analysis ? (
           /* Setup Form */
-          <div className="bg-gray-900 rounded-xl border border-gray-700 p-8">
+          <div className="bg-gray-900/55 backdrop-blur-sm rounded-xl border border-white/10 p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Configurar Análisis</h2>
             
             {/* Paradigm Selection */}
@@ -326,9 +373,11 @@ export default function ParadigmLab() {
           </div>
         ) : (
           /* Analysis Results */
-          <div className="space-y-6">
+          /* max-w + mx-auto: con los paneles laterales plegados el bloque se
+             centra en lugar de dejar todo el espacio muerto a la derecha. */
+          <div className="space-y-6 mx-auto w-full max-w-[1120px]">
             {/* Header with Reset Button */}
-            <div className="flex items-center justify-between bg-gray-900 rounded-xl border border-gray-700 p-6">
+            <div className="flex items-center justify-between bg-gray-900/55 backdrop-blur-sm rounded-xl border border-white/10 p-6">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">Análisis Paradigmático</h2>
                 <p className="text-gray-300">
@@ -358,72 +407,93 @@ export default function ParadigmLab() {
             </div>
 
             {/*
-              Decisión 4 — Antes esto eran tres columnas de ~28 caracteres por
-              línea con párrafos de 300 palabras: tres scrolls verticales
-              paralelos que además no estaban alineados por tema, así que la
-              comparación que la rejilla prometía no ocurría.
-              Ahora: síntesis arriba, secciones apiladas a ancho de lectura y un
-              índice de saltos para no perder el "se ve todo de un golpe".
+              Decisión 4 — Historia de esta pantalla:
+              (1) tres columnas de ~28 caracteres por línea con párrafos de 300
+                  palabras: tres scrolls paralelos e ilegibles;
+              (2) todo apilado a 68ch: legible pero un muro de texto, con el
+                  lado derecho muerto al ocultar los paneles y sin forma de
+                  moverse entre secciones que no fuera scrollear.
+              Ahora: índice fijo que sigue la lectura + secciones plegables.
+              El ancho sobrante se ocupa con navegación, no con vacío.
             */}
+            <div className="grid gap-8 xl:gap-12 lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)]">
 
-            {/* Índice de saltos */}
-            <nav className="flex flex-wrap gap-2" aria-label="Secciones del análisis">
-              {[
-                { id: 'sintesis',      label: 'Síntesis' },
-                { id: 'ontologico',    label: 'Ontológico' },
-                { id: 'epistemologico', label: 'Epistemológico' },
-                { id: 'metodologico',  label: 'Metodológico' },
-                { id: 'propuesta',     label: 'Propuesta' },
-              ].map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className="text-xs px-3 py-1.5 rounded-full border border-gray-700 text-[#9aa6b8] hover:text-teal-300 hover:border-teal-400/50 transition-colors"
+              {/* Índice: fijo en escritorio, tiras horizontales en móvil */}
+              <nav aria-label="Secciones del análisis" className="lg:sticky lg:top-4 lg:self-start">
+                <div className="section-label mb-3 hidden lg:block">Contenido</div>
+                <ul className="flex lg:flex-col gap-2 lg:gap-0 overflow-x-auto scrollbar-hide lg:overflow-visible">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <a
+                        href={`#${section.id}`}
+                        aria-current={activeSection === section.id ? 'true' : undefined}
+                        className={`
+                          block whitespace-nowrap lg:whitespace-normal rounded-lg lg:rounded-none
+                          border lg:border-0 lg:border-l-2 px-3 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-[13px]
+                          transition-colors
+                          ${activeSection === section.id
+                            ? 'border-teal-400/50 lg:border-l-teal-400 bg-teal-400/10 lg:bg-transparent text-teal-300 font-medium'
+                            : 'border-gray-700 lg:border-l-gray-700 text-[#9aa6b8] hover:text-white lg:hover:border-l-gray-500'}
+                        `}
+                      >
+                        {section.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => setCollapsed(collapsed.size ? new Set() : new Set(sections.map((x) => x.id)))}
+                  className="hidden lg:block mt-5 text-xs text-[#9aa6b8] hover:text-teal-300 transition-colors"
                 >
-                  {s.label}
-                </a>
-              ))}
-            </nav>
+                  {collapsed.size ? 'Desplegar todo' : 'Plegar todo'}
+                </button>
+              </nav>
 
-            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6 md:p-8">
-              <div className="max-w-[68ch]">
-                {/* Síntesis primero: es el hilo que une las tres dimensiones */}
-                <section id="sintesis" className="scroll-mt-24">
-                  <h3 className="section-label mb-4">Síntesis</h3>
-                  <EnhancedRichContent content={analysis.summary} />
-                </section>
+              {/* Columna de lectura */}
+              <div className="min-w-0 max-w-[72ch] space-y-3">
+                {sections.map((section) => {
+                  const isOpen = !collapsed.has(section.id);
+                  return (
+                    <section
+                      key={section.id}
+                      id={section.id}
+                      ref={(el) => { sectionRefs.current[section.id] = el; }}
+                      className="scroll-mt-4 rounded-xl border border-white/10 bg-gray-900/55 backdrop-blur-sm"
+                    >
+                      <h3>
+                        <button
+                          onClick={() => toggleSection(section.id)}
+                          aria-expanded={isOpen}
+                          aria-controls={`${section.id}-cuerpo`}
+                          className="w-full flex items-center gap-3 px-5 md:px-7 py-4 text-left group"
+                        >
+                          {section.Icon && (
+                            <section.Icon className="w-4 h-4 text-teal-400 shrink-0" />
+                          )}
+                          <span className="section-label group-hover:text-gray-200 transition-colors">
+                            {section.label}
+                          </span>
+                          <ChevronDownIcon
+                            className={`w-4 h-4 ml-auto shrink-0 text-[#9aa6b8] transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`}
+                          />
+                        </button>
+                      </h3>
 
-                <section id="ontologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
-                  <h3 className="section-label mb-4 flex items-center gap-2.5">
-                    <LightBulbIcon className="w-4 h-4 text-teal-400 shrink-0" />
-                    Ontológico
-                  </h3>
-                  <EnhancedRichContent content={analysis.ontological} />
-                </section>
-
-                <section id="epistemologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
-                  <h3 className="section-label mb-4 flex items-center gap-2.5">
-                    <DocumentTextIcon className="w-4 h-4 text-teal-400 shrink-0" />
-                    Epistemológico
-                  </h3>
-                  <EnhancedRichContent content={analysis.epistemological} />
-                </section>
-
-                <section id="metodologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
-                  <h3 className="section-label mb-4 flex items-center gap-2.5">
-                    <CogIcon className="w-4 h-4 text-teal-400 shrink-0" />
-                    Metodológico
-                  </h3>
-                  <EnhancedRichContent content={analysis.methodological} />
-                </section>
-
-                <section id="propuesta" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
-                  <h3 className="section-label mb-4 flex items-center gap-2.5">
-                    <ClipboardDocumentListIcon className="w-4 h-4 text-teal-400 shrink-0" />
-                    Propuesta de investigación
-                  </h3>
-                  <EnhancedRichContent content={analysis.researchProposal} />
-                </section>
+                      {isOpen && (
+                        <div id={`${section.id}-cuerpo`} className="px-5 md:px-7 pb-6">
+                          {/* Texto justificado con partición de palabras: sin
+                              hyphens:auto el justificado en español abre ríos
+                              blancos entre palabras largas. */}
+                          <EnhancedRichContent
+                            content={section.content}
+                            className="rich-content--justified rich-content--full"
+                          />
+                        </div>
+                      )}
+                    </section>
+                  );
+                })}
               </div>
             </div>
           </div>
