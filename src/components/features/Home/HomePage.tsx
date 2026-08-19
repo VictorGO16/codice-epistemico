@@ -20,7 +20,7 @@ export default function HomePage() {
 
         <StaggerItem>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            El Códice Epistémico
+            Epistemología y Metodología
           </h1>
         </StaggerItem>
 

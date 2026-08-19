@@ -201,7 +201,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             <IconDialogue size={28} className="text-teal-400/70 shrink-0" />
             <div>
               <h2 className="font-display text-xl font-bold text-white tracking-tight">Diálogo con {conceptName}</h2>
-              <p className="text-sm text-gray-400">Conversación filosófica interactiva</p>
+              <p className="text-sm text-[#9aa6b8]">Conversación filosófica interactiva</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -237,22 +237,35 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
               className={`flex ${message.speaker === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] rounded-lg p-4 ${
+                /* El texto blanco sobre el relleno teal daba 2.42:1.
+                   Texto oscuro sobre el mismo teal: 9.4:1. */
+                className={`max-w-[68ch] rounded-lg p-4 ${
                   message.speaker === 'user'
-                    ? 'bg-teal-500 text-white'
+                    ? 'bg-teal-400 text-[#04211f]'
                     : 'bg-gray-800 text-gray-100 border border-gray-700'
                 }`}
               >
                 {message.isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
-                    <span className="text-gray-400">Reflexionando...</span>
+                    <span className="text-[#9aa6b8]">Reflexionando...</span>
                   </div>
                 ) : (
                   <>
-                    <EnhancedRichContent content={message.text} />
-                    <div className="text-xs opacity-70 mt-2">
-                      {new Date(message.timestamp).toLocaleTimeString()}
+                    <EnhancedRichContent
+                      content={message.text}
+                      className={`rich-content--compact rich-content--full ${
+                        message.speaker === 'user' ? '[&_*]:text-[#04211f]' : ''
+                      }`}
+                    />
+                    {/* Antes: hora con segundos y formato AM/PM inglés bajo
+                        CADA mensaje, en una conversación que ocurre toda en el
+                        mismo minuto. Ahora solo hora y minuto, y en es-CL. */}
+                    <div className="text-[11px] opacity-60 mt-2 tabular-nums">
+                      {new Date(message.timestamp).toLocaleTimeString('es-CL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
                     </div>
                   </>
                 )}
@@ -278,7 +291,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isLoading}
-              className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white p-3 rounded-lg transition-colors"
+              className="bg-teal-400 hover:bg-teal-300 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed text-[#04211f] p-3 rounded-lg transition-colors"
             >
               <PaperAirplaneIcon className="w-5 h-5" />
             </button>
@@ -290,7 +303,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             </div>
           )}
           
-          <div className="mt-3 text-xs text-gray-500">
+          <div className="mt-3 text-xs text-[#9aa6b8]">
             Presiona Enter para enviar • Shift+Enter para nueva línea
           </div>
         </div>

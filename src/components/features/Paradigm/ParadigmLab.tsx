@@ -259,11 +259,16 @@ export default function ParadigmLab() {
                         });
                       }
                     }}
-                    className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+                    /* Decisión 5 — un solo acento: el morado de esta sección
+                       (y el naranja del debate) competían con el teal sin
+                       resolver ningún problema que el título y el icono no
+                       resolvieran ya. */
+                    className={`p-4 rounded-lg border-2 transition-colors duration-200 text-left ${
                       selectedParadigm === paradigm.id
-                        ? 'border-purple-500 bg-purple-500/20 text-white'
+                        ? 'border-teal-400 bg-teal-400/15 text-white'
                         : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500 hover:bg-gray-700/50'
                     }`}
+                    aria-pressed={selectedParadigm === paradigm.id}
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <paradigm.Icon
@@ -296,7 +301,7 @@ export default function ParadigmLab() {
                   }
                 }}
                 placeholder="Ej: La ansiedad en adolescentes, El aprendizaje de idiomas, La creatividad artística, etc."
-                className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none"
                 rows={3}
               />
               <p className="text-sm text-gray-500 mt-2">
@@ -321,11 +326,11 @@ export default function ParadigmLab() {
               <button
                 onClick={handleSubmit}
                 disabled={isLoading || !selectedParadigm || !objectOfStudy.trim()}
-                className="flex items-center gap-3 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-8 rounded-lg transition-colors text-lg"
+                className="flex items-center gap-3 bg-teal-400 hover:bg-teal-300 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed text-[#04211f] font-semibold py-3 px-8 rounded-lg transition-colors text-lg"
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                    <div className="animate-spin w-5 h-5 border-2 border-current border-t-transparent rounded-full"></div>
                     Analizando...
                   </>
                 ) : (
@@ -358,58 +363,86 @@ export default function ParadigmLab() {
                   size="sm"
                   variant="secondary"
                 />
+                {/* "Nuevo Análisis" descarta el resultado que acabas de
+                    generar: era el botón más prominente de la pantalla.
+                    Pasa a terciario (solo texto). */}
                 <button
                   onClick={resetForm}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-3 md:px-4 py-2 rounded-lg font-medium text-sm md:text-base whitespace-nowrap"
+                  className="text-[#9aa6b8] hover:text-white px-3 md:px-4 py-2 rounded-lg font-medium text-sm md:text-base whitespace-nowrap transition-colors"
                 >
-                  Nuevo Análisis
+                  Nuevo análisis
                 </button>
               </div>
             </div>
 
-            {/* Analysis Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Ontological */}
-              <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <LightBulbIcon className="w-8 h-8 text-blue-400" />
-                  <h3 className="text-xl font-bold text-white">Ontológico</h3>
-                </div>
-                <EnhancedRichContent content={analysis.ontological} />
-              </div>
+            {/*
+              Decisión 4 — Antes esto eran tres columnas de ~28 caracteres por
+              línea con párrafos de 300 palabras: tres scrolls verticales
+              paralelos que además no estaban alineados por tema, así que la
+              comparación que la rejilla prometía no ocurría.
+              Ahora: síntesis arriba, secciones apiladas a ancho de lectura y un
+              índice de saltos para no perder el "se ve todo de un golpe".
+            */}
 
-              {/* Epistemological */}
-              <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <DocumentTextIcon className="w-8 h-8 text-green-400" />
-                  <h3 className="text-xl font-bold text-white">Epistemológico</h3>
-                </div>
-                <EnhancedRichContent content={analysis.epistemological} />
-              </div>
+            {/* Índice de saltos */}
+            <nav className="flex flex-wrap gap-2" aria-label="Secciones del análisis">
+              {[
+                { id: 'sintesis',      label: 'Síntesis' },
+                { id: 'ontologico',    label: 'Ontológico' },
+                { id: 'epistemologico', label: 'Epistemológico' },
+                { id: 'metodologico',  label: 'Metodológico' },
+                { id: 'propuesta',     label: 'Propuesta' },
+              ].map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className="text-xs px-3 py-1.5 rounded-full border border-gray-700 text-[#9aa6b8] hover:text-teal-300 hover:border-teal-400/50 transition-colors"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </nav>
 
-              {/* Methodological */}
-              <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <CogIcon className="w-8 h-8 text-purple-400" />
-                  <h3 className="text-xl font-bold text-white">Metodológico</h3>
-                </div>
-                <EnhancedRichContent content={analysis.methodological} />
-              </div>
-            </div>
+            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6 md:p-8">
+              <div className="max-w-[68ch]">
+                {/* Síntesis primero: es el hilo que une las tres dimensiones */}
+                <section id="sintesis" className="scroll-mt-24">
+                  <h3 className="section-label mb-4">Síntesis</h3>
+                  <EnhancedRichContent content={analysis.summary} />
+                </section>
 
-            {/* Research Proposal */}
-            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <ClipboardDocumentListIcon className="w-8 h-8 text-orange-400" />
-                <h3 className="text-xl font-bold text-white">Propuesta de Investigación</h3>
-              </div>
-              <EnhancedRichContent content={analysis.researchProposal} />
-            </div>
+                <section id="ontologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
+                  <h3 className="section-label mb-4 flex items-center gap-2.5">
+                    <LightBulbIcon className="w-4 h-4 text-teal-400 shrink-0" />
+                    Ontológico
+                  </h3>
+                  <EnhancedRichContent content={analysis.ontological} />
+                </section>
 
-            {/* Summary */}
-            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
-              <h3 className="text-xl font-bold text-white mb-4">Síntesis</h3>
-              <EnhancedRichContent content={analysis.summary} />
+                <section id="epistemologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
+                  <h3 className="section-label mb-4 flex items-center gap-2.5">
+                    <DocumentTextIcon className="w-4 h-4 text-teal-400 shrink-0" />
+                    Epistemológico
+                  </h3>
+                  <EnhancedRichContent content={analysis.epistemological} />
+                </section>
+
+                <section id="metodologico" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
+                  <h3 className="section-label mb-4 flex items-center gap-2.5">
+                    <CogIcon className="w-4 h-4 text-teal-400 shrink-0" />
+                    Metodológico
+                  </h3>
+                  <EnhancedRichContent content={analysis.methodological} />
+                </section>
+
+                <section id="propuesta" className="scroll-mt-24 mt-10 pt-8 border-t border-gray-800">
+                  <h3 className="section-label mb-4 flex items-center gap-2.5">
+                    <ClipboardDocumentListIcon className="w-4 h-4 text-teal-400 shrink-0" />
+                    Propuesta de investigación
+                  </h3>
+                  <EnhancedRichContent content={analysis.researchProposal} />
+                </section>
+              </div>
             </div>
           </div>
         )}

@@ -13,6 +13,22 @@ import { exportDebateToPDF, exportToHTML, DebateExportData } from '@/lib/utils/e
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
 import { IconForum, IconScale, IconPerson, IconSettings, TypeIcon } from '@/components/ui/Icons';
 
+/*
+ * Decisión 3 — un color por hablante.
+ * El teal es el acento de la app, así que la primera voz lo hereda y el resto
+ * toma tonos distinguibles entre sí y sobre el fondo oscuro (todos por encima
+ * de 7:1). El moderador queda deliberadamente en gris: comenta, no debate.
+ */
+const SPEAKER_COLORS = ['#2dd4bf', '#e0b252', '#9ec1f7', '#d5a8ef'];
+
+function speakerColor(participantId: string, participantIds: string[]): string {
+  if (participantId === 'moderator' || participantId === 'system') return '#8fa0b4';
+  if (participantId === 'user') return '#ffffff';
+  const idx = participantIds.indexOf(participantId);
+  return SPEAKER_COLORS[(idx < 0 ? 0 : idx) % SPEAKER_COLORS.length];
+}
+
+
 interface AnalysisArgument {
   participantName: string;
   thesis: string;
@@ -640,8 +656,13 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
     return null;
   }
 
+  const rounds = Math.max(
+    1,
+    currentSession.messages.filter((m) => m.participantId === 'moderator').length + 1
+  );
+
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={handleClose}
     >
@@ -654,8 +675,15 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <IconForum size={26} className="text-teal-400/70 shrink-0" />
             <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-xl font-bold text-white">Debate Filosófico</h2>
-              <p className="text-xs sm:text-sm text-gray-400 truncate">
+              <h2 className="text-lg sm:text-xl font-bold text-white">
+                Debate Filosófico
+                {/* Antes no había ninguna noción de progreso: no se sabía si
+                    esto duraba tres turnos o treinta. */}
+                <span className="ml-3 align-middle text-[11px] font-semibold uppercase tracking-wider text-[#9aa6b8] border border-gray-700 rounded px-2 py-0.5">
+                  Ronda {rounds}
+                </span>
+              </h2>
+              <p className="text-xs sm:text-sm text-[#9aa6b8] truncate">
                 {currentSession.topic}
               </p>
             </div>
@@ -678,7 +706,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                 openAnalysis();
               }}
               disabled={currentSession.messages.filter(msg => !msg.isLoading).length < 3}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium text-sm min-h-[44px]"
+              className="flex items-center justify-center gap-2 px-3 py-2 border border-gray-600 hover:border-gray-500 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed text-gray-200 rounded-lg font-medium text-sm min-h-[44px] transition-colors"
             >
               <ChartBarIcon className="w-4 h-4" />
               <span className="hidden sm:inline">Analizar Debate</span>
@@ -725,8 +753,17 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
           </div>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-4 md:space-y-6">
+        {/*
+          Decisión 3 — Formato guion.
+          Antes los participantes compartían avatar gris, burbuja, color y lado:
+          en un debate, saber quién habla de un vistazo es LA función, y era lo
+          único que no estaba resuelto. (El sistema de color por hablante ya
+          existía en el código, pero solo se aplicaba al moderador.)
+          Ahora el nombre va en una columna a la izquierda, en versalitas y con
+          color propio por participante: se escanea vertical y escala igual con
+          dos que con cuatro voces, sin cambiar de diseño.
+        */}
+        <div className="flex-1 overflow-y-auto px-3 md:px-8 py-2">
           {currentSession.messages.map((message) => {
             const participant = philosophicalData[message.participantId];
             // Allow moderator, user, and system messages even if not in philosophicalData
@@ -739,54 +776,53 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
             // Don't render empty system messages
             if (isSystem && !message.text && !message.isLoading) return null;
 
+            const speakerName = isModerator
+              ? 'Moderador'
+              : isUser
+                ? 'Tú'
+                : isSystem
+                  ? 'Sistema'
+                  : participant?.name || 'Desconocido';
+
+            const color = speakerColor(
+              message.participantId,
+              currentSession.participantIds
+            );
+
             return (
-              <div key={message.id} className={`flex gap-3 md:gap-4 ${isUser ? 'flex-row-reverse' : ''} ${isSystem ? 'justify-center' : ''}`}>
-                <div className="flex-shrink-0">
-                  <div className={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center ${isModerator
-                    ? 'bg-purple-600'
-                    : isUser
-                      ? 'bg-blue-600'
-                      : isSystem
-                        ? 'bg-orange-600'
-                        : 'bg-gray-700'
-                    }`}>
-                    {isModerator ? <IconScale size={16} className="text-white" />
-                      : isUser ? <IconPerson size={16} className="text-white" />
-                      : isSystem ? <IconSettings size={16} className="text-white" />
-                      : <TypeIcon type={participant?.type || 'concept'} size={16} className="text-white" />}
-                  </div>
-                </div>
-                <div className={`flex-1 min-w-0 ${isUser ? 'text-right' : ''} ${isSystem ? 'text-center' : ''}`}>
-                  <div className={`flex items-center gap-1 md:gap-2 mb-1 md:mb-2 ${isUser ? 'justify-end' : ''} ${isSystem ? 'justify-center' : ''}`}>
-                    <h3 className="font-semibold text-white text-sm md:text-base">
-                      {isModerator ? 'Moderador' : isUser ? 'Usuario' : isSystem ? 'Sistema' : participant?.name || 'Desconocido'}
-                    </h3>
-                    {!isModerator && !isUser && !isSystem && participant && (
-                      <span className="text-xs text-gray-500 hidden sm:inline">
-                        {participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}
-                      </span>
-                    )}
-                    <span className="text-xs text-gray-500">
-                      {new Date(message.timestamp).toLocaleTimeString()}
+              <div
+                key={message.id}
+                className="flex flex-col md:flex-row gap-1 md:gap-6 py-4 md:py-5 border-b border-gray-800 last:border-b-0"
+              >
+                {/* Columna de nombre — en móvil pasa arriba del texto */}
+                <div className="w-full md:w-[150px] flex-shrink-0 md:text-right md:pt-0.5">
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.09em]"
+                    style={{ color }}
+                  >
+                    {speakerName}
+                  </span>
+                  {!isModerator && !isUser && !isSystem && participant && (
+                    <span className="ml-2 md:ml-0 md:block text-[11px] text-[#7c8899] tabular-nums">
+                      {participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}
                     </span>
-                  </div>
-                  <div className={`rounded-lg p-3 md:p-4 border ${isUser
-                    ? 'bg-blue-900/30 border-blue-700/50'
-                    : isSystem
-                      ? 'bg-orange-900/30 border-orange-700/50'
-                      : 'bg-gray-800/50 border-gray-700/50'
-                    }`}>
-                    {message.isLoading ? (
-                      <div className="flex items-center gap-2">
-                        <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
-                        <span className="text-gray-400">
-                          {isSystem ? 'Preparando nueva ronda...' : 'Reflexionando...'}
-                        </span>
-                      </div>
-                    ) : (
-                      <EnhancedRichContent content={message.text} />
-                    )}
-                  </div>
+                  )}
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  {message.isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
+                      <span className="text-[#9aa6b8]">
+                        {isSystem ? 'Preparando nueva ronda...' : 'Reflexionando...'}
+                      </span>
+                    </div>
+                  ) : (
+                    <EnhancedRichContent
+                      content={message.text}
+                      className={isModerator || isSystem ? 'text-[#9aa6b8]' : ''}
+                    />
+                  )}
                 </div>
               </div>
             );
@@ -802,14 +838,14 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleUserInput()}
-              placeholder="Escribe para dirigir el debate..."
+              placeholder="Moderar: plantea una objeción o cambia el rumbo del debate..."
               className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 text-sm md:text-base"
               disabled={isSubmittingInput}
             />
             <button
               onClick={handleUserInput}
               disabled={!userInput.trim() || isSubmittingInput}
-              className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap"
+              className="border border-gray-600 hover:border-gray-500 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed text-gray-200 font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap"
             >
               {isSubmittingInput ? 'Enviando...' : 'Enviar'}
             </button>
@@ -822,11 +858,11 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
             <div className="text-xs md:text-sm text-gray-400 text-center md:text-left">
               {isContinuingDebate ? (
                 <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
                   Generando nueva ronda...
                 </span>
               ) : (
-                <span className="hidden md:inline">Usa el campo de arriba para dirigir el debate o haz clic en los botones</span>
+                <span className="hidden md:inline">Puedes moderar tú: escribe arriba para redirigir el debate hacia donde te interese</span>
               )}
             </div>
             <div className="flex flex-col sm:flex-row gap-2 md:gap-3 w-full md:w-auto">
@@ -843,17 +879,17 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
               <button
                 onClick={handleContinueDebate}
                 disabled={isLoading || isContinuingDebate}
-                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
+                className="border border-gray-600 hover:border-gray-500 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed text-gray-200 font-semibold py-2 px-3 md:px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
               >
                 {isContinuingDebate && (
-                  <div className="animate-spin w-3 h-3 md:w-4 md:h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                  <div className="animate-spin w-3 h-3 md:w-4 md:h-4 border-2 border-current border-t-transparent rounded-full"></div>
                 )}
                 <span className="truncate">{isContinuingDebate ? 'Generando...' : 'Continuar Debate'}</span>
               </button>
               <button
                 onClick={handleNextResponse}
                 disabled={isLoading || isContinuingDebate}
-                className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-2 px-3 md:px-6 rounded-lg transition-colors text-sm md:text-base"
+                className="bg-teal-400 hover:bg-teal-300 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed text-[#04211f] font-semibold py-2 px-3 md:px-6 rounded-lg transition-colors text-sm md:text-base"
               >
                 {isLoading ? 'Generando...' : 'Siguiente Respuesta'}
               </button>
