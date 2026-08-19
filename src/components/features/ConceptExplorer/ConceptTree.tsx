@@ -77,9 +77,8 @@ export default function ConceptTree({
             {/* Category Header */}
             <motion.button
               onClick={() => toggleCategory(category.id)}
-              className="flex items-center w-full px-2 py-2 text-sm font-semibold text-gray-400 hover:text-gray-300 hover:bg-gray-700/50 rounded-md transition-colors"
-              whileHover={{ scale: 1.02, x: 4 }}
-              whileTap={{ scale: 0.98 }}
+              className="flex items-center w-full px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors"
+              aria-expanded={isExpanded}
             >
               {isExpanded ? (
                 <ChevronDownIcon className="w-4 h-4 mr-2 flex-shrink-0" />
@@ -116,25 +115,26 @@ export default function ConceptTree({
                     <motion.button
                       key={concept.id}
                       onClick={() => handleConceptClick(concept.id)}
+                      /*
+                        Estado activo: antes era texto BLANCO sobre relleno teal
+                        sólido (#00bba7) = 2.42:1, por debajo del mínimo AA de
+                        4.5:1 — el elemento seleccionado era el menos legible de
+                        la pantalla. Ahora: fondo teal al 13 %, texto teal claro
+                        (9.8:1) y barra izquierda como marca de posición.
+                      */
                       className={`
-                        flex items-center w-full px-3 py-2 text-sm rounded-md transition-all duration-200
+                        relative flex items-center w-full min-h-[44px] px-3 py-2 text-sm rounded-md
+                        transition-colors duration-150
                         ${isSelected
-                          ? 'bg-teal-500 text-white font-semibold shadow-lg'
+                          ? 'bg-teal-400/15 text-teal-200 font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[2.5px] before:rounded-full before:bg-teal-400'
                           : 'text-gray-300 hover:text-white hover:bg-gray-700/70'
                         }
-                        ${isPhilosopher ? 'border-l-2 border-yellow-400/50' : ''}
+                        ${isPhilosopher ? 'border-l-2 border-yellow-400/40' : ''}
                       `}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      whileHover={{ 
-                        scale: 1.02, 
-                        x: 4,
-                        boxShadow: isSelected 
-                          ? '0 8px 25px rgba(20, 184, 166, 0.4)' 
-                          : '0 4px 15px rgba(0, 0, 0, 0.2)'
-                      }}
-                      whileTap={{ scale: 0.98 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.02 }}
+                      aria-current={isSelected ? 'true' : undefined}
                     >
                       <div className="flex-1 text-left">
                         <div className="font-medium">{concept.name}</div>
@@ -144,8 +144,15 @@ export default function ConceptTree({
                           </div>
                         )}
                       </div>
+                      {/* El punto no tenía leyenda ni etiqueta accesible: marcaba
+                          algo que solo sabía quien escribió el código. */}
                       {isPhilosopher && (
-                        <div className="ml-2 w-2 h-2 bg-yellow-400 rounded-full flex-shrink-0" />
+                        <span
+                          className="ml-2 w-2 h-2 bg-yellow-400 rounded-full flex-shrink-0"
+                          title="Pensador: permite diálogo"
+                          aria-label="Pensador: permite diálogo"
+                          role="img"
+                        />
                       )}
                     </motion.button>
                   );

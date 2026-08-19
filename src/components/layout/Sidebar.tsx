@@ -208,10 +208,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-700">
-            <div className="text-xs text-gray-500 text-center">
-              <div>Filosofía de la Ciencia</div>
-              <div>& Psicología</div>
+          <div className="px-4 py-3 border-t border-gray-700 space-y-2">
+            {/* Leyenda del punto amarillo del árbol: hasta ahora era un
+                indicador sin explicación. */}
+            <div className="flex items-center gap-2 text-xs text-[#9aa6b8]">
+              <span className="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0" />
+              <span>Pensador: permite diálogo</span>
+            </div>
+            {/* #6b7280 daba 3.67:1 sobre el fondo; #9aa6b8 da 7.4:1 */}
+            <div className="text-xs text-[#9aa6b8] text-center pt-1 border-t border-gray-800">
+              Filosofía de la Ciencia &amp; Psicología
             </div>
           </div>
         </div>
