@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BASE_STYLE, authorVoice } from '@/lib/prompts/voice';
+import { BASE_STYLE, buildAuthorBriefing } from '@/lib/prompts/voice';
+import { getExposition, getVoice } from '@/lib/data/corpus';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Participant {
@@ -55,10 +56,13 @@ export async function POST(request: NextRequest) {
 
     const prompt = `Intervienes como ${participant.name}, ${participant.type === 'philosopher' ? 'filósofo' : 'científico'} de ${participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}, en una discusión sobre: ${topic}
 
-Núcleo de tu pensamiento:
-${participant.coreIdea}${otherParticipantsContext}${historyContext}
-
-${authorVoice(participant.name)}
+${buildAuthorBriefing({
+      name: participant.name,
+      exposition: getExposition(participant.id),
+      voice: getVoice(participant.id),
+      question: topic,
+      fallbackCoreIdea: participant.coreIdea,
+    })}${otherParticipantsContext}${historyContext}
 
 ${BASE_STYLE}
 

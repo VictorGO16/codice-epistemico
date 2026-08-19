@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { philosophicalData } from '@/lib/data/philosophical-data';
-import { BASE_STYLE, authorVoice } from '@/lib/prompts/voice';
+import { BASE_STYLE, buildAuthorBriefing } from '@/lib/prompts/voice';
+import { getExposition, getVoice } from '@/lib/data/corpus';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -47,13 +48,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the system prompt for the philosopher/scientist
+    /* El informe sustituye al volcado de la ficha completa: antes se enviaban
+       coreIdea, psychologyLink y methodologyLink enteros en cada turno. */
+    const briefing = buildAuthorBriefing({
+      name: concept.name,
+      exposition: getExposition(conceptId),
+      voice: getVoice(conceptId),
+      question: message,
+      fallbackCoreIdea: concept.coreIdea,
+    });
+
     const systemPrompt = `Respondes como ${concept.name}, ${concept.type === 'philosopher' ? 'filósofo' : 'científico'} de ${concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}.
 
-Núcleo de tu pensamiento:
-${concept.coreIdea}
-${concept.psychologyLink ? `\nRelación con la psicología: ${concept.psychologyLink}` : ''}${concept.methodologyLink ? `\nMetodología: ${concept.methodologyLink}` : ''}
-
-${authorVoice(concept.name)}
+${briefing}
 
 ${BASE_STYLE}
 
