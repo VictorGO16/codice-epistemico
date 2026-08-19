@@ -114,7 +114,7 @@ export default function ParadigmLab() {
   
   const { analyzeWithParadigm, isLoading } = useParadigmLab();
   const { addNotification } = useUIStore();
-  const { getActiveSession, updateSessionData } = useSessionStore();
+  const { getActiveSession, updateSessionData, createSession, switchToSession } = useSessionStore();
   
   // Restaurar estado de la sesión activa
   const activeSession = getActiveSession();
@@ -151,14 +151,27 @@ export default function ParadigmLab() {
     try {
       const result = await analyzeWithParadigm(selectedParadigm, objectOfStudy.trim());
       setAnalysis(result.analysis);
-      
-      // Guardar en la sesión activa
+
+      /* Si el analisis se inicio desde la navegacion y no desde el "+", no
+         habia ninguna sesion activa y el resultado no quedaba guardado en el
+         panel derecho: se perdia al cambiar de seccion. Ahora se crea una,
+         nombrada con el objeto de estudio. */
+      const payload = {
+        selectedParadigm,
+        objectOfStudy: objectOfStudy.trim(),
+        analysis: result.analysis,
+      };
+
       if (activeSession && activeSession.type === 'paradigm') {
-        updateSessionData(activeSession.id, {
-          selectedParadigm,
-          objectOfStudy: objectOfStudy.trim(),
-          analysis: result.analysis
-        });
+        updateSessionData(activeSession.id, payload);
+      } else {
+        const label = objectOfStudy.trim();
+        const sessionId = createSession(
+          'paradigm',
+          label.length > 42 ? `${label.slice(0, 42)}…` : label,
+          payload,
+        );
+        switchToSession(sessionId);
       }
       
       addNotification({
@@ -377,7 +390,7 @@ export default function ParadigmLab() {
              centra en lugar de dejar todo el espacio muerto a la derecha. */
           <div className="space-y-6 mx-auto w-full max-w-[1120px]">
             {/* Header with Reset Button */}
-            <div className="flex items-center justify-between bg-gray-900/55 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+            <div className="relative z-30 flex flex-wrap items-start justify-between gap-4 bg-gray-900/55 backdrop-blur-sm rounded-xl border border-white/10 p-5 md:p-6">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">Análisis Paradigmático</h2>
                 <p className="text-gray-300">
@@ -416,10 +429,10 @@ export default function ParadigmLab() {
               Ahora: índice fijo que sigue la lectura + secciones plegables.
               El ancho sobrante se ocupa con navegación, no con vacío.
             */}
-            <div className="grid gap-8 xl:gap-12 lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)]">
+            <div className="grid gap-8 xl:gap-12 grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)]">
 
               {/* Índice: fijo en escritorio, tiras horizontales en móvil */}
-              <nav aria-label="Secciones del análisis" className="lg:sticky lg:top-4 lg:self-start">
+              <nav aria-label="Secciones del análisis" className="min-w-0 lg:sticky lg:top-4 lg:self-start">
                 <div className="section-label mb-3 hidden lg:block">Contenido</div>
                 <ul className="flex lg:flex-col gap-2 lg:gap-0 overflow-x-auto scrollbar-hide lg:overflow-visible">
                   {sections.map((section) => (
