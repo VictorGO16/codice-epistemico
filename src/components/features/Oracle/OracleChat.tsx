@@ -60,7 +60,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     addNotification({
       type: 'success',
       title: 'Conversación Reiniciada',
-      message: 'Has iniciado una nueva conversación con el oráculo'
+      message: 'Se descartó el hilo anterior'
     });
   };
 
@@ -90,37 +90,31 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     if (!currentSession) return;
 
     const concept = philosophicalData[conceptId];
-    let content = `CONVERSACIÓN CON EL ORÁCULO\n\n`;
-    content += `Filósofo: ${conceptName}\n`;
-    content += `Fecha: ${new Date().toLocaleDateString('es-ES')}\n\n`;
-    content += `${'='.repeat(50)}\n\n`;
+    // El contenido se entrega en markdown: exportToHTML lo convierte a un
+    // documento con jerarquia real. Antes se enviaba texto plano con reglas de
+    // guiones y se inyectaba en un <pre>, por lo que el markdown del modelo
+    // (los ** de la negrita) se leia en crudo.
+    let content = '';
 
-    if (concept) {
-      content += `SOBRE ${conceptName.toUpperCase()}\n\n`;
-      content += `${concept.coreIdea}\n\n`;
-      content += `${'-'.repeat(30)}\n\n`;
+    if (concept?.coreIdea) {
+      content += `## Punto de partida\n\n${concept.coreIdea}\n\n`;
     }
 
-    content += `CONVERSACIÓN\n\n`;
+    content += `## Conversación\n\n`;
     currentSession.messages
       .filter(msg => !msg.isLoading)
-      .forEach((message, index) => {
-        const speaker = message.speaker === 'user' ? 'Usuario' : conceptName;
-        content += `${speaker}:\n`;
+      .forEach((message) => {
+        content += `### ${message.speaker === 'user' ? 'Pregunta' : conceptName}\n\n`;
         content += `${message.text}\n\n`;
-        
-        if (index < currentSession.messages.length - 1) {
-          content += `${'-'.repeat(20)}\n\n`;
-        }
       });
 
     exportToHTML({
-      title: `Oráculo: ${conceptName}`,
+      title: `Diálogo con ${conceptName}`,
       content,
       metadata: {
-        subject: `Conversación con ${conceptName}`,
+        subject: `Conversación a partir de la obra de ${conceptName}`,
         author: conceptName,
-        keywords: ['oráculo', 'filosofía', conceptId],
+        keywords: ['diálogo', 'filosofía de la ciencia', conceptId],
         createdAt: new Date(),
       },
     });
@@ -169,14 +163,14 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     } catch (err) {
       // Remove loading message and show error
       updateMessage(loadingMessageId, {
-        text: 'Lo siento, no pude procesar tu pregunta en este momento. Por favor, intenta de nuevo.',
+        text: 'No se pudo generar la respuesta. Vuelve a intentarlo.',
         isLoading: false,
       });
       
       addNotification({
         type: 'error',
-        title: 'Error en el Oráculo',
-        message: 'No pude obtener una respuesta. Por favor, intenta de nuevo.',
+        title: 'No se pudo responder',
+        message: 'No se obtuvo respuesta. Vuelve a intentarlo.',
       });
     }
   };
@@ -248,7 +242,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
                 {message.isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
-                    <span className="text-[#9aa6b8]">Reflexionando...</span>
+                    <span className="text-[#9aa6b8]">Generando respuesta…</span>
                   </div>
                 ) : (
                   <>
@@ -284,7 +278,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder={`Pregúntale a ${conceptName}...`}
+              placeholder={`Pregunta a ${conceptName}…`}
               className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               disabled={isLoading}
             />

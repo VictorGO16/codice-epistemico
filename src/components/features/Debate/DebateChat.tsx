@@ -112,11 +112,9 @@ export default function DebateChat({ onClose }: DebateChatProps) {
       .join(', ');
 
     updateMessage(moderatorIntro, {
-      text: `¡Bienvenidos a este fascinante debate filosófico! Hoy exploraremos el tema: "${currentSession.topic}". 
-
-Nos acompañan distinguidos pensadores: ${participantNames}. Cada uno aportará su perspectiva única desde su tradición filosófica.
-
-Comenzaremos con las declaraciones de apertura. Cada participante presentará su posición inicial sobre el tema.`,
+      // El moderador levanta acta: enuncia el tema y quien interviene.
+      // No da la bienvenida ni califica el debate.
+      text: `Tema: ${currentSession.topic}\n\nIntervienen ${participantNames}. Cada uno fija primero su posición.`,
       isLoading: false,
     });
 
@@ -172,7 +170,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
     addMessage({
       participantId: 'moderator',
       participantName: 'Moderador',
-      text: 'Excelentes declaraciones de apertura. Ahora procederemos con el intercambio de ideas. Cada participante podrá responder y desarrollar sus argumentos.',
+      text: 'Posiciones fijadas. Turno de réplica: cada intervención responde a un argumento concreto de otro participante.',
       isLoading: false,
     });
     
@@ -235,7 +233,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
 
       } catch {
         updateMessage(moderatorMessageId, {
-          text: 'Excelentes puntos. Continuemos explorando estas ideas desde diferentes perspectivas.',
+          text: 'Se abre una nueva ronda sobre los puntos en disputa.',
           isLoading: false,
         });
       }
@@ -814,7 +812,7 @@ Comenzaremos con las declaraciones de apertura. Cada participante presentará su
                     <div className="flex items-center gap-2">
                       <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
                       <span className="text-[#9aa6b8]">
-                        {isSystem ? 'Preparando nueva ronda...' : 'Reflexionando...'}
+                        {isSystem ? 'Preparando la ronda…' : 'Generando intervención…'}
                       </span>
                     </div>
                   ) : (

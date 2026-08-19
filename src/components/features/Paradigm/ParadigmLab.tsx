@@ -178,37 +178,19 @@ export default function ParadigmLab() {
 
     const paradigmName = paradigms.find(p => p.id === selectedParadigm)?.name || selectedParadigm;
     
-    let content = `ANÁLISIS PARADIGMÁTICO\n\n`;
-    content += `Paradigma: ${paradigmName}\n`;
-    content += `Objeto de Estudio: ${objectOfStudy}\n`;
-    content += `Fecha: ${new Date().toLocaleDateString('es-ES')}\n\n`;
-    content += `${'='.repeat(50)}\n\n`;
-
-    content += `ANÁLISIS ONTOLÓGICO\n\n`;
-    content += `${analysis.ontological}\n\n`;
-    content += `${'-'.repeat(30)}\n\n`;
-
-    content += `ANÁLISIS EPISTEMOLÓGICO\n\n`;
-    content += `${analysis.epistemological}\n\n`;
-    content += `${'-'.repeat(30)}\n\n`;
-
-    content += `ANÁLISIS METODOLÓGICO\n\n`;
-    content += `${analysis.methodological}\n\n`;
-    content += `${'-'.repeat(30)}\n\n`;
-
-    content += `PROPUESTA DE INVESTIGACIÓN\n\n`;
-    content += `${analysis.researchProposal}\n\n`;
-    content += `${'-'.repeat(30)}\n\n`;
-
-    content += `SÍNTESIS\n\n`;
-    content += `${analysis.summary}\n`;
+    // Markdown: exportToHTML lo convierte en un documento con jerarquía real.
+    let content = `## Síntesis\n\n${analysis.summary}\n\n`;
+    content += `## Ontológico\n\n${analysis.ontological}\n\n`;
+    content += `## Epistemológico\n\n${analysis.epistemological}\n\n`;
+    content += `## Metodológico\n\n${analysis.methodological}\n\n`;
+    content += `## Propuesta de investigación\n\n${analysis.researchProposal}\n`;
 
     exportToHTML({
-      title: `Paradigma: ${paradigmName}`,
+      title: `Análisis paradigmático: ${objectOfStudy}`,
       content,
       metadata: {
         subject: `Análisis paradigmático de ${objectOfStudy}`,
-        author: 'El Códice Epistémico',
+        author: 'Epistemología y Metodología',
         keywords: ['paradigma', 'análisis', selectedParadigm],
         createdAt: new Date(),
       },

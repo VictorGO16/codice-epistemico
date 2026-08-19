@@ -315,7 +315,7 @@ export default function ConceptDetail() {
                   Diálogo con {concept.name}
                 </h2>
                 <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-lg mx-auto">
-                  Conversa con una simulación inteligente de {concept.name}.
+                  Formula preguntas a partir de la obra de {concept.name}.
                   Plantea tus preguntas filosóficas y recibe respuestas basadas en su pensamiento y obra.
                 </p>
                 <button
