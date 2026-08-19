@@ -9,8 +9,10 @@ import { IconConcept, IconForum, IconParadigm } from '@/components/ui/Icons';
 export default function HomePage() {
   const { setActiveTab } = useUIStore();
 
+  // El lienzo de partículas vive detrás (z-0). Un gradiente sólido lo tapaba
+  // por completo, así que la pantalla de inicio no mostraba nada del fondo.
   return (
-    <PageTransition className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <PageTransition className="min-h-full flex items-center justify-center">
       <StaggerContainer className="text-center w-full mx-auto px-6">
         <StaggerItem>
           <div className="flex justify-center mb-8">
@@ -32,7 +34,7 @@ export default function HomePage() {
 
         <StaggerItem>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
-            <div className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-teal-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left">
+            <div className="bg-gray-900/45 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-teal-400/40 hover:bg-gray-900/65 transition-colors duration-200 text-left">
               <IconConcept size={32} className="mb-4 text-teal-400/70" />
               <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Conceptos Filosóficos</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
@@ -42,7 +44,7 @@ export default function HomePage() {
 
             <button
               onClick={() => setActiveTab('debate')}
-              className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-purple-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left"
+              className="bg-gray-900/45 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-teal-400/40 hover:bg-gray-900/65 transition-colors duration-200 text-left"
             >
               <IconForum size={32} className="mb-4 text-purple-400/70" />
               <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Debates Filosóficos</h3>
@@ -53,7 +55,7 @@ export default function HomePage() {
 
             <button
               onClick={() => setActiveTab('paradigm')}
-              className="bg-gray-800/60 p-6 rounded-xl border border-gray-700/60 hover:border-orange-500/40 hover:bg-gray-800/80 transition-all duration-300 text-left"
+              className="bg-gray-900/45 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-teal-400/40 hover:bg-gray-900/65 transition-colors duration-200 text-left"
             >
               <IconParadigm size={32} className="mb-4 text-orange-400/70" />
               <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Análisis Paradigmático</h3>

@@ -415,12 +415,21 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
               {/* Concept Navigation - Only show when a concept is selected */}
               {concept && (
                 <div className="space-y-3 border-t border-gray-700 pt-4">
-                  <div className="text-sm font-medium text-gray-400 px-2">
-                    {concept.name}
-                  </div>
-                  <div className="text-xs text-gray-500 px-2 mb-3">
-                    {conceptCategoryLabel(concept.category)}
-                  </div>
+                  {/* Aparecia como texto muerto: el nombre del concepto abierto
+                      sin forma de volver a el desde otra seccion. Ahora es el
+                      camino de vuelta. */}
+                  <button
+                    onClick={() => handleNavigation('context')}
+                    className="group w-full text-left px-2 py-1 rounded-lg hover:bg-white/5 transition-colors"
+                  >
+                    <div className="text-sm font-medium text-gray-200 group-hover:text-teal-300 transition-colors flex items-center gap-1.5">
+                      {concept.name}
+                      <span className="text-[#9aa6b8] group-hover:text-teal-300 transition-colors" aria-hidden="true">→</span>
+                    </div>
+                    <div className="text-xs text-[#9aa6b8]">
+                      {conceptCategoryLabel(concept.category)}
+                    </div>
+                  </button>
 {/*
                     Decisión 1 — Aquí se repetían, una por una, las mismas
                     pestañas (Contexto · Psicología · Metodología · Diálogo) que
