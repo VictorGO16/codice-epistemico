@@ -73,8 +73,11 @@ export default function ExportButton({
     );
   }
 
+  /* z-50 en la raíz: las tarjetas de contenido que vienen después usan
+     backdrop-blur, que crea contexto de apilamiento propio, y el menú quedaba
+     pintado por debajo de ellas. */
   return (
-    <div className="relative">
+    <div className={`relative ${showDropdown ? 'z-50' : ''}`}>
       <button
         onClick={() => setShowDropdown(!showDropdown)}
         disabled={disabled}
@@ -93,16 +96,16 @@ export default function ExportButton({
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-10"
+            className="fixed inset-0 z-40"
             onClick={() => setShowDropdown(false)}
           />
           
           {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-20">
+          <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl z-50 overflow-hidden">
             <div className="py-1">
               <button
                 onClick={handleExportPDF}
-                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap"
               >
                 <DocumentIcon className="w-4 h-4 text-red-400" />
                 <span>Exportar como PDF</span>
@@ -110,7 +113,7 @@ export default function ExportButton({
               
               <button
                 onClick={handleExportHTML}
-                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap"
               >
                 <CodeBracketIcon className="w-4 h-4 text-blue-400" />
                 <span>Exportar como HTML</span>
