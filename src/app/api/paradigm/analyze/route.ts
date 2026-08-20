@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { BASE_STYLE } from '@/lib/prompts/voice';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { generateText, hasApiKey } from '@/lib/ai/client';
-import { WRITER_THINKING } from '@/lib/ai/models';
-import { resolveTier } from '@/lib/ai/quota';
+import { MODEL_WRITER, WRITER_THINKING } from '@/lib/ai/models';
 
 export async function POST(request: NextRequest) {
   try {
-    const { paradigmId, objectOfStudy, usedHighQuality = 0 } = await request.json();
+    const { paradigmId, objectOfStudy } = await request.json();
 
     if (!paradigmId || !objectOfStudy) {
       return NextResponse.json(
@@ -31,7 +30,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const tier = resolveTier(Number(usedHighQuality) || 0, 'heavy');
 
     const analysisPrompt = `Analizas un objeto de estudio desde un paradigma epistemológico determinado, para un curso de epistemología y metodología.
 
@@ -70,9 +68,9 @@ ${BASE_STYLE}
 Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
 
     let text = await generateText({
-      model: tier.writer,
+      model: MODEL_WRITER,
       turns: [{ role: 'user', text: analysisPrompt }],
-      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+      thinkingLevel: WRITER_THINKING,
     });
 
     // Clean up the response to ensure it's valid JSON
@@ -89,13 +87,6 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       return NextResponse.json({
         success: true,
         analysis,
-        tier: {
-          model: tier.writer,
-          degraded: tier.degraded,
-          remaining: tier.remaining,
-          warn: tier.warn,
-          limit: tier.limit,
-        },
       });
 
     } catch (parseError) {
@@ -114,13 +105,6 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       return NextResponse.json({
         success: true,
         analysis: fallbackAnalysis,
-        tier: {
-          model: tier.writer,
-          degraded: tier.degraded,
-          remaining: tier.remaining,
-          warn: tier.warn,
-          limit: tier.limit,
-        },
       });
     }
 
