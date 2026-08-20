@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { MODEL_ROUTER } from '@/lib/ai/models';
 
 export async function POST(request: NextRequest) {
   try {
-    const { prompt, model = 'gemini-pro' } = await request.json();
+    const { prompt } = await request.json();
 
     if (!prompt) {
       return NextResponse.json(
@@ -15,20 +13,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { error: 'Gemini API key not configured' },
         { status: 500 }
       );
     }
 
-    // Get the generative model
-    const geminiModel = genAI.getGenerativeModel({ model });
-
-    // Generate content
-    const result = await geminiModel.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await generateText({
+      model: MODEL_ROUTER,
+      turns: [{ role: 'user', text: prompt }],
+    });
 
     return NextResponse.json({
       response: text,

@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MODERATOR_VOICE } from '@/lib/prompts/voice';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { MODEL_ROUTER } from '@/lib/ai/models';
 
 interface ConversationMessage {
   participantName: string;
   text: string;
 }
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,14 +19,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { success: false, error: 'API key no configurada' },
         { status: 500 }
       );
     }
-
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 
     // Build conversation history
     const historyContext = conversationHistory.length > 0
@@ -47,9 +44,10 @@ ${MODERATOR_VOICE}
 
 ESTA INTERVENCIÓN: nombra el punto exacto en que los participantes discrepan y formula la pregunta que los obliga a pronunciarse sobre él. Si hay una indicación de quien modera desde fuera, redirige la discusión hacia ahí sin comentarla.`;
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    const text = await generateText({
+      model: MODEL_ROUTER,
+      turns: [{ role: 'user', text: prompt }],
+    });
 
     return NextResponse.json({
       success: true,
