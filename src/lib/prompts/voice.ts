@@ -148,6 +148,11 @@ export function buildWriterInstruction(params: {
     if (order.aviso) {
       brief.push(`- Corrige esto del turno anterior: ${order.aviso}`);
     }
+    if (order.intencion === 'saludo') {
+      brief.push(
+        '- Es un saludo o una frase de trato, no una pregunta. Devuélvelo en una línea, en tu registro, y espera. No lo conviertas en asunto de examen.',
+      );
+    }
     brief.push(`- Extensión: ${LENGTH_HINT[order.largo] ?? LENGTH_HINT.media}`);
 
     parts.push('ESTE TURNO\n' + brief.join('\n'));
