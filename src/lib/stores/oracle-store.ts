@@ -7,6 +7,10 @@ export interface ChatMessage {
   text: string;
   timestamp: Date;
   isLoading?: boolean;
+  /** Aviso del sistema dentro del hilo, no una intervención del autor. */
+  notice?: boolean;
+  /** La respuesta salió con el modelo de reemplazo. */
+  degraded?: boolean;
 }
 
 export interface OracleSession {

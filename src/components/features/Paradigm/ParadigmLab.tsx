@@ -8,6 +8,7 @@ import {
   IconBook, IconStructure, IconFlex,
 } from '@/components/ui/Icons';
 import { useParadigmLab } from '@/lib/hooks/useGemini';
+import { useUsageStore } from '@/lib/stores/usage-store';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useSessionStore } from '@/lib/stores/session-store';
 import ExportButton from '@/components/ui/ExportButton';
@@ -149,7 +150,11 @@ export default function ParadigmLab() {
     }
 
     try {
-      const result = await analyzeWithParadigm(selectedParadigm, objectOfStudy.trim());
+      const heavyUsed = useUsageStore.getState().heavy;
+      const result = await analyzeWithParadigm(selectedParadigm, objectOfStudy.trim(), heavyUsed);
+      if (result?.tier && !result.tier.degraded) {
+        useUsageStore.getState().consume('heavy');
+      }
       setAnalysis(result.analysis);
 
       /* Si el analisis se inicio desde la navegacion y no desde el "+", no

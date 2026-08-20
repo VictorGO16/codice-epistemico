@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { XMarkIcon, PlayIcon, PauseIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import { useDebate } from '@/lib/hooks/useDebate';
+import { useUsageStore } from '@/lib/stores/usage-store';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useDebateStore } from '@/lib/stores/debate-store';
 import { useSessionStore } from '@/lib/stores/session-store';
@@ -479,11 +480,16 @@ export default function DebateChat({ onClose }: DebateChatProps) {
           topic: currentSession.topic,
           participants,
           conversationHistory,
-          userInput: 'Continúa el debate con la siguiente ronda de intervenciones'
+          userInput: 'Continúa el debate con la siguiente ronda de intervenciones',
+          usedHighQuality: useUsageStore.getState().heavy,
         }),
       });
 
       const data = await response.json();
+
+      if (data?.tier && !data.tier.degraded) {
+        useUsageStore.getState().consume('heavy');
+      }
 
       // Remove the loading message
       updateMessage(loadingMessageId, {

@@ -11,10 +11,36 @@ import { exportOracleToPDF, exportToHTML, OracleExportData } from '@/lib/utils/e
 import { IconDialogue } from '@/components/ui/Icons';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { getExposition } from '@/lib/data/corpus';
+import { useUsageStore, DIALOGUE_LIMIT } from '@/lib/stores/usage-store';
 import AnimatedLoader from '@/components/ui/AnimatedLoader';
 import { AnimatedButton } from '@/components/ui/AnimatedCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
+
+function QualityMeter() {
+  const used = useUsageStore((state) => state.dialogue);
+  const left = Math.max(0, DIALOGUE_LIMIT - used);
+
+  return (
+    <div className="flex items-center gap-2 text-sm text-[#9aa6b8]">
+      <span className="flex items-center gap-1" aria-hidden="true">
+        {Array.from({ length: DIALOGUE_LIMIT }, (_, i) => (
+          <span
+            key={i}
+            className={`w-1.5 h-1.5 rounded-full ${
+              i < left ? 'bg-teal-400' : 'bg-white/20'
+            }`}
+          />
+        ))}
+      </span>
+      <span>
+        {left > 0
+          ? `${left} de ${DIALOGUE_LIMIT} respuestas en calidad alta`
+          : 'calidad alta agotada en esta sesión'}
+      </span>
+    </div>
+  );
+}
 
 interface OracleChatProps {
   conceptId: string;
@@ -106,7 +132,12 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     currentSession.messages
       .filter(msg => !msg.isLoading)
       .forEach((message) => {
-        content += `### ${message.speaker === 'user' ? 'Pregunta' : conceptName}\n\n`;
+        if (message.notice) {
+          content += `> ${message.text}\n\n`;
+          return;
+        }
+        const who = message.speaker === 'user' ? 'Pregunta' : conceptName;
+        content += `### ${who}${message.degraded ? ' (calidad reducida)' : ''}\n\n`;
         content += `${message.text}\n\n`;
       });
 
@@ -149,18 +180,39 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
 
     try {
       // Prepare conversation history for context
-      const conversationHistory = currentSession.messages.map(msg => ({
-        speaker: msg.speaker,
-        text: msg.text,
-      }));
+      const conversationHistory = currentSession.messages
+        .filter(msg => !msg.notice && !msg.isLoading && msg.text)
+        .map(msg => ({
+          speaker: msg.speaker,
+          text: msg.text,
+        }));
 
-      const response = await askOracle(conceptId, userText, conversationHistory);
+      const used = useUsageStore.getState().dialogue;
+      const reply = await askOracle(conceptId, userText, conversationHistory, used);
 
-      // Update loading message with actual response
       updateMessage(loadingMessageId, {
-        text: response,
+        text: reply.text,
         isLoading: false,
+        degraded: reply.tier?.degraded,
       });
+
+      if (reply.tier && !reply.tier.degraded) {
+        useUsageStore.getState().consume('dialogue');
+      }
+
+      if (reply.tier?.warn) {
+        addMessage({
+          speaker: 'ai',
+          notice: true,
+          text: 'Queda una respuesta en calidad alta. Después de esa, la conversación sigue con un modelo más simple.',
+        });
+      } else if (reply.tier?.degraded && !currentSession.messages.some((m) => m.notice && m.text.startsWith('Se agotó'))) {
+        addMessage({
+          speaker: 'ai',
+          notice: true,
+          text: 'Se agotó la calidad alta de esta sesión. Desde aquí responde un modelo más simple.',
+        });
+      }
 
     } catch (err) {
       // Remove loading message and show error
@@ -197,7 +249,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             <IconDialogue size={28} className="text-teal-400/70 shrink-0" />
             <div>
               <h2 className="font-display text-xl font-bold text-white tracking-tight">Diálogo con {conceptName}</h2>
-              <p className="text-sm text-[#9aa6b8]">Conversación filosófica interactiva</p>
+              <QualityMeter />
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -235,14 +287,20 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
               </p>
             </div>
           )}
-          {currentSession.messages.map((message) => (
+          {currentSession.messages.map((message) => message.notice ? (
+            <div key={message.id} className="flex items-center gap-3 py-1" role="status">
+              <span className="h-px flex-1 bg-white/10" />
+              <span className="text-[12px] text-[#9aa6b8] text-center max-w-[52ch] leading-snug">
+                {message.text}
+              </span>
+              <span className="h-px flex-1 bg-white/10" />
+            </div>
+          ) : (
             <div
               key={message.id}
               className={`flex ${message.speaker === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                /* El texto blanco sobre el relleno teal daba 2.42:1.
-                   Texto oscuro sobre el mismo teal: 9.4:1. */
                 className={`max-w-[68ch] rounded-lg p-4 ${
                   message.speaker === 'user'
                     ? 'bg-teal-400 text-[#04211f]'
@@ -262,14 +320,16 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
                         message.speaker === 'user' ? '[&_*]:text-[#04211f]' : ''
                       }`}
                     />
-                    {/* Antes: hora con segundos y formato AM/PM inglés bajo
-                        CADA mensaje, en una conversación que ocurre toda en el
-                        mismo minuto. Ahora solo hora y minuto, y en es-CL. */}
-                    <div className="text-[11px] opacity-60 mt-2 tabular-nums">
-                      {new Date(message.timestamp).toLocaleTimeString('es-CL', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
+                    <div className="text-[11px] opacity-60 mt-2 tabular-nums flex items-center gap-2">
+                      <span>
+                        {new Date(message.timestamp).toLocaleTimeString('es-CL', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </span>
+                      {message.degraded && (
+                        <span className="text-[#e0b252]">calidad reducida</span>
+                      )}
                     </div>
                   </>
                 )}
