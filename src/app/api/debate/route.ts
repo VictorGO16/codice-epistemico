@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BASE_STYLE, buildAuthorBriefing } from '@/lib/prompts/voice';
+import { buildWriterInstruction } from '@/lib/prompts/voice';
 import { getExposition, getVoice } from '@/lib/data/corpus';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { WRITER_THINKING } from '@/lib/ai/models';
+import { resolveTier } from '@/lib/ai/quota';
 
 interface Participant {
+  id: string;
   name: string;
+  type: string;
   year: number;
   coreIdea: string;
 }
@@ -14,13 +18,15 @@ interface ConversationMessage {
   text: string;
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
-
-
 export async function POST(request: NextRequest) {
   try {
-    const { topic, participant, otherParticipants, conversationHistory } = await request.json();
+    const {
+      topic,
+      participant,
+      otherParticipants,
+      conversationHistory,
+      usedHighQuality = 0,
+    } = await request.json();
 
     if (!topic || !participant) {
       return NextResponse.json(
@@ -29,14 +35,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { success: false, error: 'API key no configurada' },
         { status: 500 }
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
+    const tier = resolveTier(Number(usedHighQuality) || 0, 'heavy');
 
     // Build context about other participants
     const otherParticipantsContext = otherParticipants.length > 0 
@@ -54,20 +60,19 @@ export async function POST(request: NextRequest) {
 
     const isOpeningStatement = conversationHistory.length === 0;
 
-    const prompt = `Intervienes como ${participant.name}, ${participant.type === 'philosopher' ? 'filósofo' : 'científico'} de ${participant.year > 0 ? participant.year : `${Math.abs(participant.year)} a.C.`}, en una discusión sobre: ${topic}
-
-${buildAuthorBriefing({
+    const systemInstruction = buildWriterInstruction({
       name: participant.name,
+      year: participant.year,
+      kind: participant.type,
       exposition: getExposition(participant.id),
       voice: getVoice(participant.id),
-      question: topic,
-      priorTurns: (conversationHistory as ConversationMessage[])
-        .filter((msg) => msg.participantName === participant.name)
-        .map((msg) => msg.text),
+      firstTurn: !(conversationHistory as ConversationMessage[]).some(
+        (msg) => msg.participantName === participant.name,
+      ),
       fallbackCoreIdea: participant.coreIdea,
-    })}${otherParticipantsContext}${historyContext}
+    });
 
-${BASE_STYLE}
+    const prompt = `Intervienes en una discusión sobre: ${topic}${otherParticipantsContext}${historyContext}
 
 ${isOpeningStatement
   ? 'ESTA INTERVENCIÓN: fija tu posición. Una tesis y las razones que la sostienen. No anuncies que vas a fijar tu posición: fíjala.'
@@ -75,13 +80,23 @@ ${isOpeningStatement
 
 EXTENSIÓN: entre 120 y 200 palabras.`;
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    const text = await generateText({
+      model: tier.writer,
+      systemInstruction,
+      turns: [{ role: 'user', text: prompt }],
+      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+    });
 
     return NextResponse.json({
       success: true,
       response: text,
+      tier: {
+        model: tier.writer,
+        degraded: tier.degraded,
+        remaining: tier.remaining,
+        warn: tier.warn,
+        limit: tier.limit,
+      },
     });
 
   } catch (error: unknown) {

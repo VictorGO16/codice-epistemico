@@ -1,95 +1,130 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { philosophicalData } from '@/lib/data/philosophical-data';
-import { BASE_STYLE, buildAuthorBriefing } from '@/lib/prompts/voice';
 import { getExposition, getVoice } from '@/lib/data/corpus';
+import { buildWriterInstruction } from '@/lib/prompts/voice';
+import {
+  WORK_ORDER_SCHEMA,
+  WorkOrder,
+  routerInstruction,
+  routerTurns,
+} from '@/lib/prompts/comprehension';
+import { generateText, generateJson, hasApiKey, Turn } from '@/lib/ai/client';
+import { WRITER_THINKING } from '@/lib/ai/models';
+import { resolveTier } from '@/lib/ai/quota';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+/**
+ * Dos etapas.
+ *
+ * 1. Comprensión, en el modelo barato y con salida JSON: qué se pregunta, a
+ *    qué resuelven las menciones, qué material hace falta, qué ya se dijo.
+ * 2. Redacción, en el modelo bueno, con instrucción corta y la conversación
+ *    literal completa. El historial no se resume: es lo que da el hilo.
+ */
+
+interface HistoryMessage {
+  speaker: string;
+  text: string;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const { conceptId, message, conversationHistory = [] } = await request.json();
+    const {
+      conceptId,
+      message,
+      conversationHistory = [],
+      usedHighQuality = 0,
+    } = await request.json();
 
     if (!conceptId || !message) {
       return NextResponse.json(
         { error: 'Concept ID and message are required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { error: 'Gemini API key not configured' },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     const concept = philosophicalData[conceptId];
     if (!concept) {
-      return NextResponse.json(
-        { error: 'Concept not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Concept not found' }, { status: 404 });
     }
 
     if (concept.type !== 'philosopher' && concept.type !== 'scientist') {
       return NextResponse.json(
         { error: 'El diálogo solo está disponible para filósofos y científicos' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    // Build the conversation context
-    let conversationContext = '';
-    if (conversationHistory.length > 0) {
-      conversationContext = conversationHistory
-        .map((msg: { speaker: string; text: string }) => `${msg.speaker === 'user' ? 'Usuario' : concept.name}: ${msg.text}`)
-        .join('\n');
-    }
+    const tier = resolveTier(Number(usedHighQuality) || 0, 'dialogue');
 
-    const priorTurns = (conversationHistory as { speaker: string; text: string }[])
-      .filter((msg) => msg.speaker !== 'user')
-      .map((msg) => msg.text);
+    const history: Turn[] = (conversationHistory as HistoryMessage[])
+      .filter((msg) => msg?.text)
+      .map((msg) => ({
+        role: msg.speaker === 'user' ? ('user' as const) : ('model' as const),
+        text: msg.text,
+      }));
 
-    const briefing = buildAuthorBriefing({
+    const exposition = getExposition(conceptId);
+    const voice = getVoice(conceptId);
+
+    // Etapa 1. Si falla, la conversación sigue sin orden de trabajo.
+    const order = await generateJson<WorkOrder>({
+      model: tier.router,
+      systemInstruction: routerInstruction(
+        concept.name,
+        (exposition?.keyNotions ?? []).map((n) => n.term),
+      ),
+      turns: routerTurns(history, message),
+      schema: WORK_ORDER_SCHEMA,
+    });
+
+    // Etapa 2.
+    const systemInstruction = buildWriterInstruction({
       name: concept.name,
-      exposition: getExposition(conceptId),
-      voice: getVoice(conceptId),
-      question: message,
-      priorTurns,
+      year: concept.year,
+      kind: concept.type,
+      exposition,
+      voice,
+      order,
+      firstTurn: history.length === 0,
       fallbackCoreIdea: concept.coreIdea,
     });
 
-    const systemPrompt = `Respondes como ${concept.name}, ${concept.type === 'philosopher' ? 'filósofo' : 'científico'} de ${concept.year > 0 ? concept.year : `${Math.abs(concept.year)} a.C.`}.
-
-${briefing}
-
-${BASE_STYLE}
-
-EXTENSIÓN: nunca más de 300 palabras, y el mínimo lo fija la pregunta. Si lo que se pregunta se contesta en dos frases, se contesta en dos frases: no rellenes para alcanzar un largo. No abras temas que no vienen al caso.
-${conversationContext ? `\nLo dicho hasta aquí:\n${conversationContext}\n` : ''}
-Pregunta: ${message}`;
-
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
-    const result = await model.generateContent(systemPrompt);
-    const response = result.response;
-    const text = response.text();
+    const text = await generateText({
+      model: tier.writer,
+      systemInstruction,
+      turns: [...history, { role: 'user', text: message }],
+      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+      maxOutputTokens: 1400,
+    });
 
     return NextResponse.json({
       response: text,
       success: true,
+      tier: {
+        model: tier.writer,
+        degraded: tier.degraded,
+        remaining: tier.remaining,
+        warn: tier.warn,
+        limit: tier.limit,
+      },
     });
-
   } catch (error: unknown) {
     console.error('Error en el diálogo:', error);
-    
+
     return NextResponse.json(
-      { 
+      {
         error: 'No se pudo generar la respuesta',
         details: error instanceof Error ? error.message : 'Unknown error',
         success: false,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
