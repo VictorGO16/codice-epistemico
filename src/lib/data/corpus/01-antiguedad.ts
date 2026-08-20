@@ -174,7 +174,7 @@ En psicología esto es literalmente la teoría de los constructos. La memoria de
 
   aristoteles: {
     thesis:
-      'Hay conocimiento estricto, [[episteme]], cuando se conoce la causa por la que algo es y no puede ser de otro modo. Ese conocimiento empieza en la percepción y no exige un mundo separado: la forma que hace inteligible a una cosa está en la cosa misma.',
+      'Hay conocimiento estricto, [[episteme|epistéme]], cuando se conoce la causa por la que algo es y no puede ser de otro modo. Ese conocimiento empieza en la percepción y no exige un mundo separado: la forma que hace inteligible a una cosa está en la cosa misma.',
 
     problem:
       'Platón había situado lo cognoscible fuera de lo sensible, porque de lo que cambia no puede haber ciencia. El precio era alto: quedaba sin explicar cómo el estudio de la naturaleza, que es justamente el dominio del cambio, podría producir algún saber. Aristóteles necesita fundar una ciencia de lo que cambia sin renunciar a que el conocimiento sea necesario y demostrable.',
