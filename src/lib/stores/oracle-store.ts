@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useUsageStore } from './usage-store';
 
 export interface ChatMessage {
   id: string;
@@ -67,7 +68,9 @@ export const useOracleStore = create<OracleState>()(
             isOracleOpen: true,
           });
         } else {
-          // Create new session
+          // Conversación nueva: la cuota de calidad alta parte de cero.
+          useUsageStore.getState().resetKind('dialogue');
+
           const newSession: OracleSession = {
             conceptId,
             conceptName,

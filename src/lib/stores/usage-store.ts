@@ -5,12 +5,11 @@ import { DIALOGUE_LIMIT, HEAVY_LIMIT, QuotaKind } from '@/lib/ai/quota';
 /**
  * Consumo de calidad alta en esta sesión de trabajo.
  *
- * Vive en sessionStorage y no en localStorage: la cuota es por sesión, así que
- * el reinicio lo da el propio navegador al cerrar la pestaña.
+ * La cuota del diálogo es por conversación: se reinicia al abrir un diálogo
+ * nuevo o al descartar el hilo. Lo que limita no es cuánto usa un estudiante,
+ * sino cuánto crece una sola conversación arrastrando todo su historial.
  *
- * El contador del diálogo es compartido entre autores. Debate y análisis
- * comparten uno propio, porque una ronda de debate son varias llamadas y un
- * análisis es una sola llamada larga.
+ * Debate y análisis llevan un contador propio.
  */
 
 interface UsageState {
@@ -20,6 +19,7 @@ interface UsageState {
   used: (kind: QuotaKind) => number;
   remaining: (kind: QuotaKind) => number;
   isDegraded: (kind: QuotaKind) => boolean;
+  resetKind: (kind: QuotaKind) => void;
   reset: () => void;
 }
 
@@ -44,6 +44,8 @@ export const useUsageStore = create<UsageState>()(
       remaining: (kind) => Math.max(0, LIMITS[kind] - get()[kind]),
 
       isDegraded: (kind) => get()[kind] >= LIMITS[kind],
+
+      resetKind: (kind) => set({ [kind]: 0 } as Partial<UsageState>),
 
       reset: () => set({ dialogue: 0, heavy: 0 }),
     }),

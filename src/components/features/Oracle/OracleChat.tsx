@@ -27,7 +27,7 @@ function QualityMeter() {
   return (
     <div
       className={`flex items-center gap-2 text-sm ${tone}`}
-      title="Las primeras respuestas de cada sesión salen con el modelo de mejor calidad. Al agotarse, la conversación sigue con uno más simple. Reiniciar el hilo no las devuelve."
+      title="Cada conversación empieza con cinco respuestas en el modelo de mejor calidad. Al agotarse, el hilo sigue con uno más simple. Reiniciar el hilo o abrir un diálogo nuevo devuelve las cinco."
     >
       <span className="flex items-center gap-1" aria-hidden="true">
         {Array.from({ length: DIALOGUE_LIMIT }, (_, i) => (
@@ -41,7 +41,7 @@ function QualityMeter() {
       </span>
       <span>
         {degraded
-          ? 'Calidad reducida durante el resto de la sesión'
+          ? 'Calidad reducida en el resto de este hilo'
           : warn
             ? 'Queda 1 respuesta en calidad alta'
             : `${left} de ${DIALOGUE_LIMIT} respuestas en calidad alta`}
@@ -61,7 +61,6 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
   const inputRef = useRef<HTMLInputElement>(null);
   
   const { askOracle, isLoading, error } = useOracle();
-  const quotaLeft = useUsageStore((state) => Math.max(0, DIALOGUE_LIMIT - state.dialogue));
   const { addNotification } = useUIStore();
   const {
     currentSession,
@@ -96,10 +95,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     addNotification({
       type: 'success',
       title: 'Conversación Reiniciada',
-      message:
-        quotaLeft > 0
-          ? `Se descartó el hilo anterior. Quedan ${quotaLeft} respuestas en calidad alta.`
-          : 'Se descartó el hilo anterior. La calidad alta ya está agotada en esta sesión.'
+      message: `Se descartó el hilo anterior. Vuelves a tener ${DIALOGUE_LIMIT} respuestas en calidad alta.`
     });
   };
 
@@ -216,13 +212,13 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
         addMessage({
           speaker: 'ai',
           notice: true,
-          text: 'Queda una respuesta en calidad alta. Después de esa, la conversación sigue con un modelo más simple.',
+          text: 'Queda una respuesta en calidad alta en este hilo. Después de esa responde un modelo más simple.',
         });
       } else if (reply.tier?.degraded && !currentSession.messages.some((m) => m.notice && m.text.startsWith('Se agotó'))) {
         addMessage({
           speaker: 'ai',
           notice: true,
-          text: 'Se agotó la calidad alta de esta sesión. Desde aquí responde un modelo más simple.',
+          text: 'Se agotaron las respuestas en calidad alta de este hilo. Desde aquí responde un modelo más simple. Reiniciar la conversación las devuelve.',
         });
       }
 
@@ -268,7 +264,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
             <button
               onClick={handleRestart}
               className="text-gray-400 hover:text-teal-400 transition-colors p-2"
-              title="Descartar el hilo y empezar de nuevo. No devuelve las respuestas en calidad alta ya usadas."
+              title="Descartar el hilo y empezar de nuevo. Vuelve a habilitar las cinco respuestas en calidad alta."
             >
               <ArrowPathIcon className="w-6 h-6" />
             </button>
@@ -292,17 +288,11 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {currentSession.messages.length === 0 && (
-            <div className="h-full flex flex-col items-center justify-center gap-3">
+            <div className="h-full flex items-center justify-center">
               <p className="text-[#9aa6b8] text-sm text-center max-w-[46ch] leading-relaxed">
                 Escribe tu pregunta. {conceptName} responde en su propio registro
                 y sobre cualquier asunto, sea o no de su obra.
               </p>
-              {quotaLeft === 0 && (
-                <p className="text-[#e0b252] text-[13px] text-center max-w-[46ch] leading-relaxed">
-                  La calidad alta se agotó antes en esta sesión y reiniciar el hilo
-                  no la devuelve: responde el modelo más simple.
-                </p>
-              )}
             </div>
           )}
           {currentSession.messages.map((message) => message.notice ? (
