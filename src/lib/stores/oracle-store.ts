@@ -67,14 +67,10 @@ export const useOracleStore = create<OracleState>()(
           const newSession: OracleSession = {
             conceptId,
             conceptName,
-            messages: [
-              {
-                id: `welcome-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                speaker: 'ai',
-                text: `Saludos. Soy ${conceptName}. ¿Qué cuestiones filosóficas te inquietan? Estoy aquí para compartir contigo mis reflexiones y dialogar sobre los grandes temas del pensamiento.`,
-                timestamp: new Date(),
-              }
-            ],
+            /* Sin mensaje de bienvenida: era un saludo escrito a mano que
+               contradecía el registro del autor y que además entraba en el
+               historial como si fuese un turno suyo. */
+            messages: [],
             isActive: true,
             createdAt: new Date(),
             lastActivity: new Date(),

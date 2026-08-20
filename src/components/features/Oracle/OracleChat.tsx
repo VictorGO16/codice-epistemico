@@ -10,6 +10,7 @@ import ExportButton from '@/components/ui/ExportButton';
 import { exportOracleToPDF, exportToHTML, OracleExportData } from '@/lib/utils/export';
 import { IconDialogue } from '@/components/ui/Icons';
 import { philosophicalData } from '@/lib/data/philosophical-data';
+import { getExposition } from '@/lib/data/corpus';
 import AnimatedLoader from '@/components/ui/AnimatedLoader';
 import { AnimatedButton } from '@/components/ui/AnimatedCard';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -94,7 +95,10 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     // documento con jerarquía real.
     let content = '';
 
-    if (concept?.coreIdea) {
+    const exposition = getExposition(conceptId);
+    if (exposition) {
+      content += `## Punto de partida\n\n${exposition.thesis}\n\n${exposition.problem}\n\n`;
+    } else if (concept?.coreIdea) {
       content += `## Punto de partida\n\n${concept.coreIdea}\n\n`;
     }
 
@@ -223,6 +227,14 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          {currentSession.messages.length === 0 && (
+            <div className="h-full flex items-center justify-center">
+              <p className="text-[#9aa6b8] text-sm text-center max-w-[46ch] leading-relaxed">
+                Escribe tu pregunta. {conceptName} responde en su propio registro
+                y sobre cualquier asunto, sea o no de su obra.
+              </p>
+            </div>
+          )}
           {currentSession.messages.map((message) => (
             <div
               key={message.id}
