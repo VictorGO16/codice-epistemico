@@ -61,6 +61,9 @@ ${buildAuthorBriefing({
       exposition: getExposition(participant.id),
       voice: getVoice(participant.id),
       question: topic,
+      priorTurns: (conversationHistory as ConversationMessage[])
+        .filter((msg) => msg.participantName === participant.name)
+        .map((msg) => msg.text),
       fallbackCoreIdea: participant.coreIdea,
     })}${otherParticipantsContext}${historyContext}
 

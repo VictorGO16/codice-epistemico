@@ -32,10 +32,27 @@ export function authorVoice(name: string, extra?: string): string {
  * sobre qué acepta hablar. La gracia didáctica está en ver qué hacen sus
  * distinciones con un objeto que no las esperaba.
  */
+/**
+ * Contrato del turno.
+ *
+ * El informe describe cómo suena y qué piensa un autor. Nada describía qué
+ * tiene que HACER una respuesta, así que la forma del ejemplo de estilo pasaba
+ * a ser la forma obligatoria de todos los turnos. Esto va al final, es corto y
+ * es lo único del prompt que habla de la respuesta y no del autor.
+ */
+export const TURN_CONTRACT = `CÓMO SE RESPONDE UN TURNO:
+- Si la pregunta admite respuesta directa (un nombre, una fecha, un sí o un no), esa respuesta va en la primera oración y sin preámbulo. Las distinciones, el examen del término o la clasificación de la pregunta vienen después, y solo si aportan algo.
+- Si sabes o sospechas a qué o a quién se refiere quien pregunta, dilo y sigue. No pidas que te describan lo que puedes identificar por ti mismo, y nunca uses tu propia exigencia de rigor como razón para no contestar.
+- El tono de quien pregunta no es un tema. Si te insulta, te apura, escribe mal o usa jerga, responde el contenido y no comentes la forma: no califiques la pregunta, ni el enojo, ni el lenguaje del interlocutor.
+- La extensión la fija la pregunta. Un dato se responde en dos o tres frases. Solo se desarrolla cuando lo que se pregunta lo pide.
+- Los movimientos argumentales que se te describen son recursos disponibles, no un guion: no los apliques todos, ni siempre, ni en el mismo orden.
+- No abras el turno con la misma fórmula que el anterior ni reformules párrafos que ya dijiste.`;
+
 export const OPEN_SCOPE = `ALCANCE DE LA CONVERSACIÓN:
 - No hay tema vedado. Comida, música, drogas, deporte, política de hoy, una tontería de internet, la vida personal de quien pregunta: todo se aborda.
 - Nunca respondas que el asunto no corresponde, no es de tu competencia o se aleja del tema. Nunca redirijas hacia cuestiones "más filosóficas" ni pidas volver al temario.
-- Si el asunto es posterior a tu época o ajeno a tus escritos, entra igual: pide que te lo describan si hace falta y aplícale tus propias categorías y tu método. Que te resulte extraño es material de trabajo, no una excusa.
+- Si el asunto es posterior a tu época o ajeno a tus escritos, entra igual y aplícale tus propias categorías y tu método. Que te resulte extraño es material de trabajo, no una excusa.
+- Pedir que te describan algo es el último recurso, no el primero: solo si de verdad no puedes identificarlo, en una sola frase, y razonando ya sobre lo que sí entiendes. Nunca condiciones tu respuesta a que antes te den datos.
 - Puedes decir de paso que algo te es desconocido, pero solo de paso, y sigues razonando.
 - No moralices sobre la pregunta ni adviertas al interlocutor sobre lo que pregunta.`;
 
@@ -103,16 +120,40 @@ function questionTouchesDevelopment(question: string, development: string): bool
   return hits >= 2;
 }
 
+/**
+ * Aperturas ya gastadas. Se calcula, no se le pide al modelo que lo recuerde:
+ * es la parte del problema que una instrucción no resuelve y una lista sí.
+ */
+function openingsAlreadyUsed(priorTurns: string[]): string {
+  const openings = priorTurns
+    .slice(-4)
+    .map((t) => t.trim().split(/\s+/).slice(0, 9).join(' '))
+    .filter(Boolean);
+
+  return (
+    'APERTURAS QUE YA USASTE EN ESTA CONVERSACIÓN\n' +
+    openings.map((o) => `- «${o}...»`).join('\n') +
+    '\nEmpieza de otra manera. Si ya distinguiste sentidos de un término, no vuelvas a hacerlo: ya está hecho y ahora corresponde avanzar.'
+  );
+}
+
 /** Informe compacto que sustituye al volcado de la ficha completa. */
 export function buildAuthorBriefing(params: {
   name: string;
   exposition?: ConceptExposition;
   voice?: AuthorVoice;
   question?: string;
+  /**
+   * Turnos anteriores del propio autor en esta conversación.
+   * Mientras no haya ninguno, los anclajes son la única referencia de estilo.
+   * En cuanto los hay, ellos son mejor referencia que cualquier ejemplo
+   * externo, y seguir reinyectando el ejemplo convierte su forma en plantilla.
+   */
+  priorTurns?: string[];
   /** Respaldo para las entradas del corpus que aún no están migradas. */
   fallbackCoreIdea?: string;
 }): string {
-  const { name, exposition, voice, question, fallbackCoreIdea } = params;
+  const { name, exposition, voice, question, priorTurns = [], fallbackCoreIdea } = params;
   const parts: string[] = [];
 
   if (exposition) {
@@ -173,16 +214,23 @@ export function buildAuthorBriefing(params: {
     parts.push(`LÉXICO PROPIO\n${voice.lexicon.join(' · ')}`);
     parts.push('EVITA\n' + voice.avoid.map((a) => `- ${a}`).join('\n'));
     parts.push(OPEN_SCOPE);
-    parts.push(
-      `ASÍ SUENAS\nCopia la forma de este turno, no su contenido: el largo de las frases, los conectores, el orden en que se encadenan las cláusulas.\n«${voice.styleAnchor}»`,
-    );
-    parts.push(
-      `ASÍ ENTRAS EN UN ASUNTO QUE NO ES TUYO\nEste turno no rechaza el asunto, no advierte sobre él y no moraliza: lo somete a las distinciones del autor. Haz lo mismo con cualquier tema, por contemporáneo, crudo o incómodo que sea.\n«${voice.scopeAnchor}»`,
-    );
+
+    if (!priorTurns.length) {
+      parts.push(
+        `MUESTRA DE SU PROSA\nDe aquí se toma el vocabulario, el largo de las frases y el tipo de conectores. No se toma ni la estructura del turno ni la frase con que empieza.\n«${voice.styleAnchor}»`,
+      );
+      parts.push(
+        `CÓMO ENTRA EN UN ASUNTO QUE NO ES SUYO\nLo que hay que retener de este ejemplo es la conducta, no la forma: no rechaza el asunto, no advierte sobre él y no moraliza. Haz lo mismo con cualquier tema, por contemporáneo, crudo o incómodo que sea, y sin copiar su apertura.\n«${voice.scopeAnchor}»`,
+      );
+    } else {
+      parts.push(openingsAlreadyUsed(priorTurns));
+    }
   } else {
     parts.push(authorVoice(name));
     parts.push(OPEN_SCOPE);
   }
+
+  parts.push(TURN_CONTRACT);
 
   return parts.join('\n\n');
 }

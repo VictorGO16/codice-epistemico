@@ -47,14 +47,16 @@ export async function POST(request: NextRequest) {
         .join('\n');
     }
 
-    // Create the system prompt for the philosopher/scientist
-    /* El informe sustituye al volcado de la ficha completa: antes se enviaban
-       coreIdea, psychologyLink y methodologyLink enteros en cada turno. */
+    const priorTurns = (conversationHistory as { speaker: string; text: string }[])
+      .filter((msg) => msg.speaker !== 'user')
+      .map((msg) => msg.text);
+
     const briefing = buildAuthorBriefing({
       name: concept.name,
       exposition: getExposition(conceptId),
       voice: getVoice(conceptId),
       question: message,
+      priorTurns,
       fallbackCoreIdea: concept.coreIdea,
     });
 
@@ -64,7 +66,7 @@ ${briefing}
 
 ${BASE_STYLE}
 
-EXTENSIÓN: entre 150 y 300 palabras. Responde a lo que se te pregunta; no abras temas que no vienen al caso.
+EXTENSIÓN: nunca más de 300 palabras, y el mínimo lo fija la pregunta. Si lo que se pregunta se contesta en dos frases, se contesta en dos frases: no rellenes para alcanzar un largo. No abras temas que no vienen al caso.
 ${conversationContext ? `\nLo dicho hasta aquí:\n${conversationContext}\n` : ''}
 Pregunta: ${message}`;
 
