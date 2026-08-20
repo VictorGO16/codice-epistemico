@@ -7,6 +7,19 @@ interface ConversationMessage {
   text: string;
 }
 
+export interface TierInfo {
+  model: string;
+  degraded: boolean;
+  remaining: number;
+  warn: boolean;
+  limit: number;
+}
+
+export interface OracleReply {
+  text: string;
+  tier?: TierInfo;
+}
+
 export function useOracle() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,8 +27,9 @@ export function useOracle() {
   const askOracle = async (
     conceptId: string,
     message: string,
-    conversationHistory: ConversationMessage[] = []
-  ): Promise<string> => {
+    conversationHistory: ConversationMessage[] = [],
+    usedHighQuality = 0
+  ): Promise<OracleReply> => {
     setIsLoading(true);
     setError(null);
 
@@ -29,6 +43,7 @@ export function useOracle() {
           conceptId,
           message,
           conversationHistory,
+          usedHighQuality,
         }),
       });
 
@@ -43,7 +58,7 @@ export function useOracle() {
         throw new Error(data.error || 'Oracle response was not successful');
       }
 
-      return data.response;
+      return { text: data.response as string, tier: data.tier as TierInfo | undefined };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(errorMessage);
@@ -174,7 +189,11 @@ export function useParadigmLab() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const analyzeWithParadigm = async (paradigmId: string, objectOfStudy: string) => {
+  const analyzeWithParadigm = async (
+    paradigmId: string,
+    objectOfStudy: string,
+    usedHighQuality = 0
+  ) => {
     setIsLoading(true);
     setError(null);
 
@@ -187,6 +206,7 @@ export function useParadigmLab() {
         body: JSON.stringify({
           paradigmId,
           objectOfStudy,
+          usedHighQuality,
         }),
       });
 

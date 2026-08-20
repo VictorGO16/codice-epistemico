@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { WRITER_THINKING } from '@/lib/ai/models';
+import { resolveTier } from '@/lib/ai/quota';
 
 export async function POST(request: NextRequest) {
   try {
-    const { topic, participants, messages } = await request.json();
+    const { topic, participants, messages, usedHighQuality = 0 } = await request.json();
 
     if (!topic || !participants || !messages) {
       return NextResponse.json(
@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { success: false, error: 'API key no configurada' },
         { status: 500 }
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
+    const tier = resolveTier(Number(usedHighQuality) || 0, 'heavy');
 
     // Build the debate transcript
     const transcript = messages.map((msg: { participantName: string; text: string }) =>
@@ -72,9 +72,11 @@ CRITERIOS DE EVALUACIÓN:
 
 IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones adicionales:`;
 
-    const result = await model.generateContent(analysisPrompt);
-    const response = result.response;
-    let text = response.text();
+    let text = await generateText({
+      model: tier.writer,
+      turns: [{ role: 'user', text: analysisPrompt }],
+      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+    });
 
     // Clean up the response to ensure it's valid JSON
     text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
@@ -100,6 +102,13 @@ IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones a
       return NextResponse.json({
         success: true,
         analysis,
+        tier: {
+          model: tier.writer,
+          degraded: tier.degraded,
+          remaining: tier.remaining,
+          warn: tier.warn,
+          limit: tier.limit,
+        },
       });
 
     } catch (parseError) {
@@ -129,6 +138,13 @@ IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones a
       return NextResponse.json({
         success: true,
         analysis: fallbackAnalysis,
+        tier: {
+          model: tier.writer,
+          degraded: tier.degraded,
+          remaining: tier.remaining,
+          warn: tier.warn,
+          limit: tier.limit,
+        },
       });
     }
 

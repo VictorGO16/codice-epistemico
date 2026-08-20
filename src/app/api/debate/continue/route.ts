@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BASE_STYLE, MODERATOR_VOICE } from '@/lib/prompts/voice';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { WRITER_THINKING } from '@/lib/ai/models';
+import { resolveTier } from '@/lib/ai/quota';
 
 export async function POST(request: NextRequest) {
   try {
-    const { topic, participants, conversationHistory, userInput } = await request.json();
+    const { topic, participants, conversationHistory, userInput, usedHighQuality = 0 } = await request.json();
 
     if (!topic || !participants || participants.length === 0) {
       return NextResponse.json(
@@ -15,14 +15,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { success: false, error: 'API key no configurada' },
         { status: 500 }
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
+    const tier = resolveTier(Number(usedHighQuality) || 0, 'heavy');
 
     // Build participant details
     const participantDetails = participants.map((p: { name: string; year: number; coreIdea: string }) => 
@@ -77,9 +77,11 @@ Ejemplo de forma (no de contenido):
   }
 ]`;
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    const text = await generateText({
+      model: tier.writer,
+      turns: [{ role: 'user', text: prompt }],
+      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+    });
 
     // Try to parse JSON response
     let parsedResponse;
@@ -103,6 +105,13 @@ Ejemplo de forma (no de contenido):
     return NextResponse.json({
       success: true,
       turns: parsedResponse,
+      tier: {
+        model: tier.writer,
+        degraded: tier.degraded,
+        remaining: tier.remaining,
+        warn: tier.warn,
+        limit: tier.limit,
+      },
     });
 
   } catch (error: unknown) {

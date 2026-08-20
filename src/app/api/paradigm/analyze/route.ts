@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BASE_STYLE } from '@/lib/prompts/voice';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { philosophicalData } from '@/lib/data/philosophical-data';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { generateText, hasApiKey } from '@/lib/ai/client';
+import { WRITER_THINKING } from '@/lib/ai/models';
+import { resolveTier } from '@/lib/ai/quota';
 
 export async function POST(request: NextRequest) {
   try {
-    const { paradigmId, objectOfStudy } = await request.json();
+    const { paradigmId, objectOfStudy, usedHighQuality = 0 } = await request.json();
 
     if (!paradigmId || !objectOfStudy) {
       return NextResponse.json(
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!hasApiKey()) {
       return NextResponse.json(
         { success: false, error: 'API key no configurada' },
         { status: 500 }
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
+    const tier = resolveTier(Number(usedHighQuality) || 0, 'heavy');
 
     const analysisPrompt = `Analizas un objeto de estudio desde un paradigma epistemológico determinado, para un curso de epistemología y metodología.
 
@@ -69,9 +69,11 @@ ${BASE_STYLE}
 
 Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
 
-    const result = await model.generateContent(analysisPrompt);
-    const response = result.response;
-    let text = response.text();
+    let text = await generateText({
+      model: tier.writer,
+      turns: [{ role: 'user', text: analysisPrompt }],
+      thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
+    });
 
     // Clean up the response to ensure it's valid JSON
     text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
@@ -87,6 +89,13 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       return NextResponse.json({
         success: true,
         analysis,
+        tier: {
+          model: tier.writer,
+          degraded: tier.degraded,
+          remaining: tier.remaining,
+          warn: tier.warn,
+          limit: tier.limit,
+        },
       });
 
     } catch (parseError) {
@@ -105,6 +114,13 @@ Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
       return NextResponse.json({
         success: true,
         analysis: fallbackAnalysis,
+        tier: {
+          model: tier.writer,
+          degraded: tier.degraded,
+          remaining: tier.remaining,
+          warn: tier.warn,
+          limit: tier.limit,
+        },
       });
     }
 
