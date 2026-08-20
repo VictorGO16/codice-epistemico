@@ -100,6 +100,49 @@ Para la psicología la consecuencia es incómoda y utilizable. Si no hay interac
         note: 'El paso de la objetividad sin paréntesis a la objetividad entre paréntesis y sus consecuencias para la convivencia.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Sostuvo que el sistema nervioso no recibe información del medio sino que opera con clausura sobre sus propios estados, y que en consecuencia nadie instruye a nadie: solo se gatillan cambios que la estructura del otro determina. Esa tesis, que en biología es técnica, reorganizó la psicoterapia sistémica y la educación en Chile y en buena parte de América Latina.',
+      lineages: [
+        {
+          name: 'Maturana y Varela, De máquinas y seres vivos',
+          year: 1973,
+          what: 'Formulan la autopoiesis: un ser vivo es una red de procesos que produce los componentes que producen la red. La identidad del sistema está en su organización y no en sus materiales.',
+        },
+        {
+          name: 'El árbol del conocimiento',
+          year: 1984,
+          what: 'Lleva la biología del conocer a un público amplio con la fórmula todo lo dicho es dicho por un observador, y con la idea de que vivir es conocer. Es el texto por el que la mayoría de los psicólogos chilenos lo lee.',
+        },
+        {
+          name: 'La terapia sistémica de segunda cibernética',
+          year: 1985,
+          what: 'El terapeuta deja de ser un observador externo del sistema familiar y pasa a formar parte del sistema que observa. Cambia qué se considera una intervención y quién es responsable de sus efectos.',
+        },
+        {
+          name: 'Maturana y Verden-Zöller, Amor y juego',
+          year: 1993,
+          what: 'Definen el amor como la conducta que constituye al otro como legítimo otro en la convivencia, y lo tratan como fenómeno biológico y no moral. Es la base de su influencia en educación y en primera infancia.',
+        },
+      ],
+      development: `El punto de partida es contraintuitivo y hay que tomarlo en serio antes de discutirlo. Si el sistema nervioso es operacionalmente cerrado, no distingue entre una perturbación que viene de afuera y una que se origina en su propia actividad; lo que hay son cambios de estado determinados por su estructura, no representaciones de un mundo externo. De ahí se sigue que el medio no instruye al organismo, solo gatilla en él lo que su estructura permite, y que dos personas expuestas a lo mismo no reciben lo mismo.
+
+Para la psicología esto cae directamente sobre la noción de intervención. Si nadie puede determinar lo que le pasa a otro, entonces enseñar, tratar y persuadir no son transmisiones sino acoplamientos: uno perturba y el otro cambia de acuerdo con su propia estructura. La terapia sistémica sacó de ahí una consecuencia práctica concreta, que fue abandonar la pretensión de corregir a la familia desde afuera y asumir que el terapeuta, al observar, ya está participando. Eso trajo una ganancia real en humildad clínica y una dificultad igual de real para evaluar resultados, porque un marco que niega la instrucción tiene problemas para decir qué produjo la mejoría.
+
+Su recepción chilena merece mención aparte porque es un dato disciplinar. La biología del conocer entró a las escuelas de psicología, a la formación de profesores y al discurso público con una intensidad que no tiene equivalente en otros países, y en ese trayecto se ablandó: pasó de ser una tesis sobre clausura operacional a ser un repertorio de frases sobre el respeto y la aceptación del otro. Vale la pena leer el original para ver cuánto más duro es.
+
+Lo que le queda a quien investiga es una incomodidad productiva. Si todo lo dicho es dicho por un observador, entonces el investigador no está fuera de lo que describe, y la objetividad entendida como acceso sin observador no es una meta alcanzable sino una descripción incorrecta de lo que ocurre. Maturana propone ponerla entre paréntesis: no negarla, sino explicitar el dominio de observación desde el cual una afirmación es válida. Eso es exigible y verificable en un informe de investigación.`,
+      today: [
+        'La terapia sistémica y las prácticas colaborativas con familias tienen presencia fuerte en la formación clínica chilena, y su encuadre no directivo viene de aquí.',
+        'La educación emocional y los programas de convivencia escolar usan su vocabulario de aceptación del otro, casi siempre sin el aparato biológico que lo sostenía.',
+        'La discusión sobre si el cerebro representa el mundo o construye estados propios sigue viva entre el enfoque representacional clásico y las teorías enactivas y de inferencia activa.',
+      ],
+      caveats: [
+        'Su circulación popular lo convirtió en un autor de frases sobre el amor y el respeto, lo que borra que su tesis central es una afirmación técnica sobre organización de sistemas vivos, discutible con argumentos de biología.',
+        'De la clausura operacional no se sigue que cada uno viva en su propia realidad y que todo valga igual. Ese salto relativista es frecuente en la recepción psicológica y no está en el texto, que insiste en el acoplamiento estructural y en el dominio consensual.',
+      ],
+    },
   },
 
   varela: {
@@ -194,6 +237,49 @@ Para la psicología esto se traduce en decisiones de diseño. Un reporte obtenid
         note: 'Con Lutz y otros. El experimento donde los reportes de preparación agrupan los ensayos y revelan patrones de sincronía invisibles al promedio.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Propuso que el estudio de la mente necesita datos en primera persona recogidos con método, articulados con la medición en tercera persona, y llamó neurofenomenología a ese programa. Es la propuesta más seria que existe para sacar a la experiencia de la categoría de dato blando sin reducirla a un puntaje.',
+      lineages: [
+        {
+          name: 'Varela, Thompson y Rosch, De cuerpo presente',
+          year: 1991,
+          what: 'Fundan el enactivismo: la cognición no es representación de un mundo previo sino la actividad de un organismo que hace emerger un mundo. Introducen además la tradición budista como interlocutora metodológica y no decorativa.',
+        },
+        {
+          name: 'Neurophenomenology, a methodological remedy for the hard problem',
+          year: 1996,
+          what: 'Propone el círculo virtuoso: entrenar el reporte en primera persona para que genere categorías que guíen el análisis de los registros fisiológicos, y que esos registros a su vez refinen el reporte.',
+        },
+        {
+          name: 'Lutz, Lachaux, Martinerie y Varela',
+          year: 2002,
+          what: 'Ponen el programa a prueba: clasifican ensayos según el reporte de los propios participantes sobre su estado de preparación y encuentran patrones de sincronía neuronal que el promedio ciego a esos reportes ocultaba.',
+        },
+        {
+          name: 'Claire Petitmengin, microfenomenología',
+          year: 2006,
+          what: 'Desarrolla la técnica de entrevista que el programa necesitaba, con procedimientos para llevar al participante al detalle de un episodio vivido y para evaluar la calidad de ese acceso.',
+        },
+      ],
+      development: `El problema que Varela ataca es viejo y la psicología lo había resuelto por decreto: la experiencia es privada, por lo tanto no es dato, por lo tanto se la reemplaza por conducta o por señal fisiológica. Su objeción no es sentimental sino técnica. Cuando se promedian cientos de ensayos de un experimento electrofisiológico se está suponiendo que el sujeto estaba en el mismo estado en todos ellos, y eso es falso: a veces estaba atento, a veces distraído, a veces anticipando. Esa variabilidad se trata como ruido y se elimina, cuando podría ser información.
+
+El experimento de 2002 es la demostración de que la alternativa funciona. En lugar de promediar ciego, entrenaron a los participantes para que informaran, ensayo por ensayo, en qué estado de preparación se encontraban, y usaron esos reportes para agrupar los registros. Los patrones de sincronía que aparecieron dentro de cada grupo eran estables y quedaban invisibles en el promedio general. El reporte en primera persona no fue un adorno interpretativo: fue la variable que hizo interpretable el dato fisiológico.
+
+Lo que el programa exige es lo que lo hace difícil. No sirve preguntarle a alguien qué sintió, porque la respuesta espontánea es una opinión reconstruida. Hace falta una técnica de entrevista que lleve al participante al episodio concreto, que evite las generalidades y que permita evaluar si el acceso fue bueno, y hace falta entrenamiento por ambas partes. Esa exigencia explica que la neurofenomenología tenga menos estudios de los que su prestigio sugiere: es cara y lenta.
+
+Para un estudiante que discute métodos, este es el mejor contraejemplo disponible frente a la idea de que rigor y subjetividad se oponen. Aquí la primera persona no relaja el control, lo aumenta, porque obliga a especificar el estado del sujeto en lugar de suponerlo constante. Y deja una pregunta incómoda para cualquier diseño experimental: qué se está tratando como ruido y con qué derecho.`,
+      today: [
+        'La investigación sobre meditación, dolor crónico y experiencia en psicosis usa entrevistas microfenomenológicas junto a medidas fisiológicas, que es la aplicación directa del programa.',
+        'La discusión sobre terapias asistidas con psicodélicos enfrenta exactamente su problema: qué se mide cuando se mide un efecto, si escalas de síntomas o la transformación de la experiencia que los pacientes reportan.',
+        'La crítica al promedio como operación por defecto reaparece en el análisis de datos intensivos longitudinales y en los diseños de caso único con muchas medidas.',
+      ],
+      caveats: [
+        'Neurofenomenología no significa poner un cuestionario de experiencia junto a un registro cerebral. Sin entrenamiento del reporte y sin que las categorías de la primera persona guíen el análisis de la tercera, el círculo virtuoso no ocurre y solo hay dos conjuntos de datos puestos uno al lado del otro.',
+        'Su cercanía con el budismo se cita como si fuera una afinidad espiritual, cuando lo que a él le interesaba era una tradición con métodos entrenados de observación de la experiencia, es decir, un recurso metodológico.',
+      ],
+    },
   },
 
   enactivismo: {
@@ -287,6 +373,49 @@ Para la psicología esto reordena el diseño antes que la teoría. Si la cognici
         note: 'Thompson: la continuidad entre vida y mente, y el argumento de que la significación exige un sistema autónomo.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Sostiene que la cognición no consiste en construir representaciones de un mundo dado sino en la actividad de un cuerpo que hace emerger un mundo de significados a partir de lo que le importa para seguir vivo. Es la alternativa más articulada al cognitivismo clásico y la que más ha cambiado el diseño experimental en percepción y desarrollo.',
+      lineages: [
+        {
+          name: 'James Gibson, El enfoque ecológico de la percepción visual',
+          year: 1979,
+          what: 'Introduce las affordances: lo que se percibe no son formas y colores que después se interpretan, sino posibilidades de acción relativas a un cuerpo concreto. Antecedente directo aunque anterior al término.',
+        },
+        {
+          name: 'Varela, Thompson y Rosch, De cuerpo presente',
+          year: 1991,
+          what: 'Acuñan enacción y articulan biología, fenomenología y ciencia cognitiva en un programa único, con la crítica al representacionalismo como eje.',
+        },
+        {
+          name: 'Andy Clark y David Chalmers, La mente extendida',
+          year: 1998,
+          what: 'Argumentan que los procesos cognitivos pueden incluir recursos externos al cráneo cuando cumplen el papel funcional adecuado, lo que abre la discusión sobre dónde termina el sistema que se estudia.',
+        },
+        {
+          name: 'Esther Thelen y Linda Smith, sistemas dinámicos en el desarrollo',
+          year: 1994,
+          what: 'Explican hitos del desarrollo motor y cognitivo sin recurrir a programas internos, mostrando que la conducta emerge de la interacción entre cuerpo, tarea y entorno.',
+        },
+      ],
+      development: `El cognitivismo que la psicología adoptó en los años sesenta describe la mente como un sistema que recibe entradas, las representa y opera sobre esas representaciones. El enactivismo discute la primera premisa. Un organismo no encuentra un mundo neutral que después interpreta: encuentra un entorno ya organizado en términos de lo que le sirve, lo que lo amenaza y lo que puede hacer, y esa organización depende de qué cuerpo tiene y de qué necesita para conservarse. La silla no se percibe primero como forma y después como sentable.
+
+La consecuencia experimental es más concreta de lo que la formulación sugiere. Si la percepción depende de la acción, entonces estudiarla con un sujeto inmóvil mirando una pantalla es estudiar un caso especial y no el caso general. De ahí vienen los diseños con movimiento libre, con manipulación de objetos y con registro en contexto, y de ahí viene también la crítica al laboratorio como escenario que produce el fenómeno que después atribuye al organismo.
+
+En desarrollo el aporte es todavía más claro. Thelen y Smith mostraron que hitos que se explicaban por la maduración de un programa interno se entienden mejor como estados estables que emergen de la relación entre el peso del cuerpo, la fuerza disponible y la tarea, y que cambian cuando se cambia cualquiera de esos factores. El famoso error del bebé que sigue buscando un objeto donde lo encontró antes se reprodujo y se hizo desaparecer manipulando la postura, lo que es un resultado difícil de explicar con una teoría de estadios cognitivos.
+
+Queda una tensión que la corriente no resolvió y que conviene no esconder. Hay tareas cognitivas donde la explicación representacional funciona muy bien, como el razonamiento simbólico o la memoria de trabajo con material verbal, y las versiones más radicales del enactivismo no ofrecen una alternativa igual de precisa. La versión moderada, que reserva la representación para los casos que la exigen y explica el resto por acoplamiento, es la que hoy está produciendo investigación.`,
+      today: [
+        'Los diseños con movimiento libre, realidad virtual y registro en contexto natural desplazan al sujeto inmóvil frente a la pantalla en investigación en percepción y atención.',
+        'Los modelos de sistemas dinámicos se usan en psicología del desarrollo y en psicopatología para describir transiciones y estados estables sin postular programas internos.',
+        'La cognición corporizada sostiene intervenciones en rehabilitación y en trastornos alimentarios, donde el objetivo es la relación entre el cuerpo y el entorno y no una creencia por corregir.',
+      ],
+      caveats: [
+        'Corporizado se usa a veces como sinónimo de que el cuerpo influye en la mente, lo que es trivial y no es la tesis. La afirmación fuerte es que el vehículo del proceso cognitivo incluye al cuerpo y al entorno, y esa sí es discutible.',
+        'La tesis de la mente extendida no es una consecuencia obligada del enactivismo, y varios enactivistas la rechazan. Presentar las cuatro E como un bloque unificado oculta desacuerdos importantes entre ellas.',
+      ],
+    },
   },
 
   met_cuantitativo: {
@@ -381,6 +510,49 @@ El error más común del estudiante es tratar el indicador como si fuera el cons
         note: 'Open Science Collaboration: cien replicaciones directas y la constatación de que menos de la mitad sobrevive.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es el método con que la psicología construyó casi todo lo que puede afirmar sobre poblaciones, y también el que produjo su crisis más seria. Su promesa no es la certeza sino el control: permite decir con qué probabilidad un resultado se debe al azar y qué explicaciones alternativas quedaron descartadas por el diseño.',
+      lineages: [
+        {
+          name: 'Ronald Fisher, The Design of Experiments',
+          year: 1935,
+          what: 'Introduce la aleatorización, el diseño factorial y el contraste de la hipótesis nula. La aleatorización es su aporte mayor: es lo que permite atribuir una diferencia al tratamiento y no a las características previas de los grupos.',
+        },
+        {
+          name: 'Cronbach y Meehl, validez de constructo',
+          year: 1955,
+          what: 'Establecen que un instrumento no se valida mostrando que mide algo sino poniendo a prueba la red de relaciones que su constructo predice. Es el criterio que separa un test de una batería de preguntas.',
+        },
+        {
+          name: 'Jacob Cohen, Statistical Power Analysis',
+          year: 1969,
+          what: 'Muestra que la potencia típica de los estudios en psicología era demasiado baja para detectar los efectos que buscaban, y da las herramientas para calcular el tamaño muestral necesario antes de recoger datos.',
+        },
+        {
+          name: 'Open Science Collaboration, reproducibilidad de la ciencia psicológica',
+          year: 2015,
+          what: 'Replica cien estudios y reproduce alrededor de un tercio de los efectos, lo que obliga a revisar prácticas de análisis y de publicación que la disciplina daba por buenas.',
+        },
+      ],
+      development: `Un diseño cuantitativo es una máquina para descartar explicaciones rivales. Cuando se asigna al azar a los participantes, lo que se consigue no es un grupo idéntico a otro sino que las diferencias previas se repartan sin sistema, de modo que ya no puedan explicar el resultado. Cuando se mide antes y después, se descarta que la diferencia estuviera desde el principio. Cada elemento del diseño existe para cerrarle la puerta a una interpretación alternativa, y esa es la operación epistemológica que hay debajo de la estadística.
+
+El eslabón débil no suele ser el análisis sino la medición. Antes de calcular cualquier cosa hay que haber decidido qué operaciones cuentan como observación del constructo, y esa decisión determina todo lo que viene después. Un puntaje total de una escala supone que los ítems miden lo mismo, que la distancia entre 2 y 3 equivale a la que hay entre 4 y 5, y que el instrumento funciona igual en los grupos que se comparan. Ninguno de esos supuestos es gratis y todos son verificables, aunque muchas tesis los den por hechos.
+
+La crisis de replicación mostró qué pasa cuando el aparato funciona sin esos cuidados. Un conjunto de decisiones tomadas con los datos ya a la vista, cuáles casos excluir, qué covariables incluir, cuándo dejar de recolectar, basta para producir resultados significativos a partir de ruido, sin que nadie mienta. La respuesta no fue abandonar el método sino atarse las manos por anticipado: preregistro, potencia calculada antes, reporte de tamaños del efecto e intervalos, y datos disponibles.
+
+Para un trabajo de curso, el error más frecuente no es técnico sino epistemológico. Consiste en preguntar qué prueba corresponde aplicar antes de haber preguntado qué explicación alternativa quedaría viva si el resultado sale significativo. La prueba se elige al final y casi siempre es obvia; lo que decide la calidad de un estudio es el diseño, y el diseño se juega en identificar qué más podría estar produciendo lo que uno espera encontrar.`,
+      today: [
+        'El preregistro, el cálculo de potencia previo y el reporte de tamaños del efecto son requisitos crecientes en revistas de psicología y en algunos comités de tesis.',
+        'La invarianza de medición es la comprobación que decide si dos grupos culturales pueden compararse en una misma escala, y suele omitirse en estudios que igual comparan.',
+        'El uso de instrumentos normados en otras poblaciones sin adaptación ni validación local es un problema recurrente en investigación chilena, y afecta directamente lo que un puntaje significa.',
+      ],
+      caveats: [
+        'Un valor p no dice cuán probable es que la hipótesis sea verdadera ni cuán grande es el efecto. Dice qué tan improbable sería un resultado así si el efecto fuera exactamente cero, que es una afirmación mucho más pobre de lo que su uso sugiere.',
+        'La significación estadística y la relevancia práctica son cosas distintas: con muestras grandes, diferencias sin ninguna importancia clínica salen significativas, y no reportar el tamaño del efecto deja al lector sin manera de notarlo.',
+      ],
+    },
   },
 
   met_cualitativo: {
@@ -476,6 +648,49 @@ El error más común del estudiante es entregar una lista de temas que reproduce
         note: 'Charmaz: la versión constructivista, que abandona el supuesto de un investigador sin marco previo.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es el diseño que corresponde cuando el objeto es el significado que algo tiene para alguien o el proceso por el cual una práctica se sostiene, y no la magnitud de una diferencia. No es investigación cuantitativa sin números ni un paso previo a la de verdad: tiene preguntas propias, criterios de rigor propios y modos propios de fallar.',
+      lineages: [
+        {
+          name: 'Glaser y Strauss, El descubrimiento de la teoría fundamentada',
+          year: 1967,
+          what: 'Proponen construir teoría desde los datos mediante muestreo teórico y comparación constante, con el criterio de saturación como regla para decidir cuándo dejar de recolectar.',
+        },
+        {
+          name: 'Lincoln y Guba, Naturalistic Inquiry',
+          year: 1985,
+          what: 'Reemplazan validez, confiabilidad y generalización por credibilidad, auditabilidad, confirmabilidad y transferibilidad. Es el aparato de rigor que se enseña hoy en casi todo curso de metodología cualitativa.',
+        },
+        {
+          name: 'Jonathan Smith, análisis fenomenológico interpretativo',
+          year: 1996,
+          what: 'Formaliza un método con muestras pequeñas y análisis caso a caso, con la doble hermenéutica explícita: el investigador interpreta a alguien que ya interpreta su experiencia.',
+        },
+        {
+          name: 'Braun y Clarke, análisis temático',
+          year: 2006,
+          what: 'Sistematizan el método cualitativo más usado en psicología en seis fases, y años después insisten en llamarlo reflexivo para combatir la idea de que los temas emergen solos.',
+        },
+      ],
+      development: `La primera decisión de un diseño cualitativo es de muestreo y casi siempre se toma mal. No se busca representatividad estadística sino casos que informen sobre el fenómeno, y por eso se eligen deliberadamente: típicos, extremos, desviados, de máxima variación. Un muestreo intencionado bien argumentado no es una muestra pequeña con la que hubo que conformarse, es una selección hecha por razones que se pueden defender. Cuando una tesis escribe que entrevistó a doce personas por disponibilidad, no está haciendo muestreo intencionado, está describiendo una limitación.
+
+La segunda decisión es cuándo parar, y ahí opera la saturación. La regla dice que se deja de recolectar cuando los casos nuevos ya no modifican las categorías del análisis, lo que supone algo que muchos estudios no hacen: analizar mientras se recolecta. Si todas las entrevistas se hacen primero y se analizan después, la saturación no puede haberse comprobado y afirmarla es una formalidad vacía.
+
+El aparato de rigor de Lincoln y Guba responde a una pregunta legítima: si no hay validez interna ni generalización, qué distingue un buen análisis de una opinión ordenada. Sus respuestas son verificables. Credibilidad significa haber buscado activamente casos que contradigan la interpretación propuesta, y no solo los que la ilustran. Auditabilidad significa que otra persona pueda seguir el camino desde el fragmento de entrevista hasta la conclusión. Transferibilidad significa describir el contexto con suficiente detalle como para que el lector decida si el hallazgo le sirve, lo que traslada el juicio de generalización a quien lee.
+
+El modo característico de fallar es escribir un informe que solo confirma. Se citan los fragmentos que apoyan cada tema, se omite el material incómodo y se afirma que las categorías emergieron de los datos, lo que contradice el marco interpretativo que la propia tesis invoca. La corrección no es difícil ni cara: dejar constancia de las decisiones de codificación, mostrar los casos que no calzaron y explicar qué se hizo con ellos.`,
+      today: [
+        'El análisis temático reflexivo es el método más usado en tesis de psicología, y sus autoras han tenido que publicar aclaraciones porque se aplica mal con frecuencia.',
+        'Los comités de ética exigen consentimiento informado y resguardo de identidad en materiales donde el relato mismo puede identificar a la persona, lo que plantea un problema propio de este tipo de datos.',
+        'La investigación cualitativa en salud sostiene buena parte de lo que se sabe sobre adherencia a tratamientos y sobre experiencia de enfermedad, donde un cuestionario no alcanza a la pregunta.',
+      ],
+      caveats: [
+        'Los temas no emergen de los datos: alguien los construye desde una posición y con un marco. La fórmula emergieron del análisis es la frase que más delata que no hubo reflexividad.',
+        'Muestra pequeña no equivale a estudio cualitativo. Un diseño cualitativo se define por el tipo de pregunta y por el modo de analizar, no por el número de participantes, y hacer diez entrevistas para calcular porcentajes es un error de diseño y no una variante.',
+      ],
+    },
   },
 
   met_mixto: {
@@ -570,6 +785,49 @@ El error más común del estudiante es llamar mixto a un estudio que aplicó una
         note: 'Fetters, Curry y Creswell: integración por conexión, construcción y fusión, y la exhibición conjunta como herramienta.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Combinan diseños cuantitativos y cualitativos para responder preguntas que ninguno de los dos responde solo, y su dificultad real no es técnica sino de integración: la mayoría de los estudios que se declaran mixtos yuxtaponen dos investigaciones en el mismo informe sin que ninguna hable con la otra.',
+      lineages: [
+        {
+          name: 'Campbell y Fiske, la matriz multirrasgo multimétodo',
+          year: 1959,
+          what: 'Establecen que un constructo se valida cuando medidas distintas del mismo rasgo convergen y medidas del mismo método sobre rasgos distintos no. Es el antecedente técnico de la triangulación.',
+        },
+        {
+          name: 'Tashakkori y Teddlie, Handbook of Mixed Methods',
+          year: 2003,
+          what: 'Adoptan el pragmatismo como marco y proponen que la pregunta de investigación, y no la lealtad paradigmática, decide qué métodos se combinan.',
+        },
+        {
+          name: 'Creswell y Plano Clark, Designing and Conducting Mixed Methods Research',
+          year: 2007,
+          what: 'Ordenan los diseños en convergente, explicativo secuencial y exploratorio secuencial, y fijan el vocabulario con que hoy se escriben las tesis mixtas.',
+        },
+        {
+          name: 'Los criterios de calidad de los diseños mixtos',
+          year: 2011,
+          what: 'Las guías publicadas por institutos de investigación en salud incorporan la exigencia de mostrar en qué punto y de qué modo se integraron los dos componentes, y no solo que ambos existieron.',
+        },
+      ],
+      development: `Los tres diseños básicos responden a tres situaciones distintas y conviene no confundirlos. En el convergente se recogen ambos tipos de datos en paralelo y se comparan al final, lo que sirve cuando se quiere ver si dos vías de acceso al mismo fenómeno coinciden. En el explicativo secuencial primero se mide y después se entrevista, para entender por qué salió lo que salió, y es el diseño natural cuando un resultado cuantitativo resulta contraintuitivo. En el exploratorio secuencial primero se explora en profundidad y después se construye un instrumento, y es el camino correcto cuando no existe una escala adecuada para la población o el constructo.
+
+La objeción de fondo es la inconmensurabilidad paradigmática: si un enfoque supone una realidad independiente y el otro supone que la realidad se construye en el lenguaje, combinarlos sería incoherente. La respuesta pragmatista, que es la que adoptaron los manuales, dice que el criterio de elección es la utilidad para la pregunta y no la lealtad ontológica. Es una respuesta legítima y también es una manera de esquivar la discusión, y conviene reconocer eso en lugar de citarla como si zanjara el asunto.
+
+El problema práctico está en otra parte. Un estudio mixto de verdad tiene un punto de integración identificable: los resultados cuantitativos se usaron para seleccionar los casos que se entrevistaron, o las categorías cualitativas se usaron para construir los ítems, o los hallazgos discrepantes obligaron a revisar el análisis. Si el informe tiene un capítulo de resultados cuantitativos, otro de cualitativos y una discusión que los menciona a los dos, no hay diseño mixto: hay dos estudios en el mismo documento.
+
+Los resultados discrepantes son el caso más interesante y el que suele esconderse. Cuando la escala dice una cosa y las entrevistas dicen otra, la tentación es explicar la discrepancia como limitación. La lectura productiva es la contraria: la discrepancia suele indicar que el instrumento y la experiencia no están hablando del mismo fenómeno, y eso es un hallazgo sobre la medición que ninguno de los dos componentes habría producido por separado.`,
+      today: [
+        'La investigación en evaluación de programas y en salud pública usa diseños mixtos de forma estándar, porque necesita estimar efectos y a la vez entender por qué una intervención funciona en un contexto y no en otro.',
+        'La construcción y adaptación de instrumentos a población chilena sigue el diseño exploratorio secuencial: primero entrevistas y grupos focales, después el instrumento y su validación.',
+        'Las guías de reporte para estudios mixtos exigen declarar el punto de integración, lo que convierte en visible el defecto más común de estos diseños.',
+      ],
+      caveats: [
+        'Recoger dos tipos de datos no es un diseño mixto. Sin un punto de integración explícito, lo que hay es yuxtaposición, y es el defecto más frecuente en tesis que se declaran mixtas.',
+        'Triangular no significa que dos métodos deban confirmarse mutuamente. La versión original en Campbell y Fiske es sobre validez de constructo, y tratar toda discrepancia como error de medida hace perder justamente la información más valiosa.',
+      ],
+    },
   },
 };
 

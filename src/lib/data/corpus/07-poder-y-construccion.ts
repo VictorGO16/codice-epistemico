@@ -98,6 +98,49 @@ Para la psicología cambia el estatuto de sus objetos y de sus instrumentos. Las
         note: 'Contra la hipótesis represiva: la modernidad no calló el sexo, lo obligó a hablar y multiplicó los discursos sobre él.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Convirtió a la psicología en objeto de estudio en lugar de tomarla como punto de vista, y mostró que sus categorías no describen un terreno preexistente sino que participan en producirlo. Para un estudiante de la disciplina eso significa que su propia formación profesional es parte de lo que hay que analizar.',
+      lineages: [
+        {
+          name: 'Historia de la locura en la época clásica',
+          year: 1961,
+          what: 'Reconstruye cómo la locura pasó de ser una experiencia tolerada a un objeto médico encerrado, y sostiene que la psiquiatría no descubrió al enfermo mental sino que lo constituyó junto con su institución.',
+        },
+        {
+          name: 'Vigilar y castigar',
+          year: 1975,
+          what: 'Describe el examen, el expediente y la evaluación individualizada como técnicas de poder que producen un sujeto conocible. La psicometría aparece ahí como tecnología disciplinaria y no como instrumento neutral.',
+        },
+        {
+          name: 'Nikolas Rose, Governing the Soul',
+          year: 1990,
+          what: 'Aplica el análisis a la psicología del siglo XX y muestra cómo la disciplina proveyó al Estado y a la empresa de un vocabulario para gobernar conductas por la vía de la autonomía y la autorrealización.',
+        },
+        {
+          name: 'Ian Hacking, los efectos de bucle de las clases humanas',
+          year: 1995,
+          what: 'Formula el mecanismo con precisión: cuando una clasificación se aplica a personas, las personas cambian al saberse clasificadas, y la categoría tiene que ajustarse. Es una diferencia estructural entre clasificar personas y clasificar cosas.',
+        },
+      ],
+      development: `La psicología suele contarse a sí misma como una disciplina que fue aprendiendo a describir mejor un objeto que estaba ahí desde siempre. Foucault propone leer esa historia al revés: preguntar qué instituciones, qué prácticas y qué necesidades hicieron falta para que apareciera algo llamado enfermedad mental, delincuente o niño con déficit atencional, y qué se volvió posible hacer una vez que esas categorías existieron. No dice que el sufrimiento sea inventado. Dice que la forma en que se recorta, se nombra y se administra tiene historia, y que esa historia es investigable.
+
+El examen es su concepto más útil para esta disciplina y el que menos se enseña. Un test convierte a una persona en un caso: la vuelve descriptible, comparable con una norma, archivable y susceptible de seguimiento. Esa operación produce conocimiento verdadero y produce a la vez una posición desde la cual intervenir. Sostener las dos cosas al mismo tiempo es difícil y es exactamente lo que se le pide a un psicólogo que aplica un instrumento: el puntaje informa y también decide qué pasa con esa persona en un colegio, en un tribunal o en una licencia médica.
+
+Hacking le agregó a esto un mecanismo que la vuelve una tesis empírica y no solo crítica. Las clases humanas interactúan: quien recibe un diagnóstico reorganiza su biografía a la luz de ese diagnóstico, cambian sus síntomas, cambian las expectativas de su entorno y con eso cambia la población que la categoría describía. Un electrón no hace nada con la palabra electrón; una persona sí hace algo con la palabra que la nombra. Esa asimetría tiene consecuencias metodológicas concretas para cualquier estudio longitudinal con categorías diagnósticas.
+
+Lo que queda para quien investiga no es sospechar de todo. Es incorporar una pregunta más al diseño: qué hace esta categoría con las personas a las que se aplica, quién queda autorizado a usarla y qué consecuencias prácticas trae quedar dentro o fuera. Esa pregunta no reemplaza a la de validez, la complementa, y en salud mental suele ser la que más pesa fuera del laboratorio.`,
+      today: [
+        'El aumento sostenido de diagnósticos de déficit atencional y la medicación en población escolar es el caso donde la producción del sujeto por la categoría se discute con datos y no solo en teoría.',
+        'La despatologización de la homosexualidad y la discusión actual sobre la disforia de género muestran que los límites de lo patológico se negocian institucionalmente y no solo se descubren.',
+        'Los efectos de bucle obligan a preguntarse, en cualquier estudio de seguimiento, si la categoría diagnóstica que se usa está describiendo a la misma población que describía diez años antes.',
+      ],
+      caveats: [
+        'Que una categoría tenga historia no implica que el sufrimiento que nombra sea falso ni que el tratamiento sea ilegítimo. La lectura militante que concluye que los diagnósticos son puro poder es una simplificación que el propio Foucault no autoriza.',
+        'Historia de la locura fue criticado por historiadores en puntos empíricos concretos, en particular sobre el alcance real del gran encierro y sobre el tratamiento de los locos antes del siglo XVII. La tesis general sobrevive, varios de sus apoyos documentales no.',
+      ],
+    },
   },
 
   haraway: {
@@ -191,6 +234,51 @@ Para la metodología esto tiene una consecuencia precisa y muy maltratada. La re
         note: 'Simpoiesis, parentescos raros y el rechazo tanto del optimismo tecnológico como del relato del desastre inevitable.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le ofreció a la psicología una salida al falso dilema entre la objetividad sin sujeto y el relativismo: todo conocimiento se produce desde una posición, y decir cuál es esa posición lo hace más responsable y no menos riguroso. Es la base epistemológica de buena parte de la investigación feminista y decolonial que hoy se hace en la disciplina.',
+      lineages: [
+        {
+          name: 'Manifiesto para cyborgs',
+          year: 1985,
+          what: 'Disuelve las fronteras entre organismo, máquina y animal, y ataca la idea de una naturaleza femenina como base política. Reordena cómo se pueden pensar categorías que la psicología trata como dadas.',
+        },
+        {
+          name: 'Conocimientos situados',
+          year: 1988,
+          what: 'Nombra truco de dios a la pretensión de ver desde ninguna parte, y propone la objetividad situada: el conocimiento es parcial, localizable y por eso mismo criticable y responsable.',
+        },
+        {
+          name: 'Sandra Harding y la objetividad fuerte',
+          year: 1991,
+          what: 'Sostiene que incluir la posición del investigador en el escrutinio produce mejor ciencia, porque somete a examen supuestos que de otro modo quedan invisibles por compartidos.',
+        },
+        {
+          name: 'Henrich, Heine y Norenzayan, The weirdest people in the world',
+          year: 2010,
+          what: 'Muestran que la psicología generaliza a la especie desde muestras occidentales, educadas, industrializadas, ricas y democráticas. Es el conocimiento situado convertido en un problema de validez externa medible.',
+        },
+      ],
+      development: `La psicología aprendió a proteger sus resultados de la subjetividad del investigador mediante control, cegamiento y estandarización, y esa estrategia funciona para un conjunto acotado de amenazas. No funciona para otra clase de problema: el que aparece cuando toda una comunidad de investigadores comparte los mismos supuestos, porque entonces no hay nadie en la sala que pueda notarlos. Ese es el punto de Haraway y el que la disciplina tardó más en escuchar.
+
+Su propuesta no es abandonar la objetividad sino cambiar dónde se la busca. La mirada desde ninguna parte, la que pretende no tener cuerpo, historia ni intereses, es la menos criticable de todas justamente porque no declara desde dónde mira. Un conocimiento situado, en cambio, dice quién lo produjo, con qué muestra, en qué contexto y para qué, y eso lo hace evaluable. Harding lleva el argumento más lejos: incluir esa declaración en el escrutinio no relaja el rigor, lo aumenta.
+
+El caso WEIRD es la mejor demostración empírica que la psicología tiene de este punto, y es útil precisamente porque no viene de la teoría crítica sino de la revisión sistemática de sus propias muestras. Durante décadas la disciplina publicó afirmaciones sobre la percepción, la moral y la cooperación humanas basadas casi por completo en estudiantes universitarios de países ricos, y las escribió en presente universal. No hubo fraude ni descuido individual: hubo una posición no declarada que se confundió con ningún lugar.
+
+Para un estudiante chileno esto no es abstracto. Buena parte de los instrumentos que va a usar fueron construidos y normados en otras poblaciones, y adaptarlos no es traducirlos: exige evaluar si el constructo funciona igual, si los ítems significan lo mismo y si las normas son aplicables. Declarar la posición desde la que se investiga, incluida la del propio instrumento, es en este contexto una exigencia técnica antes que política.
+
+Su trabajo posterior sobre especies compañeras extiende el argumento a un lugar donde la psicología rara vez lo aplica: el laboratorio con animales. Llamar modelo animal a una rata supone a la vez que se parece lo bastante a un humano como para que el resultado se transfiera, y lo bastante poco como para que el procedimiento sea aceptable. Esas dos suposiciones se sostienen juntas todo el tiempo y casi nunca se escriben juntas. Haraway no concluye de ahí una prohibición sino una exigencia: hacer explícita la relación con el animal en lugar de tratarlo como instrumento transparente, que es la misma operación que pide para cualquier otro objeto de investigación.`,
+      today: [
+        'La adaptación y validación de instrumentos a población chilena es la forma cotidiana en que el problema de las muestras no representativas aparece en una tesis.',
+        'La declaración de posicionamiento del investigador es requisito en revistas de investigación cualitativa y creciente en investigación participativa y comunitaria.',
+        'La investigación con animales y los estudios sobre vínculo humano animal retoman su trabajo posterior sobre especies compañeras, que discute a quién se le reconoce estatus de sujeto en un diseño.',
+      ],
+      caveats: [
+        'Conocimiento situado no significa que cualquier punto de vista valga lo mismo. Su argumento es lo contrario: como toda mirada es parcial, hay que poder examinarla, y una posición declarada es más criticable que una encubierta.',
+        'El Manifiesto para cyborgs se cita en psicología casi siempre de segunda mano y como metáfora tecnológica optimista, cuando es un texto de polémica interna del feminismo de los años ochenta contra el esencialismo.',
+      ],
+    },
   },
 
   construccionismo: {
@@ -285,6 +373,49 @@ Para la metodología deja herramientas y una advertencia. El análisis del discu
         note: 'Hacking ordena y limita la consigna, con la distinción entre clases interactivas y clases indiferentes.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Sostiene que buena parte de lo que la psicología trata como propiedades del individuo son productos de relaciones, de lenguaje y de historia, y que la disciplina se equivoca de nivel cuando los busca dentro de la cabeza. Es la corriente que obligó a la psicología social a discutir si su objeto tiene la estabilidad que sus métodos presuponen.',
+      lineages: [
+        {
+          name: 'Berger y Luckmann, La construcción social de la realidad',
+          year: 1966,
+          what: 'Describen cómo lo que se hace repetidamente se institucionaliza, se transmite y termina siendo vivido como naturaleza. Es el texto que instala el vocabulario en las ciencias sociales.',
+        },
+        {
+          name: 'Kenneth Gergen, Social psychology as history',
+          year: 1973,
+          what: 'Argumenta que los hallazgos de la psicología social son históricamente locales, porque la gente cambia su conducta al conocerlos. Es el punto donde la disciplina tiene que decidir si busca leyes o describe épocas.',
+        },
+        {
+          name: 'Sheila McNamee y Kenneth Gergen, Therapy as Social Construction',
+          year: 1992,
+          what: 'Traducen el programa a la clínica: el problema no está en el individuo sino en las descripciones disponibles, y la terapia consiste en generar otras. De ahí salen las terapias narrativas y colaborativas.',
+        },
+        {
+          name: 'Michael White y David Epston, Medios narrativos para fines terapéuticos',
+          year: 1990,
+          what: 'Desarrollan la externalización del problema y la reescritura de la historia personal, con un procedimiento clínico específico y una difusión amplia en Chile y en América Latina.',
+        },
+      ],
+      development: `La psicología estudia atributos: personalidad, actitudes, inteligencia, autoestima. El construccionismo pregunta de dónde salieron esos atributos como unidades de análisis, y responde que de un conjunto de prácticas históricas que primero produjeron la distinción y después la encontraron en todas partes. La versión fuerte sostiene que no hay nada detrás del vocabulario; la versión moderada, que es la que más rinde, sostiene que el vocabulario participa en la constitución del fenómeno sin agotarlo.
+
+El argumento de Gergen es el que más incomoda porque es metodológico y no filosófico. Si publicar un hallazgo sobre conformidad cambia la conformidad de quienes lo leen, entonces la psicología social no está describiendo regularidades estables sino un blanco que se mueve, y su acumulación funciona distinto de la de la física. La disciplina nunca respondió a esto de frente. La respuesta implícita fue seguir buscando efectos y confiar en que fueran lo bastante básicos como para no depender de la época, y la crisis de replicación reabrió la duda desde otro flanco.
+
+Donde el programa sí produjo resultados verificables fue en la clínica. Las terapias narrativas y colaborativas tomaron en serio la idea de que un problema es también una descripción, y construyeron procedimientos concretos: separar a la persona del problema, buscar los episodios que la descripción dominante deja fuera, reescribir. Es la traducción más honesta del marco, porque no se limita a criticar sino que se expone a los resultados. Su base de evidencia es menor que la de las terapias cognitivo conductuales, y eso también hay que decirlo.
+
+En un curso de metodología, el construccionismo es sobre todo un llamado de atención sobre lo que un instrumento presupone. Una escala de autoestima supone que la autoestima es una cantidad que una persona tiene en mayor o menor medida, comparable entre individuos y estable en el tiempo. Todo eso puede ser cierto, pero es una hipótesis y no un punto de partida, y hay diseños que la ponen a prueba en vez de asumirla.`,
+      today: [
+        'Las terapias narrativas y colaborativas tienen presencia formativa importante en Chile, especialmente en el trabajo con familias y en contextos comunitarios.',
+        'El análisis del discurso y los métodos participativos se apoyan en este marco, con criterios de calidad propios que no son la validez interna ni la generalización estadística.',
+        'La discusión sobre si constructos como la autoestima o la resiliencia nombran propiedades individuales o efectos de condiciones sociales es una disputa construccionista con consecuencias directas en política pública.',
+      ],
+      caveats: [
+        'La versión fuerte, que niega cualquier realidad independiente de las descripciones, se refuta a sí misma cuando se aplica a sus propias afirmaciones. La mayoría de los construccionistas productivos trabajan con una versión moderada, y confundirlas hace fácil descartar la corriente entera.',
+        'Construccionismo social y constructivismo no son sinónimos aunque los manuales los mezclen: el constructivismo de Piaget describe cómo un individuo construye estructuras cognitivas, y el construccionismo niega justamente que el individuo sea la unidad correcta.',
+      ],
+    },
   },
 
   hermeneutica: {
@@ -378,6 +509,49 @@ En investigación cualitativa esto es doctrina de trabajo, no ornamento. El aná
         note: 'Escritos posteriores donde Gadamer responde a sus críticos y precisa el alcance de la aplicación.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le dio a la psicología una teoría de la interpretación que sostiene lo que hace todos los días sin decirlo: leer entrevistas, historias clínicas y observaciones. Su tesis central es que no existe una interpretación sin supuestos previos, de modo que la exigencia razonable no es eliminarlos sino hacerlos trabajar de forma controlada.',
+      lineages: [
+        {
+          name: 'Wilhelm Dilthey, la distinción entre explicar y comprender',
+          year: 1894,
+          what: 'Sostiene que las ciencias del espíritu buscan comprender el sentido y las de la naturaleza explicar por causas. Es el origen de la división entre psicología cuantitativa y cualitativa tal como se sigue enseñando.',
+        },
+        {
+          name: 'Hans-Georg Gadamer, Verdad y método',
+          year: 1960,
+          what: 'Rehabilita el prejuicio como condición de toda comprensión y propone la fusión de horizontes. De ahí sale la idea de reflexividad que hoy se exige en cualquier informe cualitativo serio.',
+        },
+        {
+          name: 'Paul Ricoeur, De la interpretación',
+          year: 1965,
+          what: 'Lee el psicoanálisis como una hermenéutica de la sospecha y no como una ciencia natural, lo que reformula el estatuto de la interpretación clínica y su relación con la prueba.',
+        },
+        {
+          name: 'Braun y Clarke, Using thematic analysis in psychology',
+          year: 2006,
+          what: 'Sistematizan el análisis temático con seis fases y con la exigencia de declarar la posición del investigador. Es el método cualitativo más usado en psicología y su base es hermenéutica aunque rara vez lo diga.',
+        },
+      ],
+      development: `Toda investigación cualitativa en psicología descansa en una operación que casi nunca se justifica: alguien lee un material y decide qué significa. La hermenéutica es la tradición que se hizo cargo de esa operación en serio. Su punto de partida es que comprender no es partir de cero sino ajustar una anticipación de sentido con lo que el texto va oponiendo, en un movimiento que va de la parte al todo y vuelve. Ese círculo no es un defecto que haya que evitar, es la forma que tiene la comprensión.
+
+La consecuencia para la disciplina es fuerte. Si no hay lectura sin anticipación, entonces la pretensión de acercarse a los datos sin teoría previa es una ilusión, y la que promete una interpretación que emerge sola de los datos es una promesa que ningún analista cumple. Gadamer propone otra cosa: en lugar de negar los supuestos, ponerlos a jugar y dejar que el material los corrija. En metodología eso se llama reflexividad, y es la diferencia entre un análisis en que el investigador encuentra lo que ya creía y uno en que algo del material lo obligó a cambiar de idea.
+
+Ricoeur agregó una distinción que le sirve a un estudiante de clínica más que ninguna otra. Hay interpretaciones que restauran un sentido y otras que lo desconfían: leer un síntoma como mensaje cifrado supone que hay algo detrás que el propio sujeto no dice, y esa es una apuesta interpretativa con consecuencias, no una lectura neutral. La pregunta que sigue es de qué depende que una interpretación sea buena, y la respuesta hermenéutica no es la verificación sino la coherencia, la capacidad de dar cuenta del material completo y la resistencia frente a lecturas rivales.
+
+De ahí sale el criterio de calidad que la investigación cualitativa terminó adoptando. No se pide validez interna ni generalización sino algo distinto: que se pueda seguir el camino que llevó de los datos a las conclusiones, que se hayan buscado casos que contradigan la interpretación propuesta, y que la posición del investigador esté declarada. Cuando una tesis afirma que las categorías emergieron de los datos y no explica quién las hizo emerger, está incumpliendo un requisito hermenéutico básico.`,
+      today: [
+        'El análisis temático de Braun y Clarke es el método cualitativo más usado en tesis de psicología, y su fase de familiarización y su exigencia de reflexividad son hermenéutica aplicada.',
+        'Los criterios de rigor cualitativo, credibilidad, transferibilidad y auditabilidad, sustituyen a la validez porque provienen de esta tradición y no de la experimental.',
+        'La supervisión clínica es un ejercicio hermenéutico institucionalizado: dos personas discuten qué significa el material de un caso y qué supuestos trajo cada una.',
+      ],
+      caveats: [
+        'Comprender no se opone a explicar como lo cualitativo a lo cuantitativo. Dilthey planteó una distinción sobre tipos de objeto, no sobre técnicas de recolección, y usar su nombre para justificar que en cualitativa no hace falta rigor es una lectura oportunista.',
+        'La afirmación de que las categorías emergen de los datos, muy frecuente en tesis de análisis temático, contradice el marco que esas mismas tesis invocan: en hermenéutica nada emerge solo, alguien interpreta desde alguna parte.',
+      ],
+    },
   },
 
   pragmatismo: {
@@ -472,6 +646,49 @@ Su rendimiento metodológico es directo y es la base filosófica explícita de l
         note: 'La exposición sistemática de la indagación como transformación de una situación indeterminada y de la aserción garantizada.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es la única de estas tradiciones que fue fundada en parte por psicólogos, y la que le dio a la disciplina su primer manual y su primera definición funcional de la mente. Hoy sostiene, además, la justificación estándar de los métodos mixtos: el criterio para elegir un método es la pregunta que se quiere responder y no la lealtad a una ontología.',
+      lineages: [
+        {
+          name: 'William James, Principios de psicología',
+          year: 1890,
+          what: 'Define la conciencia como una corriente y no como una suma de elementos, y trata los hábitos y la voluntad por su función adaptativa. Es el texto fundacional de la psicología estadounidense.',
+        },
+        {
+          name: 'John Dewey, El concepto de arco reflejo en psicología',
+          year: 1896,
+          what: 'Critica la descomposición del acto en estímulo y respuesta separados, y propone verlo como un circuito de coordinación. Es el manifiesto del funcionalismo y un antecedente directo del enfoque ecológico.',
+        },
+        {
+          name: 'Charles Sanders Peirce, la máxima pragmática',
+          year: 1878,
+          what: 'Propone que el significado de un concepto son sus efectos prácticos concebibles. Es el antecedente filosófico directo del operacionalismo y de la exigencia de definir constructos por sus consecuencias observables.',
+        },
+        {
+          name: 'Tashakkori y Teddlie, Handbook of Mixed Methods',
+          year: 2003,
+          what: 'Adoptan explícitamente el pragmatismo como marco de los métodos mixtos, para autorizar la combinación de diseños que las tablas de paradigmas declaraban incompatibles.',
+        },
+      ],
+      development: `El pragmatismo entró a la psicología por la puerta principal porque James era psicólogo antes que filósofo. Su definición de la conciencia como corriente continua, personal y selectiva no fue una tesis metafísica sino una descripción destinada a orientar la investigación, y su tratamiento del hábito como economía del sistema nervioso sigue siendo reconocible en cualquier manual de aprendizaje. Lo que aportó no fue una teoría particular sino un criterio: preguntar para qué sirve un proceso mental antes de preguntar de qué está hecho.
+
+Dewey radicalizó ese criterio con un argumento que la psicología tardó setenta años en volver a escuchar. Descomponer una conducta en estímulo y respuesta supone que el organismo estaba quieto y algo lo golpeó, cuando en realidad el organismo ya estaba haciendo algo y el estímulo es un momento dentro de esa actividad. El niño que se quema no primero ve la llama y después retira la mano: ver y alcanzar son partes de una misma coordinación. El enfoque ecológico y la cognición corporizada vuelven a este punto por caminos distintos.
+
+En metodología el pragmatismo tuvo un segundo uso, más instrumental y bastante más discutible. Cuando los métodos mixtos necesitaron una justificación filosófica para combinar diseños que la tabla de paradigmas declaraba incompatibles, la encontraron aquí: si el criterio de verdad es lo que funciona para el problema, entonces la incompatibilidad entre positivismo y constructivismo deja de ser un obstáculo. El argumento es legítimo y también cómodo, porque permite evitar la discusión ontológica en lugar de resolverla, y conviene reconocerlo antes de invocarlo en una tesis.
+
+Queda un aporte que a un curso de metodología le sirve más que todo lo anterior. Peirce sostuvo que la investigación no empieza en la duda metódica sino en una duda real, la que aparece cuando un hábito de acción deja de funcionar. Aplicado a una tesis, eso significa que una buena pregunta de investigación no es la que llena un vacío bibliográfico sino la que resuelve algo que quedó trabado en la práctica, y la diferencia entre ambas se nota de inmediato en la calidad del trabajo.`,
+      today: [
+        'El pragmatismo es el marco declarado en la mayoría de los diseños de métodos mixtos, y aparece explícitamente en los manuales que los estudiantes usan para justificar su elección.',
+        'La evaluación de programas y la investigación acción trabajan con criterios pragmáticos: el conocimiento se juzga por lo que permite hacer y por la transformación que produce.',
+        'La definición funcional de los procesos psicológicos, que pregunta para qué sirve algo antes de dónde ocurre, sigue organizando buena parte de la psicología cognitiva y del análisis funcional de la conducta.',
+      ],
+      caveats: [
+        'Que algo funcione no es lo mismo que sea verdadero, y el pragmatismo clásico nunca sostuvo esa equivalencia burda. Usarlo en una tesis como permiso para no discutir supuestos es exactamente la lectura que Peirce y Dewey combatían.',
+        'El pragmatismo de los manuales de métodos mixtos es una versión muy adelgazada del original, más cercana a una regla práctica de conveniencia que a la teoría de la indagación de Dewey, y conviene no atribuirle a esta la respetabilidad de aquella.',
+      ],
+    },
   },
 };
 

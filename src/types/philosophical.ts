@@ -60,6 +60,33 @@ export interface Work {
   note?: string;
 }
 
+/** Un tramo concreto de transmisión hacia la psicología. */
+export interface Lineage {
+  /** Escuela, autor u obra, con su año cuando corresponde. */
+  name: string;
+  year?: number;
+  /** Qué heredó exactamente, en una o dos frases. */
+  what: string;
+}
+
+/**
+ * Qué hace este autor o concepto dentro de la psicología.
+ * No es un apéndice del desarrollo: es la razón por la que la entrada está en
+ * el temario de un curso de psicología y no en uno de filosofía.
+ */
+export interface PsychologyLink {
+  /** Lo que quedó dentro de la disciplina. Dos frases. */
+  claim: string;
+  /** Tres o cuatro tramos con nombre, obra y año. */
+  lineages: Lineage[];
+  /** Desarrollo en markdown: 350 a 450 palabras. */
+  development: string;
+  /** Dónde se ve hoy, en la práctica o en la investigación. */
+  today: string[];
+  /** Lo que se cita mal o se atribuye de más. */
+  caveats?: string[];
+}
+
 /**
  * Capa de lectura: lo que ve el estudiante.
  * El orden de los campos es el orden de la página, y va de lo que se retiene
@@ -77,6 +104,8 @@ export interface ConceptExposition {
   /** Dos o tres objeciones estándar. Evita el tono hagiográfico. */
   objections?: Objection[];
   works?: Work[];
+  /** Lo que se muestra en la pestaña de Psicología. */
+  psychology?: PsychologyLink;
 }
 
 /** Capa de voz. No se muestra al estudiante: alimenta la simulación. */

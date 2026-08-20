@@ -81,6 +81,53 @@ La disputa sigue viva en psicología con otro vocabulario. El argumento de la po
       { title: 'Monadología', year: 1714, note: 'Leibniz expone las sustancias simples, la armonía preestablecida y el principio de razón suficiente.' },
       { title: 'Nuevos ensayos sobre el entendimiento humano', year: 1704, note: 'Réplica punto por punto a Locke: nada hay en el entendimiento que no haya estado en los sentidos, salvo el entendimiento mismo.' },
     ],
+
+    psychology: {
+      claim:
+        'El innatismo no sobrevive en psicología como doctrina metafísica sino como programa empírico: la tesis de que un aprendiz sin estructura previa no llega adonde llega un niño, y de que esa estructura se puede especificar y poner a prueba. De ahí salen la lingüística generativa, la hipótesis de la modularidad y la psicología evolucionista, con sus tareas de laboratorio y sus disputas abiertas.',
+
+      lineages: [
+        {
+          name: 'Noam Chomsky, reseña de Verbal Behavior de Skinner, revista Language',
+          year: 1959,
+          what: 'Sostiene que estímulo, respuesta y refuerzo pierden todo contenido definible al aplicarse a la conducta verbal, y que la productividad sintáctica exige un dispositivo interno. Instala en revistas de la disciplina la pregunta por la estructura mental previa.',
+        },
+        {
+          name: 'Jerry Fodor, The Modularity of Mind',
+          year: 1983,
+          what: 'Convierte el innatismo en hipótesis sobre la arquitectura: sistemas de entrada específicos de dominio, rápidos, de cableado neural fijo y encapsulados respecto de las creencias. Aporta un criterio contrastable, la impenetrabilidad cognitiva, verificable en ilusiones que persisten pese al conocimiento.',
+        },
+        {
+          name: 'Barkow, Cosmides y Tooby, The Adapted Mind',
+          year: 1992,
+          what: 'Reformulan lo innato como diseño seleccionado para problemas adaptativos recurrentes. Cosmides ya lo había llevado a una tarea concreta en Cognition, 1989, mostrando que el rendimiento en la selección de Wason mejora cuando la regla se presenta como contrato social.',
+        },
+        {
+          name: 'Elman, Bates, Johnson, Karmiloff-Smith, Parisi y Plunkett, Rethinking Innateness',
+          year: 1996,
+          what: 'Separan tres sentidos de innato, representacional, arquitectónico y cronotópico, y muestran con redes conexionistas que restricciones generales sobre la arquitectura y sobre el calendario del desarrollo bastan para producir resultados atribuidos a conocimiento previo.',
+        },
+      ],
+
+      development: `El innatismo entró a la psicología del siglo veinte por la puerta de una reseña. En 1959 Chomsky revisa *Verbal Behavior* de Skinner en la revista *Language* y sostiene dos cosas: que términos como estímulo, respuesta y refuerzo, definidos con rigor en el laboratorio animal, se vuelven metáforas vacías al aplicarse a una oración, y que ningún historial de refuerzos explica que un hablante produzca y comprenda frases que jamás oyó. La disciplina necesitaba ese argumento porque su teoría del aprendizaje era una teoría de la entrada, mientras que el habla infantil exhibía una salida sistemáticamente más rica que la entrada disponible. A esa desproporción Chomsky le puso nombre en *Rules and Representations*, 1980: pobreza del estímulo.
+
+Al entrar a la psicología, las [[ideas_innatas]] cambiaron de naturaleza. Dejaron de ser contenidos que el alma contempla por [[intuicion_intelectual|intuición intelectual]] y pasaron a ser restricciones sobre el espacio de hipótesis que un aprendiz llega a considerar. La ganancia es metodológica y es grande: una restricción se contrasta. Permite preguntar qué generalizaciones un niño nunca ensaya, qué errores no comete, qué configuraciones de estímulo un sistema perceptivo trata como equivalentes sin haberlo aprendido. Fodor, en 1983, le dio forma arquitectónica con sistemas de entrada específicos de dominio y encapsulados, y aportó un criterio empírico, la impenetrabilidad cognitiva: si una ilusión persiste cuando el observador sabe que es una ilusión, el proceso que la produce no consulta sus creencias. Lo que se perdió en el camino es la pretensión de certeza. La estructura previa del racionalismo garantizaba verdad; la de la psicología solo sesga el aprendizaje en una dirección, y puede estar mal calibrada.
+
+La discusión viva es cuánta especificidad hay que postular. Cosmides y Tooby empujan hacia el máximo, con mecanismos diseñados por selección natural para problemas adaptativos concretos, uno de los cuales sería detectar tramposos en intercambios sociales. Elman y sus coautores empujan en dirección contraria: muestran con redes conexionistas que restricciones generales sobre la arquitectura, sobre el momento en que madura cada capa y sobre el tamaño inicial de la memoria de trabajo bastan para producir resultados que se atribuían a conocimiento previo. Ninguno de los dos bandos defiende hoy una mente sin estructura ni una mente cargada de proposiciones; discuten dónde poner la estructura.
+
+Eso le exige algo preciso a quien investiga: declarar qué observación distinguiría su hipótesis innatista de una hipótesis de aprendizaje con la misma entrada. Sin esa especificación, el innatismo repite el defecto que Locke le imputó al racionalismo, el de afirmar un contenido que la mente tendría sin saberlo, y que ningún dato podría refutar. La diferencia entre un programa de investigación y una [[tabula_rasa|discusión sobre la tabla rasa]] está justo ahí.`,
+
+      today: [
+        'La gramática universal sigue en disputa empírica: Evans y Levinson, en Behavioral and Brain Sciences, 2009, sostienen que los universales propuestos no sobreviven al muestreo de lenguas poco descritas, y la réplica generativista los reubica en un nivel más abstracto.',
+        'Lo innato se mide hoy como heredabilidad, con diseños de gemelos y puntuaciones poligénicas. Es una proporción de varianza en una población concreta, no un dato sobre el desarrollo de un individuo ni sobre qué resulta modificable.',
+        'Varios efectos clásicos de la psicología evolucionista no replicaron en la última década, y su dificultad de diseño es reconocible: la hipótesis adaptativa rara vez especifica de antemano qué resultado la dejaría descartada.',
+      ],
+
+      caveats: [
+        'Innato no significa presente al nacer ni independiente del ambiente. En la literatura actual nombra canalización del desarrollo, es decir robustez del resultado frente a variaciones de la entrada, y por eso Elman y colaboradores proponen en 1996 abandonar el término o usarlo siempre con el nivel especificado.',
+        'La reseña de 1959 no derribó el conductismo por sí sola. MacCorquodale respondió en el Journal of the Experimental Analysis of Behavior, 1970, que Chomsky discute una posición que Skinner no sostiene, y el análisis conductual siguió generando investigación y práctica clínica vigente.',
+      ],
+    },
   },
 
   descartes: {
@@ -155,6 +202,53 @@ Para la psicología el legado es doble y ambivalente. De un lado, la primera per
       { title: 'Principios de la filosofía', year: 1644, note: 'El sistema completo, de la metafísica a la física de los torbellinos, ordenado como manual.' },
       { title: 'Las pasiones del alma', year: 1649, note: 'Fisiología de los espíritus animales, la glándula pineal y el tratamiento de las pasiones como efectos de la unión.' },
     ],
+
+    psychology: {
+      claim:
+        'De Descartes la psicología recibió dos cosas incompatibles entre sí y ambas fundacionales: la introspección como método de acceso a la [[res_cogitans|sustancia pensante]], que fracasó de manera documentada entre 1901 y 1909, y el arco reflejo, que se volvió el modelo fisiológico del que salen Sechenov, Pavlov y el condicionamiento. La disciplina sigue organizada por el problema que él dejó abierto y no por la solución que propuso.',
+
+      lineages: [
+        {
+          name: 'Ivan Sechenov, Los reflejos del cerebro',
+          year: 1863,
+          what: 'Toma el circuito mecánico que Descartes reservaba para el movimiento involuntario y lo extiende a toda la actividad cerebral, incluido el pensamiento, entendido como reflejo con la fase motora inhibida. Pavlov construye sobre esa base el condicionamiento.',
+        },
+        {
+          name: 'Edward Titchener, Experimental Psychology: A Manual of Laboratory Practice',
+          year: 1901,
+          what: 'Codifica el entrenamiento de observadores que descomponen la experiencia en sensaciones, imágenes y sentimientos elementales, y les enseña a evitar el error del estímulo, esto es, informar sobre el objeto en vez de informar sobre el contenido consciente.',
+        },
+        {
+          name: 'Karl Bühler y la escuela de Wurzburgo',
+          year: 1907,
+          what: 'Reportan pensamiento sin imagen: observadores entrenados resuelven problemas sin hallar en la conciencia ninguna sensación ni imagen. Titchener responde en 1909 que están mal entrenados, y la disputa queda sin instancia que la resuelva.',
+        },
+        {
+          name: 'Antonio Damasio, El error de Descartes',
+          year: 1994,
+          what: 'Reúne evidencia neurológica de que la decisión sin emoción se degrada, con la hipótesis del marcador somático y la tarea de apuestas de Bechara y colaboradores, publicada en Cognition el mismo año, aplicada a pacientes con daño prefrontal ventromedial.',
+        },
+      ],
+
+      development: `La psicología llegó tarde a la universidad y llegó cargando el problema cartesiano completo. Si lo mental y lo corporal son géneros distintos, una ciencia de lo mental necesita un método de acceso propio, y el único candidato disponible era la observación interna. Wundt fundó su laboratorio en Leipzig en 1879 con una versión restringida de esa idea: la autoobservación entrenada solo valía para juicios simples sobre estímulos controlados, con tiempos de reacción y series repetibles, mientras el pensamiento superior quedaba fuera del laboratorio. Titchener llevó el programa mucho más lejos. Su manual de 1901 forma observadores que descomponen la experiencia en sensaciones, imágenes y sentimientos elementales, y les enseña a evitar el error del estímulo, que consiste en informar sobre el objeto en lugar de informar sobre el contenido consciente.
+
+El programa se rompió por dentro. Los investigadores de Wurzburgo, con Bühler en 1907, reportaron que sus observadores resolvían problemas y tomaban decisiones sin encontrar imagen ni sensación alguna en la conciencia. Titchener respondió en 1909 que esos observadores estaban mal entrenados. El punto es que la disputa era irresoluble: dos laboratorios competentes informaban contenidos incompatibles y no existía tercera instancia. Lo que quebró no fue una teoría sino el método, y de ahí sale tanto el conductismo como la desconfianza permanente de la disciplina hacia el autoinforme.
+
+Mientras tanto, la otra mitad de Descartes prosperaba. La *[[res_extensa|res extensa]]* incluía el cuerpo, y Descartes había descrito el movimiento involuntario como un circuito mecánico que va del estímulo periférico al músculo sin intervención del alma. Sechenov tomó ese esquema en 1863 y lo extendió a toda la actividad cerebral, incluido el pensamiento, que sería un reflejo con la parte final inhibida; Pavlov construyó sobre esa base el condicionamiento. El dualismo produjo así dos psicologías: una de la conciencia, que colapsó, y una del cuerpo, que se volvió fisiología experimental.
+
+La discusión sigue abierta y ya no es metafísica sino operativa. Damasio, en 1994, sostiene desde la neurología que separar razón y emoción es un error empírico, y muestra con la tarea de apuestas de Bechara y colaboradores que pacientes con daño prefrontal ventromedial razonan bien en abstracto y deciden pésimo en su vida. Para quien investiga, la herencia cartesiana aparece cada vez que un diseño trata las variables psicológicas y las fisiológicas como dos conjuntos que hay que correlacionar, en lugar de preguntarse qué relación supone esa correlación. El [[cogito|punto de partida cartesiano]] dejó a la disciplina un método que no funcionó y un problema que todavía organiza sus preguntas.`,
+
+      today: [
+        'El autoinforme sigue siendo el instrumento central de la psicología y su límite está documentado desde Nisbett y Wilson, 1977: los sujetos informan con confianza sobre causas de su conducta a las que no tienen acceso, y construyen una explicación plausible en su lugar.',
+        'La tarea de apuestas de Iowa se usa en evaluación neuropsicológica y en investigación en adicciones, con una discusión abierta sobre qué mide exactamente y sobre la fiabilidad de sus puntuaciones en muestras no clínicas.',
+        'El dualismo opera en la práctica cada vez que un servicio separa salud mental de salud física, con derivaciones, presupuestos y registros distintos, y la psicología de enlace trabaja justamente sobre los casos que esa división deja sin destino.',
+      ],
+
+      caveats: [
+        'Damasio discute con un Descartes simplificado. En la Meditación sexta se afirma la unión sustancial de alma y cuerpo, no estar en él como un piloto en su navío, y *Las pasiones del alma*, 1649, es un tratado psicofisiológico de la emoción. El blanco real es el dualismo escolar, no el texto.',
+        'La objeción de interacción no la inventó la neurociencia. Isabel de Bohemia se la plantea a Descartes en su carta de mayo de 1643, preguntando cómo algo inextenso puede mover un cuerpo, y las respuestas de Descartes nunca la satisfacen. La discusión es interna al siglo diecisiete.',
+      ],
+    },
   },
 
   empirismo: {
@@ -228,6 +322,53 @@ En psicología el linaje es visible sin necesidad de forzarlo. El asociacionismo
       { title: 'Investigación sobre el entendimiento humano', year: 1748, note: 'Versión depurada de la primera parte del Tratado, con el problema de la inferencia causal en primer plano.' },
       { title: 'Observaciones sobre el hombre', year: 1749, note: 'Hartley traduce la asociación de ideas a vibraciones del sistema nervioso y funda la psicología asociacionista.' },
     ],
+
+    psychology: {
+      claim:
+        'El empirismo le dio a la psicología su primer mecanismo explicativo, la asociación, y con él la posibilidad de una ciencia de la experiencia sin recurso a facultades. Ese mecanismo llega hasta hoy en forma de ecuación: el aprendizaje asociativo se modela como reducción de error de predicción, y esa es la línea directa que va de Hartley al condicionamiento y al aprendizaje estadístico.',
+
+      lineages: [
+        {
+          name: 'David Hartley, Observations on Man',
+          year: 1749,
+          what: 'Convierte la asociación en el único principio del cambio mental y la ancla en vibraciones del sistema nervioso. Con eso queda establecido que la ley psicológica y el proceso corporal son la misma cosa descrita en dos vocabularios.',
+        },
+        {
+          name: 'Alexander Bain, The Senses and the Intellect',
+          year: 1855,
+          what: 'Añade al asociacionismo el ensayo y error, la idea de que un movimiento espontáneo seguido de placer tiende a repetirse. Ese es el eslabón que Thorndike formaliza como ley del efecto y que Skinner reformula como refuerzo.',
+        },
+        {
+          name: 'John B. Watson, Psychology as the Behaviorist Views It',
+          year: 1913,
+          what: 'Declara que la psicología no requiere conciencia ni observador interno, sino predicción y control de la conducta. El vínculo asociativo deja de ser algo que se contempla en la propia mente y pasa a ser algo que se produce y se mide.',
+        },
+        {
+          name: 'Robert Rescorla y Allan Wagner, modelo del condicionamiento pavloviano',
+          year: 1972,
+          what: 'Formalizan el aprendizaje como función de la sorpresa: un estímulo se asocia según cuánto exceda el refuerzo a lo que los estímulos presentes ya predicen. Explican el bloqueo, donde la contigüidad perfecta no basta para producir aprendizaje.',
+        },
+      ],
+
+      development: `El empirismo le entregó a la psicología algo que ninguna otra tradición filosófica le dio: un mecanismo. No solo la tesis de que todo viene de la experiencia, sino una explicación de cómo lo que entra se combina en lo que hay. Hartley, en 1749, convirtió la asociación en el único principio del cambio mental y la ancló en vibraciones nerviosas, con lo cual quedó dicho que la ley psicológica y el proceso corporal son la misma cosa descrita dos veces. Bain, un siglo después, sumó dos cosas decisivas: fundó la revista *Mind* en 1876 y añadió al asociacionismo el ensayo y error, la idea de que un movimiento espontáneo seguido de placer tiende a repetirse. Ese es el eslabón que Thorndike formaliza como ley del efecto y que Skinner convierte en refuerzo.
+
+Al entrar a la psicología, el [[asociacionismo]] perdió la introspección y ganó un objeto público. Hume enumeraba las conexiones entre ideas examinando su propia mente; Watson, en 1913, declaró que la psicología no necesita conciencia ni observador interno, sino la predicción y el control de la conducta, y con eso el vínculo asociativo dejó de ser algo que se contempla para volverse algo que se produce y se mide en un animal. La *[[tabula_rasa|tabula rasa]]* pasó de imagen a supuesto de trabajo: si la historia de refuerzos explica el repertorio, la historia se puede manipular.
+
+La transformación más profunda vino después y es contraintuitiva. Rescorla y Wagner, en 1972, escribieron una ecuación que dice que el aprendizaje no depende de que dos eventos ocurran juntos, sino de cuánto sorprende el segundo dado lo que ya predicen los estímulos presentes. Con eso explicaron el bloqueo, el fenómeno en que un estímulo perfectamente contiguo al refuerzo no se asocia porque otro ya lo predecía. La contigüidad, que era el corazón del asociacionismo desde Hartley, dejó de ser suficiente. El propio Rescorla lo resumió en 1988 diciendo que el condicionamiento pavloviano no es lo que se cree: no es pegar dos ideas, es detectar una relación informativa.
+
+Ahí está la discusión actual. Si el aprendizaje asociativo computa error de predicción, la distancia entre asociación e inferencia se estrecha, y la vieja frontera entre lo que hace una rata y lo que hace un científico se vuelve una diferencia de grado. Para quien investiga, la lección práctica es que agrupar dos variables porque covarían no equivale a haber identificado un mecanismo, exactamente lo que Rescorla y Wagner tuvieron que demostrar dentro del laboratorio.`,
+
+      today: [
+        'El error de predicción de Rescorla y Wagner tiene correlato neural desde Schultz, Dayan y Montague, Science, 1997: la respuesta dopaminérgica sigue la sorpresa y no la recompensa, y hoy sostiene modelos computacionales de adicción y de anhedonia.',
+        'La exposición con prevención de respuesta, tratamiento de primera línea en trastornos de ansiedad, se diseña con teoría de la extinción: la extinción no borra la asociación sino que añade un aprendizaje inhibitorio nuevo, de donde vienen la recaída y el trabajo con contextos múltiples.',
+        'El aprendizaje estadístico se mide en laboratorio infantil con tiempos de escucha ante secuencias con probabilidades de transición controladas, y es el paradigma en el que se juega hoy cuánto de la segmentación del habla necesita estructura previa.',
+      ],
+
+      caveats: [
+        'El asociacionismo no fue superado por la revolución cognitiva. Volvió como conexionismo con el trabajo de Rumelhart y McClelland, 1986, y como aprendizaje estadístico con Saffran, Aslin y Newport en Science, 1996, donde bebés de ocho meses segmentan un habla artificial en dos minutos usando probabilidades de transición.',
+        'Presentar el condicionamiento como aprendizaje por contigüidad es lo que Rescorla llamó en American Psychologist, 1988, una versión que la propia investigación había desmentido. El animal detecta contingencia informativa, y un estímulo que acompaña al refuerzo sin predecirlo no se aprende.',
+      ],
+    },
   },
 
   locke: {
@@ -300,6 +441,53 @@ La psicología recogió la herencia por dos vías. La primera es el asociacionis
       { title: 'Constituciones fundamentales de Carolina', year: 1669, note: 'Redactadas por Locke para la colonia: diseño de propiedad, nobleza territorial y poder absoluto del amo sobre sus esclavos.' },
       { title: 'Algunos pensamientos sobre la educación', year: 1693, note: 'Aplicación práctica del programa: el carácter como resultado del hábito y de la asociación temprana.' },
     ],
+
+    psychology: {
+      claim:
+        'Tres tesis de Locke se volvieron programas de investigación distintos y todos siguen activos: el ambientalismo, que llega hasta la evaluación de intervenciones tempranas; la identidad personal fundada en la memoria, que organiza la psicología del sí mismo y la investigación en memoria autobiográfica; y la distinción entre cualidades primarias y secundarias, que es el acta de nacimiento de la psicofísica. Ninguna de las tres se enseña hoy como él la escribió.',
+
+      lineages: [
+        {
+          name: 'Gustav Fechner, Elementos de psicofísica',
+          year: 1860,
+          what: 'Toma en serio que las cualidades secundarias son efectos en un observador y las vuelve medibles: establece una relación funcional entre magnitud del estímulo y magnitud de la sensación, con umbrales y métodos que aún se usan en laboratorio.',
+        },
+        {
+          name: 'John B. Watson, Behaviorism, edición revisada',
+          year: 1930,
+          what: 'Lleva el ambientalismo educativo a su versión máxima con la promesa de tomar una docena de niños sanos y formar con cualquiera de ellos el especialista que se le encargue. El propio Watson advierte enseguida que va más allá de los hechos.',
+        },
+        {
+          name: 'Leo Hurvich y Dorothea Jameson, teoría de procesos oponentes, Psychological Review',
+          year: 1957,
+          what: 'Dan la formulación cuantitativa de por qué el sistema visual produce cuatro tonos elementales y no tres, y por qué nadie percibe un rojo verdoso. La cualidad secundaria pasa a explicarse por la organización del observador.',
+        },
+        {
+          name: 'Martin Conway y Christopher Pleydell-Pearce, sistema de memoria del sí mismo, Psychological Review',
+          year: 2000,
+          what: 'Modelan la memoria autobiográfica como construcción a partir de una base de conocimiento, regulada por los objetivos actuales de la persona. La continuidad lockeana de la conciencia se convierte en un proceso con parámetros y con fallas descriptibles.',
+        },
+      ],
+
+      development: `Tres cosas de Locke quedaron dentro de la psicología, y las tres siguen produciendo investigación. La primera es la tesis ambientalista. La *[[tabula_rasa|tabula rasa]]* no es en Locke una consigna sino la conclusión de un argumento negativo: si nadie exhibe una proposición que todos acepten, hay que explicar el contenido mental por su historia de adquisición. En *Algunos pensamientos sobre la educación*, 1693, esa tesis se vuelve programa práctico, con la afirmación de que nueve de cada diez hombres son lo que son por su educación. Watson la radicalizó en 1930 con la promesa de tomar una docena de niños sanos y formar con cualquiera de ellos el especialista que se le pidiera. Conviene leer la frase entera, porque Watson agrega que está yendo más allá de los hechos y que quienes defienden lo contrario llevan siglos haciéndolo.
+
+La segunda es la identidad personal. Locke la desplaza del alma y del cuerpo hacia la continuidad de la conciencia, en un capítulo que agrega a la segunda edición del *Ensayo*, 1694. La consecuencia es que la [[identidad_personal|persona]] se define por lo que puede apropiarse mediante la memoria, y que es un término forense: sirve para imputar acciones. La psicología del sí mismo heredó exactamente esa estructura. El modelo de Conway y Pleydell-Pearce, 2000, describe un sistema en que los recuerdos autobiográficos no se almacenan enteros sino que se construyen desde una base de conocimiento, filtrados por los objetivos actuales del sujeto. Locke fundaba la identidad en la memoria; la psicología encontró que la memoria está en parte fabricada por la identidad, lo que invierte la dirección de la explicación.
+
+La tercera es la distinción entre cualidades primarias y secundarias. Es la carta fundacional de la psicofísica: si el color no está en el objeto sino que resulta del encuentro entre una superficie y un sistema perceptivo, hay algo psicológico que medir. Fechner escribió la relación en 1860 y Hurvich y Jameson, en 1957, dieron la explicación cuantitativa de por qué percibimos cuatro tonos elementales y no tres, y por qué nadie ve un rojo verdoso: los canales oponentes no lo permiten. La [[idea_simple|idea simple]] de Locke se convirtió en una variable con unidades.
+
+Lo que esto le exige a quien investiga es no confundir los tres niveles. Que el color sea una cualidad secundaria no lo vuelve arbitrario ni cultural: hay regularidades interlingüísticas fuertes en el vocabulario cromático, y la discusión sobre categorías de color se juega entre restricciones fisiológicas y particiones lingüísticas, no entre objetividad y subjetividad.`,
+
+      today: [
+        'Los programas de intervención temprana se evalúan con seguimientos de décadas, y su discusión abierta es cuánto del efecto persiste en la adultez y por qué vía, porque la promesa ambientalista fuerte no sobrevive a los datos y la versión débil sí.',
+        'La memoria autobiográfica se investiga con entrevistas estructuradas y con paradigmas de falso recuerdo, y sus resultados pesan en peritajes forenses: si el recuerdo se reconstruye en cada evocación, la confianza del testigo no informa sobre su exactitud.',
+        'La psicofísica del color sigue midiendo tonos únicos y fronteras categoriales entre poblaciones con vocabularios cromáticos distintos, y el debate es cuánto de la categoría viene del sistema visual y cuánto del léxico que la nombra.',
+      ],
+
+      caveats: [
+        'La tabla rasa que cita la psicología popular es una caricatura. Locke niega principios innatos, no facultades: la mente tiene poderes de percibir, comparar y componer, y admite diferencias de temperamento entre niños. Sostener que para él la mente nace sin ninguna estructura es atribuirle una tesis que su propio texto contradice.',
+        'Pinker, en *La tabla rasa*, 2002, discute una posición reconstruida más que a Locke. Su blanco real es el modelo estándar de las ciencias sociales del siglo veinte, y la etiqueta lockeana funciona ahí como recurso expositivo, no como lectura del *Ensayo*.',
+      ],
+    },
   },
 
   hume: {
@@ -374,6 +562,53 @@ La metodología de la investigación vive dentro de este problema. Ningún resul
       { title: 'Disertación sobre las pasiones', year: 1757, note: 'Mecánica de las pasiones por doble asociación de impresiones e ideas.' },
       { title: 'Diálogos sobre la religión natural', year: 1779, note: 'Póstumos: crítica del argumento del diseño y de la inferencia analógica de la naturaleza a su causa.' },
     ],
+
+    psychology: {
+      claim:
+        'Hume le dejó a la psicología su problema metodológico central, el de que la covariación observada no autoriza por sí sola una conclusión causal, y le dejó además el programa de estudiar cómo la gente pasa igual de una a otra. La teoría de la atribución, los modelos de aprendizaje causal y la discusión actual sobre mediación descienden de ahí, y su tesis del yo reaparece en las teorías del sí mismo sin centro.',
+
+      lineages: [
+        {
+          name: 'Harold Kelley, modelo de covariación, Nebraska Symposium on Motivation',
+          year: 1967,
+          what: 'Traduce la inferencia causal humeana a un procedimiento psicológico: el observador atribuye una conducta a la persona, al estímulo o a la circunstancia según el consenso, la distintividad y la consistencia que detecte. De ahí nace la teoría de la atribución.',
+        },
+        {
+          name: 'Patricia Cheng, teoría del poder causal, Psychological Review',
+          year: 1997,
+          what: 'Muestra que la covariación observada no determina el juicio causal, y que las personas estiman algo más parecido a un poder generativo, corrigiendo por las causas alternativas presentes en la situación. Es un modelo formal del problema que Hume planteó.',
+        },
+        {
+          name: 'Judea Pearl, Causality',
+          year: 2000,
+          what: 'Fija la respuesta que hoy organiza la metodología: lo causal no sale de los datos sino de los datos más un grafo declarado por el investigador, que hace explícitos supuestos no contrastables con esas mismas observaciones.',
+        },
+        {
+          name: 'Thomas Metzinger, Being No One',
+          year: 2003,
+          what: 'Retoma la tesis del yo como haz y la convierte en hipótesis empírica: no existe un sí mismo, existe un modelo del sí mismo que el sistema no reconoce como modelo, y que se estudia en ilusiones corporales y en estados alterados.',
+        },
+      ],
+
+      development: `La psicología es la disciplina que se topa con el problema de Hume todos los días, porque su objeto rara vez se deja experimentar. Hume mostró que de la conjunción constante entre dos eventos no se sigue nada sobre una conexión necesaria, y que lo que llamamos causa es una transición que el [[habito|hábito]] produce en quien observa. La psicología convirtió eso en pregunta empírica: si la causalidad es algo que el observador agrega, entonces se puede estudiar cómo la agrega. Kelley, en 1967, propuso que la gente atribuye causas evaluando tres covariaciones, consenso, distintividad y consistencia, y trata la conducta como un efecto que hay que asignar a la persona, al estímulo o a la circunstancia. La teoría de la atribución nació de ahí, y con ella el catálogo de sesgos que documenta cuán mal cumplimos ese ideal.
+
+Al entrar a la psicología, el escepticismo de Hume cambió de signo. En Hume es un límite del conocimiento; en la disciplina se volvió un objeto de estudio y luego un problema de diseño. Cheng, en 1997, mostró que la covariación observada no determina el juicio causal y que las personas estiman algo más parecido a un poder causal, corrigiendo por las causas alternativas presentes. Pearl, en 2000, dio la formulación que hoy organiza el campo: la causalidad no se extrae de los datos, se extrae de los datos más un grafo que el investigador declara y que codifica supuestos no verificables con esos mismos datos. Esa es la respuesta contemporánea al [[problema_de_la_induccion|problema humeano]], y no es una refutación: es una contabilidad explícita de lo que se está suponiendo.
+
+De ahí la segunda herencia, la del yo. El [[haz_de_percepciones|haz de percepciones]] reaparece en la psicología del sí mismo sin centro y en las teorías del yo como modelo, donde la unidad de la persona es un producto del sistema y no su punto de partida. Es la misma estrategia que Hume aplicó: buscar el sujeto entre los contenidos, no encontrarlo y explicar la ilusión.
+
+Para un curso de metodología, sin embargo, lo más útil de Hume es la [[guillotina_de_hume|separación entre el ser y el deber]]. Un estudio muestra que cierta intervención reduce síntomas; de ahí no se sigue que deba aplicarse, porque falta la premisa de que reducir esos síntomas es lo que corresponde buscar, y esa premisa es valorativa. El salto ocurre a diario en conclusiones clínicas y en informes de política pública, casi siempre en la última frase del resumen, y casi nunca declarado. Detectarlo no exige estadística: exige leer dónde cambia el verbo.`,
+
+      today: [
+        'El análisis de mediación al modo de Baron y Kenny, 1986, sigue siendo el procedimiento más usado para afirmar mecanismos, y su crítica es humeana: los coeficientes se estiman sobre variables no manipuladas, de modo que la conclusión causal viene de supuestos y no del cálculo.',
+        'La psicología del desarrollo estudia la inferencia causal infantil con juguetes de activación probabilística, y la discusión es si los niños detectan covariación o si intervienen sobre el sistema, que es precisamente la distinción entre ver y hacer.',
+        'Toda revisión sistemática que termina recomendando una política ejecuta un paso normativo. Declarar el criterio de valor que la sostiene, y no solo el tamaño del efecto, es lo que separa un informe defendible de una opinión con tabla de resultados.',
+      ],
+
+      caveats: [
+        'La ley de Hume aparece en un párrafo del *Tratado*, libro tercero, 1740, donde solo observa que los autores pasan del es al debe sin advertirlo y pide que se explique el paso. Los nombres de guillotina y de ley, y la lectura fuerte de que ese paso es imposible, son etiquetas posteriores y discutidas.',
+        'Que Pearl haya formalizado la inferencia causal no cierra el problema de la inducción. Su aparato dice qué se puede concluir dado un grafo supuesto, y el grafo se justifica con conocimiento sustantivo o con un experimento, nunca con los datos observacionales solos.',
+      ],
+    },
   },
 };
 

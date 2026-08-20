@@ -95,6 +95,53 @@ Para la psicología esto no es una metáfora amable sino un problema de diseño.
         note: 'Edición que fija la numeración con que hoy se citan los fragmentos y separa testimonios de citas literales.',
       },
     ],
+
+    psychology: {
+      claim:
+        'De aquí la psicología no heredó una tesis cosmológica sino un problema técnico: si lo psíquico está en [[flujo|cambio continuo]], hay que explicar por qué alguien sigue siendo el mismo y cómo se mide esa continuidad. La respuesta que la disciplina terminó dando es que la identidad no es una sustancia que persiste, sino un trabajo de integración que puede fracasar y cuyo fracaso tiene consecuencias clínicas medibles.',
+
+      lineages: [
+        {
+          name: 'William James, The Principles of Psychology',
+          year: 1890,
+          what: 'El capítulo noveno describe el pensamiento como corriente sin partes separables, en la que ningún estado vuelve a presentarse idéntico. El décimo resuelve la identidad personal sin sustrato: cada pensamiento que pasa se apropia de los anteriores, y por eso hay dueño sin que haya alma.',
+        },
+        {
+          name: 'James Marcia, estatus de identidad del yo',
+          year: 1966,
+          what: 'Convierte la identidad de Erikson en una variable con cuatro estados, definidos por el cruce de exploración y compromiso, y aporta una entrevista que los clasifica. La continuidad del sí mismo pasa a ser algo que se puntúa.',
+        },
+        {
+          name: 'Dan McAdams, The Stories We Live By',
+          year: 1993,
+          what: 'Propone que la identidad es una historia de vida que la persona construye y revisa, y la vuelve investigable con una entrevista biográfica que codifica secuencias de redención y de contaminación. Con Kate McLean sintetiza el programa en Current Directions in Psychological Science, 2013.',
+        },
+        {
+          name: 'Michael Chandler y Christopher Lalonde, Transcultural Psychiatry',
+          year: 1998,
+          what: 'Muestran que la continuidad del sí mismo no es un asunto especulativo: en comunidades de las Primeras Naciones de Columbia Británica, los indicadores de continuidad cultural se asocian con tasas de suicidio juvenil radicalmente distintas.',
+        },
+      ],
+
+      development: `La psicología heredó de aquí un problema, no una doctrina. Si lo psíquico es un proceso que no se detiene y toda medición es un corte practicado sobre él, hace falta justificar por qué la persona evaluada en marzo y la evaluada en noviembre cuentan como la misma. William James enfrentó eso de manera directa: describió el pensamiento como una corriente sin partes separables, en la que ningún estado vuelve a presentarse idéntico, y acto seguido negó que hiciera falta un alma sustancial para explicar que esa corriente tenga dueño. Basta con que cada pensamiento presente se apropie de los que acaban de pasar. La identidad queda explicada por una operación y no por un sustrato.
+
+Al entrar a la disciplina, el flujo perdió su alcance cosmológico y ganó algo que Heráclito no buscaba: se volvió medible. La identidad pasó a ser una variable con estados clasificables mediante entrevista, y más tarde un relato codificable en secuencias. La ganancia es real, porque permite hipótesis contrastables sobre cuándo la continuidad se logra y cuándo falla. La pérdida también conviene verla: en Heráclito la unidad del río era obra del [[logos]], una medida del mundo que el discurso podía seguir, mientras que en la identidad narrativa esa unidad la fabrica el propio sujeto al contarse. La continuidad dejó de ser un rasgo de lo real para volverse un producto psicológico, con la consecuencia incómoda de que podría ser una ficción eficaz.
+
+Ahí está hoy la discusión viva. Si el relato de vida es lo que sostiene la identidad, no queda claro si un relato más coherente produce mejor salud mental o si es la salud mental la que permite contar mejor, y los diseños transversales no pueden decidirlo. El trabajo de Chandler y Lalonde agrega un giro que incomoda al individualismo del campo: la continuidad que protege no siempre es la que la persona construye sola, sino la que su comunidad conserva o pierde.
+
+Para quien investiga, la exigencia es concreta y poco vistosa. Un estudio longitudinal solo puede afirmar que algo cambió si antes demuestra que su instrumento midió lo mismo en cada ocasión; de lo contrario, el cambio observado puede pertenecer a la escala y no al sujeto. Heráclito, que se negaba a llamar dos veces igual al mismo río, habría reconocido el problema. La psicología lo resolvió sin metafísica, con restricciones estadísticas puestas sobre los parámetros del modelo de medida.`,
+
+      today: [
+        'Antes de afirmar que un rasgo cambió entre dos mediciones, un diseño longitudinal debe demostrar invarianza de medición en el sentido de Meredith, 1993, o el cambio observado puede ser del instrumento y no de la persona.',
+        'La identidad narrativa se investiga con entrevistas codificadas por jueces, y la discusión abierta es de dirección causal: si la coherencia del relato produce bienestar o si el bienestar es lo que permite construir un relato coherente.',
+        'Los criterios diagnósticos del trastorno límite de la personalidad y de los cuadros disociativos describen fallas de continuidad del sí mismo, lo que obliga a decidir qué grado de discontinuidad cuenta como normal antes de llamarla patológica.',
+      ],
+
+      caveats: [
+        'Todo fluye no es una frase suya. Platón resume la doctrina en el Crátilo diciendo que todo se mueve y nada permanece, y la fórmula griega panta rhei aparece en forma literal recién en Simplicio, en el siglo sexto. Se cita como fragmento lo que es una paráfrasis tardía.',
+        'James, Marcia, McAdams y Chandler no construyeron sus teorías leyendo a Heráclito. El parentesco es de problema y no de filiación: ponerlo como origen ordena la exposición, pero no describe una transmisión histórica documentable.',
+      ],
+    },
   },
 
   platon: {
@@ -170,6 +217,53 @@ En psicología esto es literalmente la teoría de los constructos. La memoria de
       { title: 'Teeteto', year: -369, note: 'Refutación del conocimiento como percepción y como opinión verdadera acompañada de razón.' },
       { title: 'Sofista', year: -360, note: 'El estatuto del no ser y de la imagen: cómo puede haber algo falso sin que sea nada.' },
     ],
+
+    psychology: {
+      claim:
+        'La psicología dinámica y la psicología cognitiva del desarrollo comparten aquí un antepasado, aunque tomen de él cosas distintas: el alma dividida en partes capaces de querer cosas incompatibles, y el conocimiento que el sujeto exhibe sin haber podido sacarlo de su experiencia. Lo primero reaparece como modelo estructural del conflicto psíquico; lo segundo, como argumento de la pobreza del estímulo.',
+
+      lineages: [
+        {
+          name: 'Sigmund Freud, El yo y el ello',
+          year: 1923,
+          what: 'Fija el aparato psíquico en tres instancias que entran en conflicto y necesitan arbitraje. La conducta deja de explicarse por un querer único y pasa a explicarse por la negociación entre subsistemas con exigencias incompatibles.',
+        },
+        {
+          name: 'Noam Chomsky, reseña de Verbal Behavior de Skinner',
+          year: 1959,
+          what: 'Publicada en Language 35, sostiene que el refuerzo no explica que un niño produzca oraciones que nunca oyó, y repone una dotación innata específica para el lenguaje. En Knowledge of Language, 1986, Chomsky bautiza el asunto como el problema de Platón.',
+        },
+        {
+          name: 'Elizabeth Spelke y Katherine Kinzler, Core knowledge',
+          year: 2007,
+          what: 'Sintetizan en Developmental Science la evidencia de que lactantes de pocos meses operan ya con sistemas de objetos, número, agentes, espacio y grupos sociales, anteriores al lenguaje y a toda instrucción.',
+        },
+        {
+          name: 'Susan Carey, The Origin of Concepts',
+          year: 2009,
+          what: 'Acepta los sistemas nucleares y disputa que basten: propone un mecanismo de bootstrapping por el cual el niño construye conceptos genuinamente nuevos, no contenidos en la dotación inicial ni derivables por asociación.',
+        },
+      ],
+
+      development: `Dos herencias distintas salen del mismo autor y conviene no mezclarlas. La primera es la idea de un alma dividida, con partes que pueden querer cosas incompatibles al mismo tiempo, de modo que la conducta necesita arbitraje interno. La psicología la necesitaba porque sin ella el conflicto resulta inexplicable: un aparato unificado que quiere algo simplemente lo persigue, y no queda lugar para la ambivalencia, la represión ni el esfuerzo de voluntad. El modelo estructural de Freud repone esa arquitectura con otros nombres y otra teoría de la energía, pero con el mismo movimiento de fondo.
+
+La segunda es el innatismo. Platón sostiene que el esclavo del Menón resuelve un problema geométrico que nadie le enseñó, y concluye que el alma lo recordaba. El argumento tiene una forma que sobrevivió a su conclusión: hay conocimiento que el sujeto exhibe y que su experiencia no alcanza a explicar. Chomsky lo reactiva contra la explicación del lenguaje por refuerzo, y decide después ponerle el nombre de su autor. Lo que se transformó es decisivo: donde había [[anamnesis]], reminiscencia de un alma que contempló las [[formas]] antes de nacer, quedó una dotación de sistemas de procesamiento con historia evolutiva. Se conserva la estructura del argumento y se descarta por completo su metafísica.
+
+La discusión sigue abierta y hoy se decide con datos. La investigación con lactantes documenta competencias muy tempranas sobre objetos, cantidad y agentes, y la pregunta es si son un punto de partida innato o el primer producto de un aprendizaje muy rápido. Carey acepta lo primero y niega que baste: si todo concepto estuviera ya contenido en la dotación inicial, nunca se aprendería nada genuinamente nuevo, y ese es el problema que su mecanismo intenta resolver. El debate reproduce, con instrumentos, la tensión entre reconocer lo que ya se sabía y adquirir lo que no se tenía.
+
+Para quien investiga, la lección es sobre inferencia. Buena parte de esta evidencia descansa en cuánto tiempo mira un bebé una escena inesperada, y la distancia entre ese dato y la atribución de un concepto es larga. Cada paso de la cadena admite explicaciones alternativas de bajo nivel, desde preferencias perceptivas hasta artefactos del procedimiento, y decidir entre ellas exige controles que suelen publicarse años después del hallazgo original.`,
+
+      today: [
+        'La disputa entre nativismo y aprendizaje estadístico se juega hoy con modelos de lenguaje entrenados con corpus del tamaño de la exposición infantil, que ambos bandos citan como evidencia a favor de su posición.',
+        'Los paradigmas de violación de expectativa con lactantes miden tiempo de mirada, y la crítica metodológica sobre qué se puede inferir de una mirada más larga es un caso de manual de operacionalización discutible.',
+        'La idea de partes en conflicto reaparece sin Freud en los modelos de doble proceso y en los de control ejecutivo, que vuelven a repartir el gobierno de la conducta entre subsistemas con intereses distintos.',
+      ],
+
+      caveats: [
+        'Freud no dedujo el ello, el yo y el superyó de la tripartición de la República: el paralelo con apetito, ánimo y razón es una lectura retrospectiva. Lo que sí reconoció de modo explícito, en Psicología de las masas, 1921, es que su libido coincide con el Eros de Platón, que es una deuda distinta.',
+        'El innatismo de Spelke y de Carey no es la reminiscencia: postula sistemas de procesamiento con historia evolutiva, no un alma que recuerda haber contemplado Formas. Presentarlos como continuación del Menón confunde una tesis empírica sobre arquitectura cognitiva con una doctrina sobre la preexistencia del alma.',
+      ],
+    },
   },
 
   aristoteles: {
@@ -245,6 +339,53 @@ Para un curso de metodología, la contribución menos citada es quizá la más �
       { title: 'Acerca del alma', year: -350, note: 'La percepción como origen del conocimiento; el alma como forma del cuerpo.' },
       { title: 'Ética a Nicómaco', year: -340, note: 'La precisión según la materia; el saber práctico frente al demostrativo.' },
     ],
+
+    psychology: {
+      claim:
+        'La psicología empieza como género literario en un tratado suyo: el *Perì psychês* es el primer intento de tratar el alma como objeto de una ciencia natural, con método propio y con un grado de exactitud ajustado a su materia. Lo que la disciplina heredó no es su contenido, que quedó obsoleto, sino la decisión de explicar lo psíquico por sus funciones antes que por su sustancia.',
+
+      lineages: [
+        {
+          name: 'David Hartley, Observations on Man',
+          year: 1749,
+          what: 'Las tres leyes de asociación que Aristóteles enuncia al explicar el recuerdo, semejanza, contigüidad y contraste, se convierten en el mecanismo único del aprendizaje. De ahí pasan a James Mill, a Bain y al conductismo.',
+        },
+        {
+          name: 'Franz Brentano, Psicología desde un punto de vista empírico',
+          year: 1874,
+          what: 'Recupera de la tradición aristotélica la idea de que todo acto mental se dirige a un objeto, y la propone como el criterio que separa lo psíquico de lo físico. De su cátedra salen Husserl, Stumpf y, por esa vía, la Gestalt.',
+        },
+        {
+          name: 'David Marr, Vision',
+          year: 1982,
+          what: 'Sus tres niveles de explicación, computacional, algorítmico y de implementación, reponen en ciencia cognitiva la distinción aristotélica entre preguntar para qué sirve algo, cómo está organizado y de qué está hecho.',
+        },
+        {
+          name: 'Carol Ryff, escala de bienestar psicológico',
+          year: 1989,
+          what: 'Convierte la eudaimonía en un constructo con seis dimensiones y un instrumento validado, frente a las escalas de bienestar que solo miden afecto positivo y satisfacción declarada.',
+        },
+      ],
+
+      development: `Lo que la psicología recibió de aquí no fue una teoría del alma, sino un formato. El tratado sobre el alma es el primer texto que trata lo psíquico como un dominio con objeto propio, preguntas ordenadas y método ajustado a su materia, y esa decisión de género precede a cualquier contenido. La disciplina necesitaba ese gesto para separarse de la teología y de la especulación: necesitaba poder decir de qué habla y con qué exactitud, sabiendo que la [[akribeia]] exigible a una ciencia de lo vivo no es la de la geometría. La advertencia de no pedir más precisión de la que el asunto admite sigue siendo el mejor comentario disponible sobre la sobreinterpretación de los decimales.
+
+Lo que se transformó al entrar es la [[teleologia]]. Aristóteles explica una función diciendo para qué está, y esa forma de explicación fue expulsada de la biología moderna por buenas razones. Volvió por otra puerta: cuando se distingue el problema que un sistema resuelve del algoritmo con que lo resuelve y del tejido que lo implementa, se está haciendo la pregunta por el para qué, ahora sin causa final y con una tarea computacional en su lugar. La ganancia es que la pregunta se volvió tratable, y que lo psíquico puede describirse por lo que hace antes que por su [[ousia|sustancia]]. La pérdida es que la palabra función quedó ambigua entre lo que algo hace y lo que algo debería hacer, ambigüedad que reaparece cada vez que un trastorno se define como deterioro funcional.
+
+Las leyes de asociación siguieron un camino distinto y más accidentado. Aristóteles las enuncia al describir cómo alguien recupera deliberadamente un recuerdo, buscando por semejanza, contigüidad o contraste. El asociacionismo británico las convirtió en el mecanismo único de la mente, y de ahí pasaron al condicionamiento. Al hacerlo dejaron de describir un procedimiento voluntario de búsqueda para volverse una ley automática de enlace. La psicología de la memoria contemporánea recuperó lo primero bajo el nombre de recuperación estratégica, sin advertir siempre que estaba volviendo al planteamiento original.
+
+El caso de la eudaimonía muestra el precio de operacionalizar. Convertir una forma de vida en seis dimensiones con ítems de respuesta graduada permite investigar, correlacionar y comparar poblaciones, y al mismo tiempo transforma una tesis sobre qué hace buena a una vida en un autoinforme sobre cómo la persona la evalúa. Quien use uno de estos instrumentos debería poder explicar qué quedó fuera en esa conversión, porque la respuesta no es técnica: decide qué se está midiendo.`,
+
+      today: [
+        'La discusión entre explicación funcional y explicación mecanicista en ciencia cognitiva es la misma que separa la causa final de la causa eficiente, y decide si una teoría psicológica queda satisfecha con decir para qué sirve un proceso.',
+        'Las escalas de bienestar eudaimónico compiten con las hedónicas en investigación en salud mental, y la diferencia entre ambas no es técnica sino una discusión sobre qué es vivir bien.',
+        'El DSM define los trastornos por deterioro del funcionamiento y no por su causa, que es una decisión aristotélica de fondo tomada por razones de fiabilidad diagnóstica.',
+      ],
+
+      caveats: [
+        'Llamarlo padre de la psicología es engañoso: su psychê no es la mente ni la conciencia, es el principio de vida de cualquier ser vivo, de modo que las plantas tienen alma en su esquema. Leer el De anima como una teoría de la experiencia consciente es un anacronismo.',
+        'La cadena que va de sus leyes de asociación al conductismo es real pero no es continua: pasa por Locke, Hume y Hartley, y cada uno la reformuló. Presentarla como herencia directa borra justamente lo que cambió en el camino.',
+      ],
+    },
   },
 
   nagarjuna: {
@@ -317,6 +458,53 @@ Para la psicología el rendimiento es directo y crítico. Una categoría diagnó
       { title: 'Śūnyatāsaptati (Setenta estrofas sobre la vacuidad)', year: 150, note: 'Trata la relación entre el habla convencional y el análisis último.' },
       { title: 'Ratnāvalī (La guirnalda preciosa)', year: 150, note: 'Aplicación de la doctrina a la conducta y al gobierno, dirigida a un rey.' },
     ],
+
+    psychology: {
+      claim:
+        'La psicología clínica occidental incorporó una práctica proveniente de este linaje y dejó fuera la doctrina que la justificaba. El resultado es un tratamiento con eficacia establecida para prevenir recaídas depresivas y, junto a él, una discusión abierta sobre qué se hizo con la crítica al yo sustancial al convertirla en una intervención manualizada de ocho sesiones.',
+
+      lineages: [
+        {
+          name: 'Jon Kabat-Zinn, clínica de reducción de estrés de la Universidad de Massachusetts',
+          year: 1979,
+          what: 'Traduce la práctica de atención plena a un protocolo de ocho semanas para pacientes con dolor crónico, despojado de vocabulario religioso para que un hospital pueda administrarlo. Es la puerta de entrada institucional de toda esta tradición a la salud.',
+        },
+        {
+          name: 'Francisco Varela, Evan Thompson y Eleanor Rosch, The Embodied Mind',
+          year: 1991,
+          what: 'Llevan el análisis madhyamaka a la ciencia cognitiva y sostienen que la ausencia de un yo hallable no es un déficit a corregir sino el punto de partida correcto, y que la disciplina carece de método para examinar la experiencia de primera persona.',
+        },
+        {
+          name: 'Zindel Segal, Mark Williams y John Teasdale, Mindfulness-Based Cognitive Therapy for Depression',
+          year: 2002,
+          what: 'Combinan el protocolo de Kabat-Zinn con terapia cognitiva para prevenir recaídas en depresión recurrente. El ensayo publicado en Journal of Consulting and Clinical Psychology en 2000 les había dado el resultado que sostiene el manual.',
+        },
+        {
+          name: 'Thomas Metzinger, Being No One',
+          year: 2003,
+          what: 'Formula en filosofía de la ciencia cognitiva la tesis de que no existe ningún yo, solo un modelo de sí mismo transparente que el sistema no reconoce como modelo. Es la versión naturalizada de una conclusión muy anterior.',
+        },
+      ],
+
+      development: `El ingreso de este linaje a la psicología no fue doctrinal sino técnico, y esa asimetría explica casi todo lo que vino después. Lo que cruzó la frontera fue una práctica de atención, presentada en un hospital como entrenamiento para pacientes con dolor crónico que la medicina no lograba aliviar. La disciplina la necesitaba porque tenía un vacío: sabía modificar contenidos de pensamiento, pero no tenía procedimiento para cambiar la relación del paciente con sus propios pensamientos. La atención plena ofrecía justamente eso, en un formato que se podía manualizar, aleatorizar y comparar contra lista de espera.
+
+El costo de la traducción se ve al mirar qué quedó atrás. En Nāgārjuna, la [[sunyata|vacuidad]] no es un estado mental sino una tesis: nada tiene naturaleza propia, todo aparece en dependencia, y la afirmación vale también para la vacuidad misma. La distinción entre el habla convencional y el análisis último, las [[dos_verdades]], existe para poder seguir hablando del yo sin concederle sustancia. En el protocolo clínico nada de eso opera: el yo no se examina, se observa; la ausencia de sustancia no es una conclusión argumentada sino una experiencia que se reporta. Se ganó un tratamiento evaluable y se perdió el argumento que lo justificaba.
+
+Conviene exponer el problema sin convertirlo en denuncia ni en defensa. Que la intervención prevenga recaídas depresivas es un hecho establecido por ensayos, y no depende de que quien la aplica suscriba una doctrina del siglo segundo. Pero la crítica histórica tiene razón en que el mindfulness clínico no desciende directamente de este autor, y la crítica política tiene un punto cuando señala que una técnica que enseña a aceptar la experiencia presente puede emplearse para que el sujeto tolere condiciones que sería mejor cambiar. Ninguna de las dos objeciones invalida el ensayo clínico; ambas modifican lo que uno puede afirmar cuando explica por qué funciona.
+
+Para quien investiga, aquí hay un caso de manual sobre validez de constructo. Las escalas de atención plena son autoinformes que preguntan por la capacidad de notar la propia experiencia, es decir, usan como instrumento la misma facultad que el entrenamiento modifica. Si meditar cambia el modo de entender un ítem, comparar puntajes antes y después mide dos cosas a la vez y no ofrece manera de separarlas.`,
+
+      today: [
+        'Las guías NICE para depresión en adultos, NG222 de 2022, incluyen la terapia cognitiva basada en mindfulness, de modo que la discusión sobre qué se recorta al secularizar la práctica recae sobre un tratamiento financiado por sistemas públicos de salud.',
+        'La revisión de Van Dam y colaboradores en Perspectives on Psychological Science, 2018, documenta que el constructo está mal definido y que los autoinformes más usados no miden lo mismo en meditadores y en no meditadores.',
+        'Los efectos adversos de la práctica intensiva empezaron a documentarse de forma sistemática con el estudio de Lindahl y Britton en PLoS ONE, 2017, después de décadas de ensayos que no los registraban como desenlace.',
+      ],
+
+      caveats: [
+        'La operación tiene un costo doctrinal que conviene nombrar sin escandalizarse: la vacuidad es una tesis sobre la falta de naturaleza propia de todo lo que hay, incluida ella misma, y en el protocolo clínico queda reducida a una técnica de regulación emocional. McMahan, 2008, describe cómo se fabricó ese budismo modernizado; Purser, 2019, lo acusa de servir a la adaptación del individuo.',
+        'Nāgārjuna no enseñó meditación de atención plena. La práctica que llega a la clínica proviene sobre todo del movimiento vipassana birmano del siglo veinte, de tradición theravāda, así que ponerlo a él como origen salta varios siglos y cambia de escuela.',
+      ],
+    },
   },
 
   tlamatini: {
@@ -390,6 +578,53 @@ Para un curso de metodología es difícil encontrar un caso mejor. El corpus es 
       { title: 'Cantares mexicanos', year: 1580, note: 'Manuscrito de cantos donde aparecen la doctrina de flor y canto y la pregunta por si algo es verdadero en la tierra.' },
       { title: 'Romances de los señores de la Nueva España', year: 1582, note: 'Segunda colección de cantos, con variantes de varios poemas del manuscrito anterior, útil para comparar versiones.' },
     ],
+
+    psychology: {
+      claim:
+        'Esta tradición no está en un temario de psicología por lo que aportó a la disciplina, sino por lo que deja ver de sus límites. Su modo de formar personas es un caso que la psicología del aprendizaje situado sabe describir, y su ausencia casi total de las bases de datos del campo es el ejemplo más nítido del sesgo de muestreo que la propia disciplina denunció en 2010.',
+
+      lineages: [
+        {
+          name: 'Miguel León-Portilla, La filosofía náhuatl estudiada en sus fuentes',
+          year: 1956,
+          what: 'Establece el corpus con que se trabaja y fija la lectura del par rostro y corazón como fin de la formación. Todo tratamiento psicológico posterior de esta tradición depende de esa edición y de sus decisiones de traducción.',
+        },
+        {
+          name: 'Jean Lave y Etienne Wenger, Situated Learning',
+          year: 1991,
+          what: 'Describen el aprendizaje como participación periférica legítima en una comunidad de práctica y no como transferencia de contenidos. Uno de sus cinco casos son las parteras yucatecas, que aprenden sin instrucción explícita ni evaluación separada de la tarea.',
+        },
+        {
+          name: 'Barbara Rogoff y colaboradoras, Firsthand learning through intent participation, Annual Review of Psychology',
+          year: 2003,
+          what: 'Documentan en comunidades indígenas de México y Guatemala un modo de aprender por observación atenta e incorporación gradual a la actividad adulta, y lo tratan como otra organización del aprendizaje y no como carencia de escolarización.',
+        },
+        {
+          name: 'Joseph Henrich, Steven Heine y Ara Norenzayan, The weirdest people in the world?, Behavioral and Brain Sciences',
+          year: 2010,
+          what: 'Muestran que el noventa y seis por ciento de las muestras publicadas en revistas de psicología proviene de países occidentales industrializados, que reúnen el doce por ciento de la población mundial, y que en varios dominios esas muestras son las atípicas.',
+        },
+      ],
+
+      development: `Aquí no hay filiación disciplinar que reclamar, y fingirla sería peor que no decir nada. Ningún programa de investigación psicológica desciende de esta tradición. Lo que sí ocurre es que el modo nahua de formar a alguien resulta descriptible con categorías que la psicología del aprendizaje desarrolló por su cuenta, y que la ausencia de esta tradición en la literatura ilustra un defecto metodológico que la propia disciplina reconoce. Son dos conexiones distintas, una de objeto y otra de crítica a la muestra, y mezclarlas produce el tipo de afirmación decorativa que conviene evitar.
+
+La primera. El [[tlamatini_nahua|que sabe algo]] no dicta contenidos: forma un rostro y un corazón transmitiendo cantos, cuentas de los días y palabra antigua a quien ya participa en la actividad. Eso es, con otro vocabulario, lo que Lave y Wenger llaman participación periférica legítima: se aprende entrando por el borde de una comunidad que practica algo, no recibiendo instrucción separada de la práctica. Rogoff documentó el mismo patrón en comunidades indígenas contemporáneas y mostró que no constituye un déficit respecto de la escuela, sino otra distribución de la atención y otro papel del error. La [[flor_y_canto|flor y canto]] es el vehículo de esa transmisión, no un ornamento añadido.
+
+La segunda es más incómoda para el curso. Cuando la enorme mayoría de las muestras publicadas proviene de países que reúnen una fracción pequeña de la población mundial, la frase los seres humanos hacen tal cosa está mal formada casi siempre. El problema no es de justicia representativa sino de validez: si el efecto medido varía con la cultura y solo se muestreó una, no se sabe si se describió a la especie o a un caso particular. El remedio tampoco es agregar una muestra exótica al final, porque comparar puntajes entre culturas exige antes demostrar que el instrumento se comporta del mismo modo en ambas.
+
+Queda una exigencia sobre las fuentes que atraviesa todo lo anterior. Trabajar con esta tradición significa leer textos dictados por ancianos a un misionero que preguntaba con sus propias categorías, décadas después de la conquista y en un contexto donde responder no era libre. Un [[difrasismo]] traducido al castellano ya perdió la forma que lo hacía significar. Cualquier inferencia psicológica sobre estos materiales debería declarar ese grado de mediación como parte del resultado y no como una nota al pie.`,
+
+      today: [
+        'Adaptar un instrumento a otra población no es traducirlo: exige retrotraducción, revisión por jueces y evidencia de invarianza de medición, sin la cual comparar puntajes entre grupos culturales no significa nada.',
+        'Rad, Martingano y Ginges propusieron en PNAS, 2018, que las revistas obliguen a describir la procedencia de la muestra y a justificar hasta dónde se generaliza, en lugar de enunciar los hallazgos como si valieran para cualquier ser humano.',
+        'La formación de psicólogos en Chile trabaja con manuales y baremos construidos en su mayoría fuera del país, y decidir cuándo una norma extranjera es utilizable es una pregunta metodológica cotidiana y no un asunto ideológico.',
+      ],
+
+      caveats: [
+        'Casi todo lo que puede decirse de esta tradición llega en fuentes recogidas por frailes, sobre todo por Sahagún, con informantes ancianos que hablaban a un misionero después de la conquista. Cualquier reconstrucción psicológica es una inferencia sobre material intervenido, y la prudencia con la fuente forma parte del argumento.',
+        'Llamar filosofía o psicología náhuatl a este corpus es ya una decisión interpretativa. León-Portilla la defendió con argumentos, y ha sido discutida por historiadores que ven en ella la proyección de categorías griegas sobre textos que no las emplean.',
+      ],
+    },
   },
 };
 

@@ -100,6 +100,49 @@ Para la psicología esto se cobra en dos frentes. El primero es metodológico: p
         note: 'Los tres tratados sobre la procedencia de los valores, el resentimiento, la mala conciencia y el ideal ascético.',
       },
     ],
+
+    psychology: {
+      claim:
+        'De él viene la sospecha que organiza buena parte de la psicología del siglo XX: los motivos que una persona declara no son los motivos que la mueven, y la conciencia llega tarde a explicar lo que ya se decidió. Lo que quedó no es una teoría sino una operación, tratar la moral, el ideal y la propia imagen como hechos que tienen procedencia y función.',
+      lineages: [
+        {
+          name: 'Alfred Adler, psicología individual',
+          year: 1912,
+          what: 'El sentimiento de inferioridad y su compensación traducen la voluntad de poder a un mecanismo clínico. Adler reconoce la deuda de modo explícito, y es la vía más corta entre Nietzsche y la práctica psicoterapeutica.',
+        },
+        {
+          name: 'Freud y el movimiento psicoanalítico',
+          year: 1914,
+          what: 'Freud declara haber evitado leerlo para preservar su imparcialidad y, en la misma página, admite la coincidencia en la represión y en el origen de la conciencia moral. La deuda es reconocida y esquivada a la vez.',
+        },
+        {
+          name: 'Nisbett y Wilson, Telling more than we can know',
+          year: 1977,
+          what: 'Muestran experimentalmente que las personas informan causas de su propia conducta a las que no tienen acceso, y que fabrican explicaciones plausibles. Es la tesis nietzscheana convertida en un resultado de laboratorio.',
+        },
+        {
+          name: 'Jonathan Haidt, el perro emocional y su cola racional',
+          year: 2001,
+          what: 'Propone que el juicio moral es intuitivo y que el razonamiento actúa después, como abogado. La genealogía de la moral pasa a ser un programa de psicología moral con datos.',
+        },
+      ],
+      development: `La psicología entra al siglo XX con un problema que Nietzsche había formulado antes de que existiera la disciplina: si la conciencia es el lugar donde uno se entera de sus razones, y no el lugar donde se producen, entonces el testimonio de una persona sobre si misma deja de ser evidencia privilegiada y pasa a ser un dato más, que hay que explicar en lugar de creer. Esa inversión es la que abre el espacio para una psicología de lo que el sujeto no sabe de si.
+
+La disciplina la recogió por dos caminos que rara vez se cruzan. El clínico llega por Adler, que convierte la voluntad de poder en un mecanismo tratable: la persona compensa una inferioridad sentida y organiza su estilo de vida alrededor de esa compensación. El experimental llega mucho después y sin citarlo, cuando Nisbett y Wilson montan situaciones en que la causa real de una elección es conocida por el investigador y desconocida por quien elige, y comprueban que la explicación que la persona ofrece es fluida, segura y falsa. Lo que en Nietzsche era una acusación pasa a ser un efecto replicable.
+
+Al entrar a la psicología, la sospecha perdió su filo y ganó precisión. Perdió filo porque Nietzsche no sospechaba de las causas sino de los valores: su pregunta no era qué produjo esta conducta, sino qué tipo de vida necesita creer que esto es bueno. La psicología se quedó casi siempre con la primera versión, que es metodológicamente manejable, y dejó la segunda a la filosofía moral. Gano precisión porque el autoengaño dejó de ser un diagnóstico de época y se volvió un fenómeno con condiciones, medidas y límites.
+
+Donde esto muerde hoy es en el estatuto del autoinforme, que es el instrumento más usado de la disciplina. Si la persona no tiene acceso a las causas de su conducta, un cuestionario no mide lo que dice medir cuando pregunta por motivos, y sirve mucho mejor cuando pregunta por estados. La respuesta metodológica no fue abandonar el autoinforme sino distinguir con cuidado que clase de pregunta admite. Para quien investiga, la exigencia es concreta: antes de preguntar por que hiciste algo, hay que poder justificar por que se supone que el informante lo sabe.`,
+      today: [
+        'La discusión sobre validez de los autoinformes, y en particular sobre cuándo preguntar por motivos produce racionalizaciones en lugar de datos, es una decisión de diseño que se toma en cualquier tesis con cuestionarios.',
+        'La psicología moral trabaja con la hipótesis de que la intuición precede al juicio, y los estudios sobre castigo y sobre indignación en redes sociales son la versión empírica del resentimiento como objeto de estudio.',
+        'Las terapias de tercera generacion, en especial la terapia de aceptación y compromiso, piden al consultante clarificar sus valores, lo que reintroduce sin nombrarla la pregunta por la procedencia de esos valores.',
+      ],
+      caveats: [
+        'Que se llamara a si mismo psicólogo es una provocacion suya, no una filiación disciplinar. No propuso método, no reunio datos y no formuló hipótesis contrastables, de modo que su lugar en un curso de psicología es el de un problema heredado y no el de un antecesor.',
+        'Buena parte de las citas que circulan en psicología divulgativa vienen de La voluntad de poder, que no es un libro suyo sino una compilacion póstuma de fragmentos hecha por su hermana. Citar de ahí como si fuera obra publicada es un error de fuente, no de interpretación.',
+      ],
+    },
   },
 
   freud: {
@@ -194,6 +237,49 @@ Para la psicología queda algo que sobrevive a la suerte de la doctrina. Toda en
         note: 'La compulsión de repetición, los sueños traumáticos y la reformulación de la teoría pulsional.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Dejo a la psicología dos cosas que sobrevivieron a la caída de su teoría: un procedimiento para producir datos sobre lo que alguien no puede decir de frente, y un conjunto de conceptos clínicos que se siguen usando aunque se hayan desprendido de la metapsicología que los sostenía. La discusión contemporánea no es si hay procesos inconscientes, que los hay, sino cuál de las versiones del inconsciente es la que la evidencia sostiene.',
+      lineages: [
+        {
+          name: 'Anna Freud, El yo y los mecanismos de defensa',
+          year: 1936,
+          what: 'Ordena las defensas en un vocabulario descriptivo y observable, que es la forma en que el psicoanálisis entra a la evaluación clínica y, muy transformado, a las escalas de afrontamiento.',
+        },
+        {
+          name: 'John Bowlby, trilogia sobre el apego',
+          year: 1969,
+          what: 'Toma la tesis del vínculo temprano y la reformula con etología y observación sistemática. Es la línea de investigación empírica más productiva que salió del psicoanálisis, y la que menos se parece a el.',
+        },
+        {
+          name: 'Mary Ainsworth, la situación extraña',
+          year: 1978,
+          what: 'Convierte el vínculo en un procedimiento estandarizado con categorías codificables, lo que permite comparar entre culturas y seguir cohortes. El paso del caso al dato ocurre aquí.',
+        },
+        {
+          name: 'Horvath y Greenberg, Working Alliance Inventory',
+          year: 1989,
+          what: 'La transferencia, despojada de su teoría, se vuelve alianza terapeutica y se mide. Termina siendo uno de los predictores más robustos del resultado en psicoterapia, cualquiera sea el enfoque.',
+        },
+      ],
+      development: `Freud le entregó a la psicología un problema de método antes que una teoría. Si hay contenidos que el sujeto no puede reportar porque algo impide su acceso, entonces el autoinforme no basta y hace falta un procedimiento que produzca material que el propio informante no controla. La asociación libre, la atención a lo que se olvida y el trabajo con lo que se repite en la relación con el clínico son ese procedimiento. Su valor no depende de que la metapsicología sea correcta.
+
+Lo que ocurrió después es una historia de traducciones, y en cada una se perdió algo. Anna Freud convirtió las defensas en descripciones utilizables, al costo de volverlas una lista. Bowlby tomó el vínculo temprano y lo sacó del terreno de la fantasía para ponerlo en el de la conducta observable, al costo de romper con la institución psicoanalítica que lo formó. Ainsworth hizo con eso un procedimiento de laboratorio, y lo que era una historia singular pasó a ser una categoría de clasificación. Ese es el precio recurrente: cada vez que un concepto freudiano se vuelve medible, deja de significar lo que significaba.
+
+La transferencia es el caso más claro y el más instructivo para un curso de metodología. En su versión original nombra la repetición de un vínculo antiguo dentro de la relación clínica, y es una afirmación causal fuerte y difícil de contrastar. En su versión contemporánea se la reemplazo por la alianza terapeutica, que no afirma nada sobre el origen y solo describe el acuerdo en tareas, objetivos y vínculo. Esa versión, mucho más modesta, resultó ser uno de los hallazgos más estables de la investigación en psicoterapia. Vale la pena mirar el intercambio completo: se ganó evidencia y se perdió la explicación.
+
+Queda por último el problema de la evidencia clínica, que es donde el psicoanálisis se juega su lugar disciplinar. El caso único no es acientifico por ser único; el problema es que los casos que se publican son los que el clínico selecciona, que la interpretación la produce el mismo que evalúa su efecto, y que los historiales originales resultaron menos concluyentes de lo que la exposición sugeria. Nada de eso invalida el método. Sí obliga a decir con precisión que puede sostener y que no.`,
+      today: [
+        'Los conceptos de defensa, transferencia y contratransferencia siguen estructurando la formación clínica en Chile y en buena parte de América Latina, aunque el marco teórico que los definía ya no se enseñe entero.',
+        'La alianza terapeutica es el predictor de resultado más replicado de la investigación en psicoterapia, y es un legado freudiano que casi ningún manual atribuye a Freud.',
+        'La teoría del apego sostiene programas de intervención temprana y política pública en infancia, con instrumentos y evidencia propios, lo que la vuelve el caso más exitoso de traducción empírica de una intuición clínica.',
+      ],
+      caveats: [
+        'Las revisiones históricas de sus historiales mostraron que varios de los desenlaces presentados como éxitos no lo fueron, y el de Anna O. es el más discutido. Es un problema de evidencia y no una anécdota biográfica, porque esos casos fueron la base probatoria de la teoría.',
+        'Atribuirle el descubrimiento del inconsciente es falso. La idea circulaba en la filosofía y en la psiquiatría del siglo XIX, y lo que Freud aporta es una teoría específica sobre cómo se produce y un método para trabajar con el.',
+      ],
+    },
   },
 
   psicoanalisis: {
@@ -288,6 +374,49 @@ Para la formación en metodología este caso vale más que cualquier ejemplo de 
         note: 'Shedler reúne los metaanálisis de resultado y desplaza la discusión desde la demarcación hacia la evidencia comparada.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es la única corriente de la psicología que se institucionalizó como sociedad de formación antes que como programa universitario de investigación, y esa decisión explica tanto su continuidad como su aislamiento. En un curso de epistemología importa menos por sus tesis que por ser el caso donde mejor se ve que está en juego cuando se pregunta si algo es ciencia.',
+      lineages: [
+        {
+          name: 'Las escisiones: Adler, Jung, Klein, Lacan',
+          year: 1911,
+          what: 'Adler en 1911 y Jung en 1913 se separan, las controversias entre Klein y Anna Freud parten la sociedad británica en los años cuarenta y Lacan es excluido de la asociación internacional en 1963. La corriente se reproduce dividiendose, no acumulando.',
+        },
+        {
+          name: 'Karl Popper, criterio de demarcación',
+          year: 1934,
+          what: 'Lo usa como su ejemplo mayor de teoría que explica todo y por eso no prohíbe nada. Es la forma en que el psicoanálisis entra a los cursos de epistemología y, para muchos estudiantes, la única.',
+        },
+        {
+          name: 'Adolf Grunbaum, The Foundations of Psychoanalysis',
+          year: 1984,
+          what: 'Refuta a Popper mostrando que Freud si formuló afirmaciones contrastables y que el mismo cambio de posición ante evidencia adversa. Su crítica es interna y más dura: la evidencia clínica está contaminada por la sugestión del propio dispositivo.',
+        },
+        {
+          name: 'Jonathan Shedler, The efficacy of psychodynamic psychotherapy',
+          year: 2010,
+          what: 'Metaanálisis publicado en American Psychologist que reporta tamaños de efecto comparables a los de otras psicoterapias con apoyo empírico, y que se mantienen o crecen en el seguimiento.',
+        },
+      ],
+      development: `Ninguna otra corriente psicológica se organizó así. La transmisión no ocurre en una universidad sino en sociedades que forman analistas mediante un análisis personal, una supervisión y una lectura de texto, y donde el desacuerdo teórico se resuelve por división institucional. Eso produce una comunidad muy estable en el tiempo y muy poco expuesta a las correcciones que vienen de afuera, que es exactamente la situación que un curso de epistemología necesita examinar.
+
+La discusión sobre su estatuto científico suele detenerse en Popper, y ahí se comete el error más caro. Popper sostiene que la teoría es infalsable porque cualquier conducta y su contraria pueden acomodarse en ella. Grunbaum le responde con el texto en la mano: Freud si arriesgo predicciones, si abandonó la teoría de la seducción, y su argumento de que la cura confirma la interpretación es contrastable. El problema, dice Grunbaum, no es que no se pueda refutar, es que la evidencia disponible no la sostiene, porque el dispositivo clínico produce por sugestión buena parte de lo que después cuenta como confirmación. Esta es una crítica peor que la de Popper y casi nadie la enseña.
+
+Mientras tanto ocurrió algo que las dos críticas no anticiparon. La psicoterapia psicodinámica, que es la derivacion tratable del psicoanálisis, se sometio a ensayos controlados y a metaanálisis, y salió razonablemente bien parada. Eso no rehabilita la metapsicología, y conviene ser preciso: lo que muestra evidencia de eficacia es un tratamiento de duración acotada, con foco, evaluado con instrumentos estandarizados. No es lo mismo que un análisis de varias sesiones semanales durante años, que sigue sin evidencia comparable porque es dificilisimo de estudiar con ese diseño.
+
+Para un estudiante chileno esto no es un debate lejano. La formación de psicólogos en el país tiene una presencia psicodinámica alta, y muchos van a trabajar con conceptos de esta tradición. La pregunta útil no es si el psicoanálisis es ciencia, que está mal planteada, sino cuál de sus afirmaciones tiene apoyo empírico, cual es una herramienta clínica que funciona sin que sepamos por qué, y cuál es una interpretación que el dispositivo produce y después encuentra.`,
+      today: [
+        'La terapia psicodinámica breve aparece en guías clínicas junto a otras psicoterapias con apoyo empírico, lo que separa su suerte de la del psicoanálisis como institución.',
+        'La investigación de procesos, que estudia que ocurre dentro de la sesión en vez de comparar resultados finales, es donde la tradición psicodinámica aporta hoy preguntas que otras corrientes no hacen.',
+        'El peso de la formación psicodinámica en las escuelas de psicología chilenas convierte esta discusión en un asunto profesional y no solo academico.',
+      ],
+      caveats: [
+        'Presentarlo solo como el ejemplo de pseudociencia de Popper borra las dos cosas más interesantes del caso: que Grunbaum refutó a Popper en este punto, y que la derivacion psicoterapeutica acumuló evidencia después.',
+        'Psicoanálisis no nombra una sola cosa. Lo que se evalúa en los metaanálisis es psicoterapia psicodinámica, no el tratamiento analítico clásico, y usar los resultados de una para defender a la otra es un salto que invalida las dos discusiones.',
+      ],
+    },
   },
 
   husserl: {
@@ -381,6 +510,49 @@ Para la psicología esto es fundacional en un sentido literal. Toda investigaci�
         note: 'El mundo de la vida como suelo olvidado de la ciencia galileana y el diagnóstico de la crisis de sentido.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le dejo a la psicología un procedimiento para trabajar con la experiencia sin reducirla a conducta ni a fisiología, y de paso le puso un límite: las leyes lógicas no son leyes psicológicas, de modo que la disciplina no puede fundar por si sola la validez de nada. Casi toda la metodología cualitativa que hoy se enseña como fenomenológica desciende de ahí, aunque por caminos indirectos.',
+      lineages: [
+        {
+          name: 'Investigaciones lógicas, la crítica al psicologismo',
+          year: 1900,
+          what: 'Argumenta que reducir las leyes de la lógica a regularidades del pensar humano las vuelve contingentes y destruye su necesidad. Fija así la frontera entre lo que la psicología puede explicar y lo que no puede fundar.',
+        },
+        {
+          name: 'Carl Stumpf y la escuela de Berlin',
+          year: 1912,
+          what: 'La atención descriptiva a lo que aparece, antes de explicarlo, pasa a la psicología de la Gestalt a través de Stumpf y de sus discípulos Wertheimer, Koffka y Kohler.',
+        },
+        {
+          name: 'Amedeo Giorgi, Psychology as a Human Science',
+          year: 1970,
+          what: 'Convierte la reducción y la variación imaginativa en un procedimiento de análisis de datos con pasos declarados. Es la versión del método que llega a los manuales de investigación cualitativa en psicología.',
+        },
+        {
+          name: 'Claire Petitmengin, entrevista de explicitación y microfenomenología',
+          year: 2006,
+          what: 'Desarrolla una técnica de entrevista que busca llevar al informante al detalle de un episodio vivido y no a su opinión sobre el, con criterios de control del propio proceso.',
+        },
+      ],
+      development: `El primer aporte de Husserl a la psicología es una prohibición, y conviene entenderla bien porque suele leerse al revés. Cuando ataca el psicologismo no está despreciando a la psicología, a la que dedicó buena parte de su obra; está diciendo que si el principio de no contradicción vale solo porque así funciona la mente humana, entonces bastaría que la mente cambiara para que dejara de valer, lo que es absurdo. La consecuencia para la disciplina es precisa: puede explicar cómo razona la gente, no puede establecer que es razonar bien. Todo curso de metodología que discuta sesgos de razonamiento está parado sobre esa distinción, porque llamar sesgo a algo supone una norma que la psicología no produjo.
+
+El segundo aporte es un procedimiento. La epojé pide suspender la creencia en la existencia del objeto para atender a cómo se da, y la reducción pide describir esa donacion sin explicarla ni causarla. En manos de un investigador esto se traduce en algo bastante concreto: describir lo que el participante relata antes de subsumirlo en la teoría con que uno llegó, y hacer explícito ese marco previo en lugar de fingir que no existe.
+
+Lo que la psicología hizo con eso fue simplificarlo hasta volverlo manejable. Giorgi produjo una secuencia de pasos, unidades de significado, transformación y estructura general, que puede enseñarse y aplicarse. La ganancia es real, porque sin esa traducción no habría método alguno. La pérdida también: la epojé husserliana es un movimiento filosófico radical y su versión metodológica es un ejercicio de honestidad sobre los propios supuestos, que es valioso pero es otra cosa.
+
+De ahí viene la discusión viva. Poner entre paréntesis los propios supuestos es, para muchos, imposible, y esa es justamente la objeción que hace la hermenéutica: no hay una mirada previa a toda interpretación. La respuesta contemporánea en investigación cualitativa no fue abandonar el procedimiento sino cambiarle el nombre y el sentido, y hablar de reflexividad: no suspender los supuestos sino declararlos y rastrear cómo operaron en el análisis.`,
+      today: [
+        'El bracketing y la declaración de reflexividad son requisitos habituales en tesis cualitativas, y suelen escribirse como formalidad en vez de como análisis, que es donde el requisito pierde su función.',
+        'La microfenomenología y la entrevista de explicitación se usan en investigación sobre meditación, dolor y experiencia en psicosis, donde preguntar por la opinión del participante no sirve.',
+        'La distinción entre explicar cómo se razona y establecer como se debe razonar sigue decidiendo si un hallazgo sobre heuristicas es un sesgo o simplemente otra norma.',
+      ],
+      caveats: [
+        'Lo que los manuales enseñan como análisis fenomenológico está casi siempre mucho más cerca de Giorgi o del análisis fenomenológico interpretativo de Smith que de Husserl, y presentarlo como su método confunde una derivacion con el original.',
+        'El psicologismo que crítica no es usar psicología para estudiar el pensamiento, es fundar la validez lógica en hechos psicológicos. Confundir ambas cosas lleva a la lectura falsa de que Husserl consideraba ilegítima a la psicología.',
+      ],
+    },
   },
 
   fenomenologia: {
@@ -476,6 +648,49 @@ En la práctica de investigación esto se traduce en decisiones concretas. Muest
         note: 'Smith, Flowers y Larkin fijan el procedimiento del análisis fenomenológico interpretativo usado hoy en psicología.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es la tradición que le devolvio a la psicología el derecho a estudiar la experiencia en primera persona con exigencia metodológica, en un período en que la disciplina la había expulsado por no ser observable. Su rendimiento mayor no está en la teoría sino en la clínica y en la investigación cualitativa, donde produjo métodos con criterios propios.',
+      lineages: [
+        {
+          name: 'Karl Jaspers, Psicopatología general',
+          year: 1913,
+          what: 'Introduce la descripción de la vivencia como tarea psiquiátrica anterior al diagnóstico, y distingue comprender de explicar. Funda la psicopatología fenomenológica que sigue viva en la investigación en psicosis.',
+        },
+        {
+          name: 'Maurice Merleau-Ponty, Fenomenología de la percepción',
+          year: 1945,
+          what: 'Sitúa la percepción en un cuerpo que ya está orientado en un mundo, y trabaja con casos neurologicos. De ahí salen el esquema corporal y buena parte del vocabulario de la cognición corporizada.',
+        },
+        {
+          name: 'Jonathan Smith, análisis fenomenológico interpretativo',
+          year: 1996,
+          what: 'Formaliza un método cualitativo con muestras pequeñas, análisis caso a caso y reconocimiento explícito de la doble hermenéutica. Se volvió el método más usado en psicología de la salud británica.',
+        },
+        {
+          name: 'Parnas y Sass, examen de la experiencia anomala del si mismo',
+          year: 2005,
+          what: 'Traducen la descripción fenomenológica de la esquizofrenia a una entrevista semiestructurada con confiabilidad medida, orientada a detectar alteraciones del si mismo en fases tempranas.',
+        },
+      ],
+      development: `Cuando el conductismo definió el objeto de la psicología por lo públicamente observable, la experiencia vivida quedó fuera no por falsa sino por inmanejable. La fenomenología mantuvo el problema abierto en otro lugar, la psiquiatría europea, donde el clínico no puede prescindir de lo que el paciente dice que le pasa. Jaspers fija ahí una distinción que sigue operando: comprender es captar el sentido de una vivencia desde adentro, explicar es dar su causa, y confundirlas produce mala psiquiatría en las dos direcciones.
+
+Merleau-Ponty aporta el giro que la psicología cognitiva tardaría medio siglo en recoger. La percepción no es un procesamiento que ocurre detrás de los ojos, es la actividad de un cuerpo que ya sabe moverse y que encuentra el mundo organizado en posibilidades de acción. Trabajo con material clínico, en particular con pacientes neurologicos, lo que hace que su argumento no sea especulativo sino discutible con datos. La cognición corporizada, la investigación sobre affordances y buena parte del enactivismo están en esa línea.
+
+La entrada más práctica es la metodológica. El análisis fenomenológico interpretativo de Smith se volvió un método estándar porque hizo tres cosas que otros no: aceptó muestras pequeñas y las justificó, ordenó el análisis caso por caso antes de buscar patrones comunes, y reconoció que el investigador interpreta a alguien que ya está interpretando su propia experiencia. Esa última admision es lo que lo separa de la ilusión de acceso directo.
+
+En clínica el rendimiento es todavía más visible. La investigación sobre alteraciones del si mismo en psicosis temprana nació de descripciones fenomenologicas que la psiquiatría basada en criterios había dejado fuera, porque el DSM pregunta por síntomas y no por cómo está estructurada la experiencia de quien los tiene. Convertir esas descripciones en una entrevista con confiabilidad medida es el ejemplo más claro de que rigor y primera persona no son incompatibles. Para quien investiga, la lección es directa: la exigencia no está en evitar lo subjetivo sino en describirlo con la misma disciplina con que se mide cualquier otra cosa.`,
+      today: [
+        'El análisis fenomenológico interpretativo es uno de los métodos cualitativos más usados en tesis de pregrado y postgrado en psicología de la salud.',
+        'La evaluación de anomalías del si mismo se aplica en programas de detección temprana de psicosis, donde compite con criterios diagnósticos basados solo en síntomas.',
+        'El cuerpo vivido es una categoría de trabajo en dolor crónico, trastornos de la conducta alimentaria y rehabilitación, donde la distancia entre el cuerpo medido y el cuerpo habitado es el problema clínico.',
+      ],
+      caveats: [
+        'En psicología fenomenológico se usa como sinónimo de referido a la experiencia subjetiva, lo que vacía el término: un cuestionario de satisfacción no es fenomenológico por preguntar como se siente alguien.',
+        'En psiquiatría la palabra fenomenología significa desde hace décadas la descripción de los síntomas de un cuadro, que es casi lo contrario del método filosófico. El mismo término nombra dos cosas distintas en textos que un estudiante lee la misma semana.',
+      ],
+    },
   },
 };
 

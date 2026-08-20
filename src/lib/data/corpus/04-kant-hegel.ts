@@ -101,6 +101,53 @@ Para la psicología la consecuencia es directa y áspera. Kant sostiene que no p
         note: 'La distinción entre persona y cosa, el deber de perfección y la doctrina del derecho.',
       },
     ],
+
+    psychology: {
+      claim:
+        'La psicología cognitiva trabaja sobre una tesis kantiana que ya no discute: lo que se percibe y lo que se recuerda son producto de estructuras que el sujeto aporta, no un registro de lo que hubo. De Kant vienen además las dos cosas que más ordenan el trabajo empírico actual, el vocabulario del esquema y de la expectativa previa, y el principio de respeto por las personas que rige los comités de ética.',
+
+      lineages: [
+        {
+          name: 'Hermann von Helmholtz, Handbuch der physiologischen Optik, tomo III',
+          year: 1867,
+          what: 'Introduce la inferencia inconsciente: la imagen retiniana es ambigua y sin embargo vemos objetos estables, luego entre estímulo y percepto opera algo que agrega lo que el estímulo no traía. Es la primera versión empírica de una condición subjetiva de la experiencia.',
+        },
+        {
+          name: 'Frederic Bartlett, Remembering',
+          year: 1932,
+          what: 'Instala el esquema como unidad de la memoria y muestra con el relato La guerra de los fantasmas que el recuerdo es reconstrucción: las distorsiones no son azarosas, van todas en la dirección del marco cultural del que recuerda.',
+        },
+        {
+          name: 'Jean Piaget, El nacimiento de la inteligencia en el niño',
+          year: 1936,
+          what: 'Convierte las estructuras del sujeto en algo que se construye: los esquemas se conservan asimilando el mundo y se modifican acomodándose a lo que no encaja. El sujeto de la experiencia deja de estar dado y pasa a tener una historia observable.',
+        },
+        {
+          name: 'Informe Belmont, National Commission for the Protection of Human Subjects',
+          year: 1979,
+          what: 'Traduce la fórmula de la humanidad como fin en sí mismo en el principio de respeto por las personas, y lo operacionaliza como consentimiento informado con información suficiente, comprensión y voluntariedad, más protección reforzada de quien tiene autonomía disminuida.',
+        },
+      ],
+
+      development: `La psicología cognitiva no heredó de Kant una teoría de la mente sino un formato de explicación: lo que percibimos y recordamos no es copia de un mundo dado, sino el resultado de aplicar estructuras propias del sujeto sobre un material que llega incompleto. La disciplina necesitaba ese formato porque el asociacionismo no daba cuenta de dos hechos tercos: que la imagen retiniana sea ambigua y aun así veamos objetos estables, y que el error de memoria no sea aleatorio sino orientado. Helmholtz explica el primero en 1867 con la inferencia inconsciente. Bartlett explica el segundo en 1932: sus participantes ingleses no olvidan al azar un relato indígena norteamericano, lo vuelven familiar, y todos en la misma dirección.
+
+Al entrar en la psicología, lo trascendental se vuelve empírico, y ahí están juntas la ganancia y la pérdida. Las **[[categorias|categorías]]** kantianas son universales, invariables y condición de que haya objeto alguno; los esquemas de Bartlett y de Piaget son particulares, aprendidos, corregibles y distintos según la edad y la cultura. La ganancia es decisiva, porque una estructura variable admite medición y desarrollo, que es lo que Piaget construye desde 1936 con la asimilación y la acomodación. La pérdida está en el estatuto del argumento: Kant no proponía una hipótesis sobre cómo trabaja un aparato psíquico, sostenía que sin esas funciones no habría experiencia sobre la cual formular hipótesis. Llamar kantiano a un esquema aprendido invierte el **[[giro_copernicano|giro copernicano]]** y devuelve al terreno psicológico aquello que Kant quiso sacar de ahí.
+
+La versión viva del linaje es hoy la codificación predictiva. Rao y Ballard modelan en 1999, en Nature Neuroscience, la corteza visual como una jerarquía que envía predicciones hacia abajo y propaga hacia arriba solo el error; Friston generaliza el esquema en 2010 con el principio de energía libre. La consecuencia metodológica es seria: si percibir es inferir, la ilusión deja de ser un fallo del sistema y pasa a ser la evidencia principal acerca del modelo interno, lo que reordena qué cuenta como dato. La objeción también lo es: un marco que acomoda cualquier resultado ajustando la precisión asignada a una expectativa previa corre el riesgo de no prohibir nada.
+
+La segunda herencia no es cognitiva sino normativa, y es la que regula el oficio. La fórmula de la humanidad como fin en sí mismo, contenida en el **[[imperativo_categorico|imperativo categórico]]**, es la matriz del principio de respeto por las personas del Informe Belmont, que convierte una tesis moral en un procedimiento auditable. Quien investiga queda obligado a algo más exigente que pedir una firma: debe mostrar que el participante entendió, que pudo negarse sin costo y que el engaño experimental, cuando lo hubo, estaba justificado y fue revelado después.`,
+
+      today: [
+        'La psiquiatría computacional usa estos modelos de forma directa: Adams, Stephan, Brown, Frith y Friston propusieron en 2013 explicar alucinaciones y delirio como un desajuste en la precisión asignada a las expectativas frente a la evidencia sensorial entrante.',
+        'El testimonio ocular se evalúa hoy como reconstrucción y no como registro, herencia directa del esquema de Bartlett, y los protocolos de entrevista forense se diseñan para no aportar el material que el recuerdo integrará después como propio.',
+        'Toda investigación con personas en Chile pasa por un comité ético científico bajo la Ley 20.120 de 2006, que exige consentimiento informado escrito: el principio de respeto por las personas convertido en requisito administrativo para poder publicar.',
+      ],
+
+      caveats: [
+        'Kant negó que pudiera existir ciencia estricta de lo psíquico, y con razones precisas, en los Principios metafísicos de 1786: lo interno carece de extensión y no admite matemática, sus estados no se dejan separar y recombinar para experimentar, y observarlos los altera. La psicología se construyó contra ese veto.',
+        'El esquema psicológico no llega desde Kant por línea directa: Bartlett tomó el término de Henry Head, neurólogo, y declaró que le disgustaba. Además el esquematismo kantiano de 1781 nombra el procedimiento que aplica una categoría al tiempo, no un paquete de conocimiento almacenado.',
+      ],
+    },
   },
 
   hegel: {
@@ -194,6 +241,53 @@ Para la psicología esto se paga en diseño. Las teorías del desarrollo por est
         note: 'Edición póstuma de sus cursos: la historia como proceso con forma, no como sucesión de hechos.',
       },
     ],
+
+    psychology: {
+      claim:
+        'De Hegel viene la tesis, hoy incorporada sin firma, de que la conciencia de sí se produce en la relación con otro y no antes de ella. De ahí sale también el formato de los modelos de desarrollo que avanzan superando contradicciones en lugar de acumular contenidos, y el vocabulario con que la psicología social nombra el daño de no ser reconocido.',
+
+      lineages: [
+        {
+          name: 'Lev Vygotski, Historia del desarrollo de las funciones psíquicas superiores',
+          year: 1931,
+          what: 'Formula la ley genética general del desarrollo cultural: toda función psíquica superior aparece dos veces, primero entre personas y después dentro de una. La relación social precede al individuo y no al revés. El manuscrito circuló recién con su publicación en ruso en 1960.',
+        },
+        {
+          name: 'Alexandre Kojève, Introducción a la lectura de Hegel',
+          year: 1947,
+          what: 'Edición de los seminarios dictados entre 1933 y 1939 que pone el deseo de reconocimiento y la dialéctica del amo y el esclavo en el centro. Por esta vía, y no por el texto de 1807, llegan a Lacan, a Fanon y a la psicología social francesa.',
+        },
+        {
+          name: 'Klaus Riegel, The dialectics of human development, American Psychologist',
+          year: 1976,
+          what: 'Objeta que Piaget cierre el desarrollo en un equilibrio final y propone operaciones dialécticas como nivel posterior, donde la contradicción no se resuelve sino que se sostiene. Funda la psicología dialéctica del ciclo vital y su interés por las crisis no normativas.',
+        },
+        {
+          name: 'Axel Honneth, La lucha por el reconocimiento',
+          year: 1992,
+          what: 'Reconstruye el reconocimiento en tres esferas, amor, derecho y solidaridad, y a cada una le hace corresponder una forma de menosprecio: maltrato, exclusión de derechos y humillación. Da a la psicología social un vocabulario para daños que no son síntomas.',
+        },
+      ],
+
+      development: `Hegel entra en la psicología por una tesis que parece obvia y no lo era: la conciencia de sí no es un dato de partida, es un resultado de la relación con otro. Una autoconciencia solo es para sí en cuanto otra la reconoce, de modo que el **[[reconocimiento]]** no es adorno moral sino condición de que haya alguien ahí. La disciplina necesitaba esto porque una psicología del individuo aislado, con un adentro accesible por introspección o legible en la conducta, no explicaba la génesis: de dónde sale un sujeto capaz de tomarse a sí mismo como objeto.
+
+La vía de entrada efectiva es Vygotski, que llega a Hegel por Marx y Engels y convierte la tesis en una ley de desarrollo contrastable: la atención voluntaria, la memoria mediada y el habla interna se describen como relaciones sociales internalizadas. Lo que se transforma en el trayecto es el sujeto del proceso. En Hegel quien se desarrolla es el **[[espiritu|espíritu]]**, una figura histórica; en Vygotski es un niño concreto en una cultura fechada, con instrumentos y signos que pueden inventariarse. Se gana un programa de investigación y se pierde la necesidad del recorrido, y con ella la garantía de que el conflicto termine bien.
+
+La segunda herencia es formal: el desarrollo avanza por contradicción y no por acumulación. Piaget conserva la estructura, porque un estadio no se descarta sino que se reorganiza dentro del siguiente, que es exactamente la **[[aufhebung|superación]]** que cancela y conserva a la vez, con el desequilibrio en el papel del momento negativo. Riegel objeta en 1976 que ese esquema cierre demasiado pronto, con un equilibrio terminal en la adolescencia, y propone un nivel posterior donde la contradicción se habita en vez de resolverse, lo que abre la investigación sobre crisis no normativas del adulto. Engeström traslada el mismo motor a los sistemas de actividad en 1987: las contradicciones internas de una organización, y no la falta de información, son la fuente del aprendizaje expansivo.
+
+Donde la **[[dialectica|dialéctica]]** produce hoy discusión viva es en la clínica y en el método. Honneth ofrece un vocabulario para nombrar daños que no son síntomas, la invisibilización y el desprecio, y eso cambia qué se registra en una entrevista y a quién se responsabiliza del malestar. Cuando el sufrimiento se describe como reconocimiento denegado, la intervención deja de apuntar solo al individuo y alcanza la relación que lo produjo. La psicología histórico cultural agrega una exigencia a quien investiga: si no existe un psiquismo previo a la historia que la cultura solo module, entonces ningún instrumento normado en una población es trasladable a otra sin preguntar otra vez qué mide. Esa es la discusión abierta sobre pruebas psicométricas en poblaciones indígenas y migrantes.`,
+
+      today: [
+        'Las teorías del reconocimiento sostienen investigación empírica sobre estigma y salud mental: el daño se conceptualiza como falta de reconocimiento y no solo como estrés, lo que modifica qué se mide y qué cuenta como reparación en política pública.',
+        'La teoría de la actividad de Engeström se usa como método de intervención en los laboratorios de cambio, donde un equipo de salud o de escuela analiza las contradicciones de su propio sistema de trabajo en lugar de recibir una solución externa.',
+        'En psicoanálisis relacional, Jessica Benjamin retomó en 1988 la dialéctica del amo y el esclavo para describir la dominación en los vínculos íntimos como un fracaso del reconocimiento mutuo y no como un rasgo de personalidad de uno de los dos.',
+      ],
+
+      caveats: [
+        'La tríada tesis, antítesis y síntesis no es de Hegel: la fórmula proviene de la exposición que Chalybäus publicó en 1837, y Gustav Mueller la desmontó como leyenda escolar en 1958. Los manuales de psicología del desarrollo siguen atribuyéndosela sin revisar la fuente.',
+        'Casi toda la lectura psicológica del amo y el esclavo procede de los seminarios de Kojève entre 1933 y 1939, publicados en 1947. Kojève leyó a Hegel con Marx y Heidegger, y el deseo de reconocimiento como motor antropológico es suyo antes que del texto de 1807.',
+      ],
+    },
   },
 };
 

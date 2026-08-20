@@ -100,6 +100,49 @@ En psicología el impacto fue inmediato y todavía se paga. La **[[operacionaliz
         note: 'Hempel repasa los intentos de arreglar el criterio y concluye que ninguno funciona: el acta de defunción escrita desde adentro.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le dio a la psicología su criterio de significado y, con él, la forma en que la disciplina escribe. La exigencia de que un término signifique solo lo que sus condiciones de verificación permiten es lo que produce la definición operacional, y de ahí sale la estructura del artículo empírico que se sigue usando hoy.',
+      lineages: [
+        {
+          name: 'Percy Bridgman, The Logic of Modern Physics',
+          year: 1927,
+          what: 'Propone que un concepto es sinónimo del conjunto de operaciones con que se mide. La longitud no es algo que la medición descubre, es lo que el procedimiento de medir produce.',
+        },
+        {
+          name: 'S. S. Stevens, The operational definition of psychological concepts',
+          year: 1935,
+          what: 'Importa el operacionalismo a la psicología y le ofrece a la disciplina una salida al problema de hablar de estados internos sin caer en metafísica: se define inteligencia como lo que mide el test.',
+        },
+        {
+          name: 'Clark Hull, Principles of Behavior',
+          year: 1943,
+          what: 'Construye un sistema axiomático con postulados y teoremas del que se deducen predicciones sobre la conducta. Es el intento más literal que hizo la psicología de ser lo que los positivistas pedían, y su fracaso es instructivo.',
+        },
+        {
+          name: 'Cronbach y Meehl, Construct validity in psychological tests',
+          year: 1955,
+          what: 'Reconocen que el operacionalismo estricto es insostenible, porque ningún test agota su constructo, y lo reemplazan por la red nomológica: un constructo se valida por el conjunto de relaciones que sostiene con otros.',
+        },
+      ],
+      development: `El problema que la psicología tenía en los años treinta era de legitimidad. Hablaba de inteligencia, de ansiedad y de motivación, que son cosas que nadie ve, y la acusación de estar haciendo metafísica con ropa de laboratorio era permanente. El operacionalismo le ofreció una salida elegante: si un concepto significa exactamente el procedimiento con que se mide, entonces la ansiedad deja de ser una entidad oculta y pasa a ser el puntaje obtenido en cierta escala aplicada de cierto modo. El costo de esa salida se pagaría después.
+
+La salida funcionó como programa de escritura antes que como filosofía. La sección de método de un artículo, con su descripción de participantes, instrumentos y procedimiento, existe para que otro pueda repetir las operaciones exactas. Esa es una herencia directa del Círculo de Viena, y es probablemente su legado más útil, porque la replicabilidad depende de que las operaciones estén escritas y no supuestas.
+
+Lo que se rompió fue la identificación entre concepto y medida. Si la inteligencia es lo que mide el test, entonces dos tests distintos miden dos cosas distintas y no se pueden comparar, y la pregunta por si un test mide bien la inteligencia pierde sentido, porque no hay nada aparte del test con que contrastarlo. Cronbach y Meehl salen de ahí con un movimiento que un estudiante de metodología debería poder reconstruir: el constructo no se define por una operación sino por la red de relaciones que la teoría predice, y validarlo consiste en poner esa red a prueba. Con eso la psicología recuperó la posibilidad de equivocarse al medir, que es justamente lo que el operacionalismo estricto le había quitado.
+
+Queda un residuo que conviene mirar de frente. La disciplina sigue enseñando definiciones operacionales como si fueran el criterio de rigor, cuando la propia tradición que las inventó las abandonó hace setenta años. Escribir que el bienestar se operacionaliza como el puntaje total de una escala no resuelve el problema de validez, lo pospone. La pregunta que corresponde es otra: qué relaciones debería mostrar ese puntaje si de verdad estuviera midiendo bienestar, y qué resultado nos haría concluir que no lo mide.`,
+      today: [
+        'La sección de método y las definiciones operacionales son un requisito de cualquier informe de investigación, y su función real es permitir la réplica, no demostrar rigor por sí mismas.',
+        'La validez de constructo y la red nomológica siguen siendo el marco con que se evalúa un instrumento psicométrico, y son la respuesta técnica al fracaso del operacionalismo.',
+        'El preregistro de hipótesis y de plan de análisis es la versión contemporánea de la misma exigencia: dejar fijadas por anticipado las operaciones que van a contar como prueba.',
+      ],
+      caveats: [
+        'El Círculo de Viena suele presentarse como una filosofía tecnocrática y conservadora, cuando fue un proyecto político de izquierda con Neurath a la cabeza, orientado a una educación pública que inmunizara contra la metafísica y contra el fascismo.',
+        'El criterio de verificación se hundió por sus propios medios: el enunciado que exige que todo enunciado con sentido sea verificable no es él mismo verificable. Que la tradición se autorrefutara es parte del contenido del tema y no una nota al pie.',
+      ],
+    },
   },
 
   wittgenstein: {
@@ -194,6 +237,49 @@ Esto le pega directo a la introspección como método y a los instrumentos que l
         note: 'Las últimas notas: hay proposiciones que no se saben ni se dudan, funcionan como el cauce por donde corre la duda.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le dejó a la psicología dos cosas incómodas: que el significado de una palabra es su uso en una práctica y no una imagen mental que la acompaña, y que un lenguaje puramente privado, cuyas reglas nadie más pudiera verificar, no sería un lenguaje. Lo segundo apunta al corazón del autoinforme, que es el instrumento más usado de la disciplina.',
+      lineages: [
+        {
+          name: 'Tractatus logico-philosophicus',
+          year: 1921,
+          what: 'El Círculo de Viena lo lee como si autorizara el criterio de verificación y lo convierte en documento fundacional del positivismo lógico, en una interpretación que él consideró equivocada.',
+        },
+        {
+          name: 'Investigaciones filosóficas',
+          year: 1953,
+          what: 'Introduce los juegos de lenguaje, los parecidos de familia y el argumento contra el lenguaje privado. Es el texto que la psicología del discurso y la filosofía de la mente siguen discutiendo.',
+        },
+        {
+          name: 'Eleanor Rosch, categorización por prototipos',
+          year: 1975,
+          what: 'Muestra experimentalmente que las categorías cotidianas no tienen condiciones necesarias y suficientes sino miembros más y menos típicos, que es la versión empírica de los parecidos de familia.',
+        },
+        {
+          name: 'Steven Hayes y la teoría del marco relacional',
+          year: 2001,
+          what: 'Construye un tratamiento conductual del lenguaje como conducta relacional aprendida, base teórica de la terapia de aceptación y compromiso, donde el problema clínico se trata como una relación con las propias palabras.',
+        },
+      ],
+      development: `La psicología heredó del sentido común una imagen del lenguaje que Wittgenstein desmonta: la idea de que una palabra significa porque está asociada a una representación interna, y que entender es tener esa representación. Si eso fuera así, aprender el significado de tristeza consistiría en asociar el sonido con una imagen privada. El argumento del lenguaje privado muestra por qué no puede ser: si el criterio de aplicar bien la palabra fuera solo mi impresión de estar aplicándola bien, no habría diferencia entre usarla correctamente y creer que la uso correctamente, y donde no cabe el error tampoco cabe la regla.
+
+Esto le llega a la psicología en su punto más sensible. Cuando un instrumento pregunta cuán ansioso se siente alguien en una escala de uno a siete, la respuesta no es la lectura de un dial interno, es un acto en una práctica pública donde el informante aprendió a usar la palabra ansioso comparándose con otros. Eso no invalida el autoinforme, pero cambia lo que se está midiendo: no un estado privado, sino la aplicación de un vocabulario compartido a la propia situación. La consecuencia metodológica es directa y muchas veces se pasa por alto: cuando dos grupos culturales responden distinto en una escala de emociones, no se sabe de antemano si difieren los estados o los usos.
+
+Los parecidos de familia tuvieron una carrera propia. La idea de que los miembros de una categoría comparten un aire común sin compartir un rasgo único reaparece en la investigación de Rosch, y de ahí pasa a la clasificación psiquiátrica: los criterios politéticos del DSM, donde bastan cinco de nueve síntomas, producen pacientes con el mismo diagnóstico y sin un solo síntoma en común. Esa estructura tiene un nombre wittgensteiniano y un problema de validez que la disciplina discute desde hace décadas.
+
+Lo que se abre al final es una pregunta de método. Si el significado está en el uso, entonces el análisis del lenguaje deja de ser un rodeo hacia lo mental y se vuelve un objeto legítimo por derecho propio, que es exactamente lo que hará la psicología discursiva.`,
+      today: [
+        'La discusión sobre equivalencia de medida entre culturas es, en el fondo, la pregunta por si dos grupos juegan el mismo juego de lenguaje al responder un cuestionario.',
+        'Los criterios politéticos del DSM producen categorías con parecidos de familia y sin núcleo común, lo que alimenta el debate sobre heterogeneidad diagnóstica.',
+        'La terapia de aceptación y compromiso trabaja con la relación del consultante con sus propias palabras en lugar de con su contenido, que es una intervención de aire wittgensteiniano aunque llegue por otra vía.',
+      ],
+      caveats: [
+        'El argumento del lenguaje privado no niega que exista la experiencia privada ni que duela un dolor. Niega que pueda haber un lenguaje cuyas reglas solo el hablante pudiera comprobar, que es una tesis mucho más acotada y que se cita mal casi siempre.',
+        'Rosch no diseñó sus experimentos para probar a Wittgenstein, y presentarlos como su confirmación empírica invierte el orden: son dos líneas que convergen, y la convergencia es interesante justamente porque es independiente.',
+      ],
+    },
   },
 
   giro_linguistico: {
@@ -284,6 +370,49 @@ Para la investigación en psicología esto se traduce en técnicas concretas. Un
         note: 'Austin distingue lo que un enunciado dice de lo que hace al decirlo, y funda la teoría de los actos de habla.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le propuso a la psicología que el lenguaje no es el vehículo con que se informa un estado mental sino parte de lo que constituye ese estado. De ahí salió una familia entera de métodos, el análisis del discurso, y una discusión que sigue abierta sobre si las actitudes son entidades internas o producciones situadas.',
+      lineages: [
+        {
+          name: 'Benjamin Lee Whorf, Language, Thought and Reality',
+          year: 1956,
+          what: 'La compilación póstuma que instala la hipótesis de la relatividad lingüística: la lengua que se habla condiciona las distinciones que se hacen. Es el punto de entrada del problema a la psicología cognitiva.',
+        },
+        {
+          name: 'J. L. Austin, How to Do Things with Words',
+          year: 1962,
+          what: 'Muestra que decir algo es hacer algo, y que muchas emisiones no son verdaderas ni falsas sino afortunadas o fallidas. Reordena qué cuenta como dato cuando alguien habla en una entrevista.',
+        },
+        {
+          name: 'Potter y Wetherell, Discourse and Social Psychology',
+          year: 1987,
+          what: 'Tratan las actitudes como construcciones que se producen en la interacción y varían según lo que el hablante está haciendo al hablar, en vez de como disposiciones estables que un cuestionario revela.',
+        },
+        {
+          name: 'Lera Boroditsky y la relatividad lingüística experimental',
+          year: 2001,
+          what: 'Retoma la hipótesis con diseños controlados y encuentra efectos acotados pero reales del vocabulario y la gramática sobre juicios de tiempo, espacio y género.',
+        },
+      ],
+      development: `Durante buena parte del siglo XX la psicología trató el lenguaje como una ventana: alguien tiene una actitud y el cuestionario la deja ver, con algo de ruido y de deseabilidad social. El giro lingüístico propone otra cosa. Si al decir juro estoy jurando y no describiendo un juramento interno, entonces hay un conjunto grande de fenómenos psicológicos que existen en la emisión y no antes de ella. La pregunta deja de ser cuánto distorsiona el lenguaje al estado y pasa a ser qué está haciendo la persona al decir lo que dice.
+
+La psicología social fue la que llevó esto más lejos y la que más resistencia encontró. Potter y Wetherell mostraron que una misma persona, entrevistada sobre el mismo asunto, produce versiones incompatibles según a quién le habla y qué está justificando, y sacaron la conclusión fuerte: la inconsistencia no es error de medida, es el dato. Si la actitud fuera una disposición estable, la variabilidad sería ruido; si es una construcción situada, la variabilidad es exactamente lo que hay que explicar. La disciplina no resolvió el punto, lo repartió: la psicología social experimental siguió midiendo actitudes y la psicología discursiva siguió analizando repertorios.
+
+La rama cognitiva tuvo una historia distinta y más ordenada. La versión fuerte de Whorf, según la cual la lengua determina lo que se puede pensar, quedó descartada por la investigación sobre color y sobre categorización. La versión débil, según la cual la lengua hace más disponibles ciertas distinciones y afecta juicios rápidos, sobrevivió con evidencia experimental. Ese arco es un buen ejemplo para un curso de metodología, porque muestra cómo una hipótesis demasiado ambiciosa se vuelve investigable al debilitarla, y cómo debilitarla no es rendirse.
+
+Para quien investiga, la exigencia práctica es incómoda. Una entrevista no es un registro de contenidos mentales, es una interacción donde el participante hace cosas: se justifica, se protege, se presenta. Analizarla como si fuera un volcado de creencias es una decisión teórica, y conviene tomarla a sabiendas.`,
+      today: [
+        'El análisis del discurso y el análisis crítico del discurso son métodos consolidados en psicología social y en investigación en salud, con criterios de calidad propios que no son los de la investigación cuantitativa.',
+        'La discusión sobre lenguaje inclusivo es un caso donde la tesis de la relatividad lingüística se vuelve política pública, y donde la evidencia disponible es más modesta que las afirmaciones de ambos bandos.',
+        'La pregunta por si las actitudes existen como disposiciones estables sigue viva cada vez que un cuestionario y una entrevista sobre el mismo tema arrojan resultados incompatibles.',
+      ],
+      caveats: [
+        'Whorf no era lingüista de formación sino ingeniero químico y perito de seguros, y varios de sus ejemplos más citados, en particular el de las palabras esquimales para la nieve, fueron desmentidos. La versión débil de su hipótesis se sostiene, la fuerte no.',
+        'Análisis del discurso nombra al menos tres cosas distintas: la psicología discursiva británica, el análisis crítico del discurso de tradición foucaultiana y el análisis conversacional. Usarlas como sinónimos en un método de tesis produce un diseño incoherente.',
+      ],
+    },
   },
 
   popper: {
@@ -377,6 +506,49 @@ En metodología cuantitativa el parentesco es directo y vale la pena verlo bien.
         note: 'El conocimiento sin sujeto cognoscente y el mundo tres: las teorías como objetos públicos con consecuencias que nadie previó.',
       },
     ],
+
+    psychology: {
+      claim:
+        'La psicología cuantitativa dice trabajar bajo su criterio y en rigor no lo hace: lo que aprendió a ejecutar fue el contraste de hipótesis nulas, que se le parece por fuera y difiere en lo esencial. Entender esa diferencia es lo que separa a un estudiante que sabe qué está haciendo con un valor p de uno que solo sabe calcularlo.',
+      lineages: [
+        {
+          name: 'La lógica de la investigación científica',
+          year: 1934,
+          what: 'Establece que una teoría es científica si prohíbe algo, y que la fuerza de una teoría se mide por lo que arriesga. Llega masivamente a la psicología con la traducción inglesa de 1959.',
+        },
+        {
+          name: 'Ronald Fisher, The Design of Experiments',
+          year: 1935,
+          what: 'Introduce la hipótesis nula y el nivel de significación como herramienta de decisión. La psicología fundió después este procedimiento con el de Neyman y Pearson en un híbrido que ninguno de los tres habría firmado.',
+        },
+        {
+          name: 'Paul Meehl, Theoretical risks and tabular asterisks',
+          year: 1978,
+          what: 'Demuestra que en psicología la hipótesis nula de diferencia exactamente cero es casi siempre falsa de antemano, de modo que rechazarla con una muestra grande no informa nada sobre la teoría.',
+        },
+        {
+          name: 'Los informes registrados y el preregistro',
+          year: 2013,
+          what: 'Las revistas empiezan a aceptar artículos evaluados por su diseño antes de conocer los resultados. Es el intento institucional de recuperar el riesgo que el falsacionismo pedía y que la práctica había disuelto.',
+        },
+      ],
+      development: `Popper propone algo simple y exigente: una teoría vale por lo que prohíbe. Si de ella no se sigue ningún resultado observable que la dejaría mal parada, entonces no dice nada sobre el mundo. La psicología adoptó el vocabulario con entusiasmo y ejecutó otra cosa. En un contraste de hipótesis nulas no se pone a prueba la teoría del investigador, se pone a prueba una hipótesis alternativa que nadie sostiene, la de que el efecto es exactamente cero, y su rechazo se cuenta como apoyo a la propia teoría. Esa inferencia no es popperiana: confirma sin arriesgar.
+
+Meehl lo formuló con una claridad que todavía incomoda. En psicología casi todas las variables están correlacionadas con casi todas las demás en alguna medida, aunque sea pequeña, de modo que la nula es falsa antes de recoger un solo dato. Rechazarla depende entonces del tamaño de la muestra y no de la verdad de la teoría, y aumentar la muestra hace más fácil obtener un resultado significativo. En física, decía, una teoría más precisa se expone más al fracaso; en psicología, más precisión estadística vuelve el fracaso más improbable. La comparación es devastadora y sigue vigente.
+
+La consecuencia práctica se hizo visible en la crisis de replicación. Cuando la evidencia se acumula por rechazos de la nula y la publicación premia los resultados significativos, el sistema produce un archivo lleno de efectos que no vuelven a aparecer. Lo que falló no fue la honestidad de los investigadores sino la lógica del procedimiento, que permitía tomar decisiones sobre el análisis con los datos ya a la vista sin que quedara rastro.
+
+De ahí viene la respuesta institucional, que es más popperiana que todo lo anterior. Preregistrar es declarar por anticipado qué resultado contaría como fracaso, y un informe registrado se publica según su diseño y no según lo que arrojó. Para quien está haciendo su tesis, la exigencia se resume en una pregunta que conviene poder responder antes de recoger datos: qué resultado me haría concluir que mi hipótesis es falsa. Si no hay ninguno, no hay investigación empírica.`,
+      today: [
+        'El umbral de significación de 0,05 sigue organizando qué se publica, y la discusión sobre bajarlo, abandonarlo o reemplazarlo por estimación con intervalos es un debate abierto en la disciplina.',
+        'El preregistro y los informes registrados son requisito creciente en revistas de psicología, y cambian el incentivo desde encontrar algo hacia responder bien una pregunta.',
+        'Los tamaños del efecto y los intervalos de confianza se piden hoy junto al valor p, porque informan de la magnitud de lo encontrado y no solo de su improbabilidad bajo una hipótesis que nadie defiende.',
+      ],
+      caveats: [
+        'Contrastar la hipótesis nula no es falsar en el sentido de Popper. Se refuta una hipótesis que el investigador no sostiene y se toma esa refutación como confirmación de la propia, que es exactamente el movimiento que Popper prohibía.',
+        'Popper usó al psicoanálisis como su ejemplo de pseudociencia, pero la crítica más fuerte no es la suya sino la de Grünbaum, que muestra que sí había afirmaciones contrastables y las evalúa. Quedarse con Popper deja al estudiante con la versión más débil del argumento.',
+      ],
+    },
   },
 
   kuhn: {
@@ -470,6 +642,49 @@ Para la psicología esto es incómodo y útil a la vez. La pregunta de si la dis
         note: 'Historia detallada de un caso propio: Planck no introdujo el cuanto como quien produce una revolución deliberada.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Le dio a la psicología el vocabulario con que discute su propia identidad, y de paso le quitó la ilusión de que sus observaciones son neutrales. La pregunta de si la disciplina tiene un paradigma, varios o ninguno se plantea en sus términos desde hace sesenta años y sigue sin respuesta compartida.',
+      lineages: [
+        {
+          name: 'La estructura de las revoluciones científicas',
+          year: 1962,
+          what: 'Introduce paradigma, ciencia normal, anomalía y revolución, y sostiene que la observación está cargada de teoría. La psicología se apropió del vocabulario casi de inmediato y con bastante libertad.',
+        },
+        {
+          name: 'Robert Rosenthal, Experimenter Effects in Behavioral Research',
+          year: 1966,
+          what: 'Documenta que las expectativas del investigador influyen en los resultados que obtiene. Es la versión empírica y doméstica de la carga teórica de la observación, y el origen del doble ciego en psicología.',
+        },
+        {
+          name: 'Arthur Staats, Psychology Crisis of Disunity',
+          year: 1983,
+          what: 'Diagnostica a la psicología como una disciplina fragmentada en escuelas que no acumulan entre sí, y propone un programa de unificación. El diagnóstico se cita mucho más que la propuesta.',
+        },
+        {
+          name: 'Open Science Collaboration, Estimating the reproducibility of psychological science',
+          year: 2015,
+          what: 'Replica cien estudios publicados y consigue reproducir alrededor de un tercio de los efectos. Se leyó de inmediato como una crisis en sentido kuhniano, con razón o sin ella.',
+        },
+      ],
+      development: `Lo que la psicología tomó de Kuhn no fue una teoría sino un espejo. Si una ciencia madura se reconoce porque su comunidad comparte ejemplares, problemas y criterios de solución, entonces una disciplina donde conviven conductistas, psicoanalistas, cognitivistas y construccionistas sin discutir realmente entre sí es o preparadigmática o algo que Kuhn no previó. Esa incomodidad produjo literatura durante décadas y no se resolvió, entre otras cosas porque el propio Kuhn se negó a aplicar su esquema a las ciencias sociales.
+
+La tesis que sí produjo consecuencias metodológicas fue la otra, la de que no hay observación sin teoría. Aplicada a la psicología es especialmente aguda, porque aquí el instrumento de observación suele ser una persona que sabe qué se espera encontrar. Rosenthal mostró que esa expectativa se filtra por vías que el investigador no controla ni advierte, y la respuesta de la disciplina fue procedimental: cegamiento, protocolos, codificadores independientes y acuerdo entre jueces. Casi todo el aparato de control que se enseña en metodología existe porque la observación no es neutral.
+
+La crisis de replicación reactivó la lectura kuhniana en un sentido más literal. Cuando un tercio de los efectos publicados no reaparece, lo que está en cuestión no es un hallazgo sino las prácticas que la comunidad daba por buenas: la flexibilidad en el análisis, el tamaño muestral, el sesgo de publicación. La reacción tuvo la forma de una reforma de la ciencia normal más que de una revolución, con nuevas reglas de publicación y de transparencia, pero mostró que los criterios de lo que cuenta como resultado válido son un acuerdo de comunidad y no un dato de la naturaleza.
+
+Queda la aplicación más concreta y la que más le sirve a un estudiante de clínica. El DSM funciona como un paradigma en el sentido de Kuhn: fija qué cuenta como caso, qué preguntas tienen sentido y qué se investiga con financiamiento. Cuando el Instituto Nacional de Salud Mental de Estados Unidos anunció en 2013 que dejaría de organizar su financiamiento según esas categorías y propuso otro marco, la discusión que se abrió fue exactamente sobre si un cambio así es acumulativo o es un cambio de reglas.`,
+      today: [
+        'La convivencia del DSM con marcos alternativos de clasificación mantiene abierta la pregunta de si la psicopatología tiene un paradigma o una taxonomía negociada.',
+        'Los procedimientos de cegamiento, doble codificación y acuerdo entre jueces existen porque se acepta que la observación está cargada de teoría, y no como formalidades administrativas.',
+        'La crisis de replicación cambió las reglas de publicación en menos de una década, lo que la vuelve un caso contemporáneo de cómo una comunidad científica renegocia sus criterios.',
+      ],
+      caveats: [
+        'En psicología paradigma se usa con dos sentidos ajenos a Kuhn: como sinónimo de enfoque teórico, y como nombre de una tarea experimental, por ejemplo el paradigma de Stroop. Ninguno de los dos es el suyo, y la confusión hace que discusiones distintas parezcan la misma.',
+        'Kuhn rechazó explícitamente que su modelo se aplicara a las ciencias sociales, y la palabra paradigma es tan imprecisa en su propio libro que Masterman contó más de veinte usos distintos. Apoyar un argumento disciplinar en ese término exige decir en cuál de sus sentidos se lo está tomando.',
+      ],
+    },
   },
 
   postpositivismo: {
@@ -564,6 +779,49 @@ Todo esto está en tu tesis aunque nadie lo nombre. La hipótesis se escribe dir
         note: 'Shadish, Cook y Campbell revisan el programa entero e incorporan la discusión sobre inferencia causal.',
       },
     ],
+
+    psychology: {
+      claim:
+        'Es el marco que la psicología cuantitativa declara cuando le piden declarar uno, y el que sostiene el aparato de validez que se enseña en metodología. Su tesis es modesta y por eso funciona: hay una realidad independiente, el conocimiento sobre ella es siempre conjetural, y el control de amenazas a la validez es lo que hace la diferencia entre una conjetura seria y una opinión.',
+      lineages: [
+        {
+          name: 'Campbell y Stanley, Diseños experimentales y cuasiexperimentales',
+          year: 1963,
+          what: 'Introducen la distinción entre validez interna y externa y catalogan las amenazas a cada una. Es el texto que convirtió el diseño de investigación en psicología en una disciplina técnica.',
+        },
+        {
+          name: 'Cook y Campbell, Quasi-Experimentation',
+          year: 1979,
+          what: 'Agregan la validez de constructo y la de conclusión estadística, y formulan el realismo crítico: se puede investigar causas en contextos reales sin la ficción del control total del laboratorio.',
+        },
+        {
+          name: 'Guba y Lincoln, Competing paradigms in qualitative research',
+          year: 1994,
+          what: 'Ordenan positivismo, post-positivismo, teoría crítica y constructivismo en una tabla por ontología, epistemología y metodología. Esa tabla es lo que la mayoría de los estudiantes conoce como paradigmas de investigación.',
+        },
+        {
+          name: 'Shadish, Cook y Campbell, Experimental and Quasi-Experimental Designs',
+          year: 2002,
+          what: 'La revisión que sigue siendo el manual de referencia para inferencia causal en investigación aplicada, con el tratamiento más completo de los diseños sin asignación aleatoria.',
+        },
+      ],
+      development: `El post-positivismo es lo que quedó cuando la psicología aceptó las críticas al positivismo sin renunciar a investigar. Concede que la observación está cargada de teoría, que ninguna medida es transparente y que ninguna conclusión es definitiva. No concede lo otro: que por eso todas las afirmaciones valgan igual. Su apuesta es que se puede aproximar la verdad por eliminación sistemática de explicaciones alternativas, y esa apuesta se traduce en un catálogo de amenazas a la validez que hay que descartar una por una.
+
+Ahí está su aporte real y también su rutina. Cuando un estudiante justifica por qué usó un grupo de control, por qué asignó al azar, por qué midió antes y después o por qué incluyó una covariable, está descartando explicaciones rivales: maduración, historia, regresión a la media, selección. Ese es todo el contenido del método experimental en psicología, y es una operación epistemológica antes que estadística. El error más común no es elegir mal la prueba, es no haber identificado qué explicación alternativa quedó viva.
+
+La distinción entre validez interna y externa es el lugar donde el marco muestra su tensión. Cuanto más se controla el contexto, más confianza hay en que la relación observada es causal y menos motivo para creer que ocurre fuera del laboratorio. Esa no es una falla del diseño sino una elección que hay que tomar y declarar, y la respuesta de Cook y Campbell fue ampliar el repertorio de diseños cuasiexperimentales para investigar donde no se puede asignar al azar, que es casi todo lo que le importa a la psicología aplicada.
+
+Conviene mirar con distancia la tabla de paradigmas que se enseña con esto. Es una herramienta didáctica útil para mostrar que las decisiones metodológicas arrastran compromisos sobre qué es conocer, y es una mala descripción de cómo trabaja la gente, porque casi ningún investigador es puro. Escribir en el capítulo tres de una tesis que el estudio se enmarca en el paradigma post-positivista no dice nada si después no se muestra qué amenazas concretas se controlaron y cuáles quedaron abiertas.`,
+      today: [
+        'El capítulo metodológico de casi cualquier tesis cuantitativa en psicología está organizado por el vocabulario de validez interna, externa, de constructo y de conclusión estadística.',
+        'Los diseños cuasiexperimentales sostienen la evaluación de programas y de políticas públicas, donde asignar al azar suele ser imposible o inaceptable.',
+        'La discusión sobre inferencia causal con datos observacionales, con métodos como el emparejamiento por puntaje de propensión, es la continuación técnica del mismo problema.',
+      ],
+      caveats: [
+        'La tabla de paradigmas de Guba y Lincoln es un artefacto pedagógico, no un mapa de la práctica real, y usarla como si cada investigador perteneciera a una casilla produce declaraciones de paradigma que no tienen consecuencia sobre el diseño.',
+        'Post-positivista se usa a veces como una etiqueta cómoda para no decir positivista, cuando la diferencia es sustantiva: el falibilismo y la carga teórica de la observación cambian lo que se puede afirmar a partir de un resultado significativo.',
+      ],
+    },
   },
 };
 

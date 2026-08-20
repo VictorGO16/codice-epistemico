@@ -78,6 +78,53 @@ La psicología nace doscientos años después dentro de este marco y con una deu
       { title: 'Novum organum', year: 1620, note: 'Bacon propone tablas, casos negativos y una inducción reglada; la naturaleza se conoce forzándola.' },
       { title: 'The Sceptical Chymist', year: 1661, note: 'Boyle disuelve los elementos aristotélicos y hace del experimento público, con testigos, la fuente de la prueba.' },
     ],
+
+    psychology: {
+      claim:
+        'La psicología existe como disciplina separada porque alguien mostró que la sensación admite número, y esa demostración tiene fecha: los Elemente der Psychophysik de Fechner, 1860. Lo que la Revolución Científica le entrega no es una teoría de la mente sino un programa de medida, junto con el problema que ese programa genera al dejar la cualidad sentida fuera del inventario de lo real.',
+
+      lineages: [
+        {
+          name: 'Gustav Theodor Fechner, Elemente der Psychophysik',
+          year: 1860,
+          what: 'Formula la relación logarítmica entre la magnitud del estímulo y la de la sensación, apoyándose en la fracción constante que Weber había medido en 1834, y fija los métodos de umbral. La sensación queda convertida en la primera variable dependiente cuantitativa de la disciplina.',
+        },
+        {
+          name: 'Wilhelm Wundt, laboratorio de Leipzig',
+          year: 1879,
+          what: 'Instala el montaje completo, cronoscopios, taquistoscopios y kimógrafos, para producir dentro de una sala universitaria fenómenos psíquicos medibles y repetibles a voluntad. La psicología obtiene su acta de nacimiento institucional en forma de laboratorio y no de tratado.',
+        },
+        {
+          name: 'S. S. Stevens, On the theory of scales of measurement, Science',
+          year: 1946,
+          what: 'Define las cuatro escalas, nominal, ordinal, de intervalo y de razón, y fija qué operación estadística admite cada una. Con eso la matematización deja de ser una aspiración y pasa a ser una regla operativa que gobierna todo informe empírico.',
+        },
+        {
+          name: 'David Chalmers, Facing up to the problem of consciousness',
+          year: 1995,
+          what: 'Separa los problemas fáciles de la conciencia, todos funcionales y por lo tanto medibles, del problema difícil de por qué hay algo que se siente. Es la partición entre cualidades primarias y secundarias devuelta a la agenda de la neurociencia cognitiva.',
+        },
+      ],
+
+      development: `La psicología llega tarde al reparto del siglo diecisiete y llega del lado perdedor. Cuando la [[matematizacion|matematización]] declara que lo real en el cuerpo es lo que admite figura y número, todo lo demás, el color visto, el dolor sentido, el sonido oído, queda del lado del que percibe, y ese lado no es materia de ciencia sino residuo. Durante doscientos años eso significó que no podía haber ciencia de lo psíquico, y Kant lo dijo con todas sus letras: lo interno no admite medida porque solo tiene una dimensión, el tiempo. La disciplina necesitaba exactamente una cosa para existir, un procedimiento que devolviera lo secundario al orden de la cantidad.
+
+Ese procedimiento tiene fecha y nombre. Fechner no mide la sensación, que es inaccesible, sino la diferencia apenas perceptible entre dos estímulos, y la declara unidad. Sumando unidades iguales de discriminación construye una escala de intensidad sentida y obtiene que la sensación crece como el logaritmo del estímulo. La [[psicofisica|psicofísica]] resuelve el problema de la medida por un desvío: mide una conducta de comparación y la trata como si fuera experiencia. De ahí salen el umbral absoluto, el umbral diferencial, la función psicométrica y, por esa vía, toda la psicometría posterior. La operación es brillante y conviene ver lo que cuesta, porque lo medido no es la cualidad sino el desempeño discriminativo de un observador.
+
+Lo que se transforma al entrar es la ambición. Fechner era panpsiquista y buscaba probar que mente y materia son dos caras de lo mismo; la disciplina se quedó con sus métodos y descartó su metafísica sin declararlo. Wundt hace después el movimiento institucional: no una teoría nueva sino una sala con instrumentos, donde el fenómeno psíquico se produce a voluntad y se repite ante terceros. Desde entonces la psicología acredita estatus mostrando montaje y cifra, y la [[ley_natural|ley]] entendida como covariación entre magnitudes es la forma que sus resultados deben adoptar para contar como conocimiento.
+
+La discusión sigue abierta en dos frentes. El primero es si los constructos psicológicos son cantidades. Joel Michell sostiene desde 1999 que la disciplina asumió sin probarla la estructura cuantitativa de sus atributos, y que asignar números no la crea. El segundo frente es el viejo reparto intacto: la neurociencia cognitiva localiza correlatos neurales con precisión creciente y no por eso avanza un paso sobre por qué hay experiencia. A quien investiga esto le exige una pregunta previa a cualquier análisis, qué se midió exactamente, si una cualidad o un desempeño, y qué autoriza a tratar la escala obtenida como métrica.`,
+
+      today: [
+        'La discusión sobre si corresponde aplicar pruebas paramétricas a escalas Likert reedita la taxonomía de Stevens de 1946 y no está resuelta: se decide en cada comité editorial, con criterios que rara vez se explicitan en el artículo publicado.',
+        'La crítica de Joel Michell en Measurement in Psychology, 1999, sostiene que la psicometría nunca probó que sus atributos tengan estructura cuantitativa, y que la teoría de respuesta al ítem asume esa estructura en lugar de contrastarla.',
+        'La búsqueda de correlatos neurales de la conciencia con resonancia funcional produce mapas cada vez más finos del acceso y ninguna respuesta sobre la experiencia, que es el reparto galileano operando dentro de un escáner.',
+      ],
+
+      caveats: [
+        'Fechar en 1879 la fundación de la psicología es una convención historiográfica discutida. Wundt tenía sala asignada en Leipzig desde 1876, la universidad no reconoció el laboratorio en su catálogo oficial hasta 1883, y otros centros hacían investigación psicológica experimental por los mismos años.',
+        'El Wundt experimentalista estrecho de los manuales es una construcción posterior, en buena parte de sus lectores estadounidenses. Su Völkerpsychologie ocupa diez volúmenes publicados entre 1900 y 1920, y ahí sostiene que los procesos superiores no se estudian en laboratorio sino por sus productos culturales.',
+      ],
+    },
   },
 
   galileo: {
@@ -151,6 +198,53 @@ La psicología nace justamente para cobrar esa factura. La [[psicofisica|psicof�
       { title: 'Diálogo sobre los dos máximos sistemas del mundo', year: 1632, note: 'La relatividad del movimiento y el barco cerrado; el argumento que le costó el proceso.' },
       { title: 'Discursos y demostraciones sobre dos nuevas ciencias', year: 1638, note: 'La ley de caída, el plano inclinado y la resistencia de los materiales, escrito bajo arresto.' },
     ],
+
+    psychology: {
+      claim:
+        'El diseño experimental de la psicología es una traducción directa del plano inclinado: no se observa el fenómeno, se lo fabrica en una situación que aísla una variable y suprime las demás. Con el montaje viene la idealización, y con la idealización la sospecha permanente de que lo medido existe solo dentro del laboratorio.',
+
+      lineages: [
+        {
+          name: 'Hermann Ebbinghaus, Über das Gedächtnis',
+          year: 1885,
+          what: 'Inventa las sílabas sin sentido para eliminar el significado previo, que es la variable perturbadora, y mide sobre sí mismo curvas de olvido. Es el plano sin roce aplicado a la memoria: un material que no existe fuera del experimento.',
+        },
+        {
+          name: 'Ronald Fisher, The Design of Experiments',
+          year: 1935,
+          what: 'Convierte el control de las variables ajenas en procedimiento formal mediante asignación aleatoria, y con eso autoriza a atribuir la diferencia observada a la manipulación. El grupo control aleatorizado es la versión estadística del aislamiento galileano.',
+        },
+        {
+          name: 'Egon Brunswik, Perception and the Representative Design of Psychological Experiments',
+          year: 1956,
+          what: 'Objeta que aislar variables produce resultados válidos solo para el entorno artificial que las aisló, y propone muestrear situaciones con el mismo cuidado con que se muestrean sujetos. De ahí viene la noción de validez ecológica.',
+        },
+        {
+          name: 'Donald Campbell y Julian Stanley, Experimental and Quasi-Experimental Designs for Research on Teaching',
+          year: 1963,
+          what: 'Nombran y separan validez interna y validez externa, y listan las amenazas a cada una. La tensión entre pureza del montaje y alcance del resultado queda convertida en una lista de control que todo diseño debe responder.',
+        },
+      ],
+
+      development: `Lo que la psicología toma de Galileo no es un contenido sino un gesto, y el gesto consiste en fabricar la situación en vez de esperarla. La caída libre es demasiado rápida para el reloj de agua, así que Galileo no la observa: construye un canal inclinado que la diluye y sostiene que la proporción medida ahí es la misma que rige la caída sin obstáculo. El montaje no registra el fenómeno, lo produce en una forma que admite número. Toda la psicología experimental descansa sobre esa apuesta y sobre su segunda mitad, que es más incómoda: el resultado vale para el mundo aunque el mundo nunca ofrezca esas condiciones.
+
+El [[resolutivo_compositivo|análisis resolutivo compositivo]] deja además una regla de trabajo que la disciplina heredó completa. Se aísla una relación, se la demuestra sin aire ni roce, y las discrepancias se atribuyen al medio antes que a la ley. Ebbinghaus la aplica sin residuo: para medir memoria sin que el significado contamine, inventa un material que carece de significado y mide curvas de olvido sobre sílabas que nadie usa jamás. Lo mismo hacen el tiempo de reacción y la tarea Stroop. El constructo psicológico típico, memoria de trabajo, control inhibitorio, sesgo atencional, es un plano sin roce: existe limpio en el laboratorio y en ninguna otra parte.
+
+Al entrar a la psicología, la idealización cambia de estatus, y ahí está el problema. En física el plano sin roce simplifica algo que existe igual con roce. En psicología no está claro que la tarea de laboratorio y la conducta cotidiana sean el mismo fenómeno con perturbaciones añadidas, porque pueden ser fenómenos distintos. Brunswik lo formuló en 1956 y nadie lo respondió del todo. Campbell y Stanley ordenaron el asunto en 1963 sin resolverlo, separando validez interna y validez externa y mostrando que cada ganancia en una suele pagarse en la otra. La aleatorización de Fisher, de 1935, maximiza la primera y no garantiza nada sobre la segunda.
+
+Queda una herencia menos visible. Galileo argumenta con el [[experimento_mental|experimento mental]] cuando el montaje no alcanza, y la psicología hace lo mismo cada vez que un dilema hipotético, el tranvía, el juego del ultimátum, sustituye a la situación real. Y hereda el reparto: lo que se registra son [[cualidades_primarias|cualidades primarias]] de la conducta, latencias, tasas y aciertos, mientras la experiencia entra por informe verbal. A quien investiga esto le exige declarar qué idealizó, no como limitación en el párrafo final del artículo sino como parte explícita de la hipótesis.`,
+
+      today: [
+        'En neuropsicología clínica un puntaje normal en tareas de función ejecutiva de escritorio convive con desorganización severa en la vida diaria, y por eso se desarrollaron instrumentos de evaluación en entornos simulados y tareas de recados múltiples.',
+        'El sesgo de las muestras WEIRD, denunciado por Henrich, Heine y Norenzayan en 2010, es un problema de validez externa producido por la misma comodidad de montaje que asegura la interna: el estudiante disponible es el plano inclinado del psicólogo social.',
+        'El preregistro y los protocolos de replicación directa exigen especificar de antemano cada condición del montaje, lo que hace visible cuánta idealización estaba antes en decisiones no declaradas del investigador durante el análisis.',
+      ],
+
+      caveats: [
+        'La imagen de Galileo como mártir puro de la evidencia frente al dogma es una simplificación que la historiografía reciente matiza. Mario Biagioli, en Galileo, Courtier, 1993, lo muestra operando dentro del mecenazgo cortesano, y buena parte del conflicto fue de prioridad, de estilo polémico y de política eclesiástica.',
+        'No consta que dejara caer pesos desde la torre de Pisa: el relato viene de la biografía que escribió su discípulo Viviani y no aparece en sus propias obras. Citarlo como experimento fundacional atribuye a un montaje real lo que fue sobre todo un argumento de contradicción interna.',
+      ],
+    },
   },
 
   newton: {
@@ -223,6 +317,53 @@ Para la metodología de la psicología el legado es directo. Renunciar a la caus
       { title: 'Opticks', year: 1704, note: 'Óptica experimental en inglés y treinta y una cuestiones abiertas donde sí conjetura, fuera del cuerpo demostrativo.' },
       { title: 'La cronología de los reinos antiguos enmendada', year: 1728, note: 'Obra póstuma que data los reinos bíblicos por eclipses y generaciones: una de sus ocupaciones principales.' },
     ],
+
+    psychology: {
+      claim:
+        'Newton le deja a la psicología la forma que un resultado debe tener para contar como conocimiento: una relación matemática entre magnitudes medibles, sin obligación de nombrar el mecanismo que la produce. La disciplina persiguió ese ideal durante siglo y medio y cosechó muy pocas leyes, lo que abrió la pregunta de si su objeto admite leyes o solo regularidades locales.',
+
+      lineages: [
+        {
+          name: 'Ernst Heinrich Weber, De subtilitate tactus',
+          year: 1834,
+          what: 'Establece que el incremento mínimo detectable de un estímulo es una fracción constante de su magnitud. Es el primer enunciado psicológico con forma de ley newtoniana: una proporción invariante entre cantidades medibles, sin hipótesis alguna sobre qué la causa.',
+        },
+        {
+          name: 'Clark Hull, Principles of Behavior',
+          year: 1943,
+          what: 'Construye un sistema de postulados, teoremas y corolarios calcado de los Principia, con ecuaciones para la fuerza del hábito y el potencial de reacción. Es el intento más literal de una psicología newtoniana, y su fracaso instruye tanto como su ambición.',
+        },
+        {
+          name: 'Richard Herrnstein, ley de igualación, Journal of the Experimental Analysis of Behavior',
+          year: 1961,
+          what: 'Muestra que la proporción de respuestas repartidas entre dos alternativas iguala la proporción de reforzadores obtenidos de cada una. Es uno de los poquísimos enunciados de la psicología que predice un valor y no solo una dirección.',
+        },
+        {
+          name: 'Paul Meehl, Theoretical risks and tabular asterisks',
+          year: 1978,
+          what: 'Argumenta que contrastar la hipótesis nula solo predice una dirección, que en psicología blanda casi todo correlaciona con casi todo, y que por eso rechazar la nula no expone la teoría a ningún riesgo real.',
+        },
+      ],
+
+      development: `La psicología del siglo diecinueve no quiso parecerse a Newton solo por prestigio, sino porque él había resuelto un problema que ella tenía encima. Si explicar exigiera exhibir el mecanismo, la psicología no podía ni empezar, porque nadie sabía nada del sistema nervioso. El [[hypotheses_non_fingo|no finjo hipótesis]] le da permiso para trabajar: basta establecer que dos magnitudes covarían de manera exacta y estable, y la explicación queda completa aunque el interior siga cerrado. Weber lo hace en 1834 con su fracción constante, Fechner la generaliza en 1860, y por primera vez existe un enunciado sobre lo mental con la forma de una [[ley_natural|ley]].
+
+Ese permiso es también el programa del conductismo. Describir relaciones entre estímulo y respuesta rechazando entidades internas no observadas es la posición de Newton frente a la gravedad trasladada de dominio. Hull lleva la analogía hasta el final en 1943 y escribe una teoría de la conducta en postulados numerados, con constantes que había que estimar empíricamente. El sistema se derrumbó en veinte años, no por falta de rigor formal sino porque las constantes no se estabilizaban entre laboratorios. Newton tenía una constante que valía en todo el universo; Hull tenía parámetros que cambiaban con la cepa de rata.
+
+La cosecha real es escasa, y justamente por eso vale mirarla. La ley de igualación de Herrnstein predice en vez de describir: dice qué proporción de respuestas se asignará a cada alternativa dada la proporción de refuerzo, y sobrevive en humanos, en elección de consumo y en asignación de esfuerzo. Junto a la ley de potencia de Stevens, de 1957, y a poco más, agota la lista de leyes cuantitativas de la disciplina. La comparación con la física es brutal y es el punto de partida de la discusión actual: si en siglo y medio se obtuvieron cuatro o cinco leyes, quizá el objeto no tenga leyes universales sino regularidades sensibles al contexto, a la cultura y al momento histórico.
+
+Meehl le dio a esa sospecha su forma metodológica en 1978. En física una teoría arriesga un valor y el experimento puede matarla; en psicología blanda se predice una dirección y se rechaza una nula que casi nunca es verdadera, de modo que más potencia estadística produce más confirmaciones y no mejores teorías. Es la diferencia entre el [[metodo_hipotetico_deductivo|método hipotético deductivo]] con predicción puntual y su versión degradada. A quien investiga le exige preguntarse qué valor concreto predice su hipótesis, y si la respuesta es solo mayor que cero, saber que no está corriendo riesgo alguno.`,
+
+      today: [
+        'La ley de igualación se usa en análisis conductual aplicado para explicar por qué una conducta problema persiste: compite con la alternativa deseable según la tasa relativa de refuerzo, y la intervención consiste en alterar esa proporción y no en suprimir la conducta.',
+        'El giro hacia el modelado computacional formal en psicología cognitiva y en psiquiatría computacional, con modelos de acumulación de evidencia y de aprendizaje por refuerzo, busca predicciones puntuales que puedan fallar, que es exactamente lo que Meehl reclamaba.',
+        'El debate sobre reemplazar el valor p por tamaños de efecto con intervalos o por factores de Bayes es la crítica de 1978 vuelta política editorial: Basic and Applied Social Psychology prohibió la contrastación de hipótesis nulas en 2015.',
+      ],
+
+      caveats: [
+        'Usar a Newton como emblema del científico puramente empírico es falso. Dedicó más manuscritos a la alquimia y a la teología que a la física, y Keynes, que compró parte de esos papeles, lo llamó en 1946 el último de los magos y no el primero de los científicos.',
+        'La ley de igualación se cita más limpia de lo que es. Baum mostró en 1974 que los datos se desvían de modo sistemático, con sesgo e infraigualación, y por eso hoy se trabaja con una versión generalizada de dos parámetros libres ajustados a cada conjunto de datos.',
+      ],
+    },
   },
 };
 

@@ -359,7 +359,67 @@ export default function ConceptDetail() {
               <IconMind size={16} className="text-teal-400 shrink-0" />
               Conexiones con la Psicología
             </h2>
-            {concept.psychologyLink ? (
+            {exposition?.psychology ? (
+              <div className="space-y-8">
+                <p className="font-display text-xl md:text-[22px] leading-[1.5] text-white measure">
+                  <GlossaryText text={exposition.psychology.claim} />
+                </p>
+
+                <div>
+                  <h3 className="section-label mb-4">De dónde a dónde</h3>
+                  <dl className="space-y-4 measure">
+                    {exposition.psychology.lineages.map((l) => (
+                      <div key={l.name} className="border-l-2 border-teal-400/40 pl-4">
+                        <dt className="text-teal-300 font-medium text-[15px] mb-1">
+                          {l.name}
+                          {l.year ? (
+                            <span className="text-[#7c8899] font-normal"> · {l.year}</span>
+                          ) : null}
+                        </dt>
+                        <dd className="text-gray-300 text-[15px] leading-relaxed">
+                          <GlossaryText text={l.what} />
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+
+                <div>
+                  <h3 className="section-label mb-4">Desarrollo</h3>
+                  <EnhancedRichContent
+                    content={exposition.psychology.development}
+                    className="rich-content--justified"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="section-label mb-4">Dónde se ve hoy</h3>
+                  <ul className="space-y-2.5 measure">
+                    {exposition.psychology.today.map((t, i) => (
+                      <li key={i} className="text-gray-300 text-[15px] leading-relaxed flex gap-3">
+                        <span className="text-teal-400/70 shrink-0" aria-hidden="true">·</span>
+                        <span><GlossaryText text={t} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {exposition.psychology.caveats && exposition.psychology.caveats.length > 0 && (
+                  <div>
+                    <h3 className="section-label mb-4">Lo que se cita mal</h3>
+                    <div className="space-y-3 measure">
+                      {exposition.psychology.caveats.map((c, i) => (
+                        <div key={i} className="bg-gray-900/50 border border-white/10 rounded-lg p-4">
+                          <p className="text-gray-300 text-[15px] leading-relaxed">
+                            <GlossaryText text={c} />
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : concept.psychologyLink ? (
               <EnhancedRichContent content={concept.psychologyLink} />
             ) : (
               <div className="text-center py-12">
