@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buildWriterInstruction } from '@/lib/prompts/voice';
-import { getExposition, getVoice } from '@/lib/data/corpus';
+import { authorInstruction } from '@/lib/prompts/voice';
 import { generateText, hasApiKey } from '@/lib/ai/client';
 import { WRITER_THINKING } from '@/lib/ai/models';
 import { resolveTier } from '@/lib/ai/quota';
@@ -60,29 +59,17 @@ export async function POST(request: NextRequest) {
 
     const isOpeningStatement = conversationHistory.length === 0;
 
-    const systemInstruction = buildWriterInstruction({
-      name: participant.name,
-      year: participant.year,
-      kind: participant.type,
-      exposition: getExposition(participant.id),
-      voice: getVoice(participant.id),
-      firstTurn: !(conversationHistory as ConversationMessage[]).some(
-        (msg) => msg.participantName === participant.name,
-      ),
-      fallbackCoreIdea: participant.coreIdea,
-    });
-
-    const prompt = `Intervienes en una discusión sobre: ${topic}${otherParticipantsContext}${historyContext}
+    const prompt = `Estás en una discusión sobre: ${topic}${otherParticipantsContext}${historyContext}
 
 ${isOpeningStatement
-  ? 'ESTA INTERVENCIÓN: fija tu posición. Una tesis y las razones que la sostienen. No anuncies que vas a fijar tu posición: fíjala.'
-  : 'ESTA INTERVENCIÓN: responde a lo que han dicho los demás. Cita el argumento concreto que discutes antes de refutarlo o aceptarlo. No repitas tu posición inicial.'}
+  ? 'Ahora te toca hablar. Fija tu posición y las razones que la sostienen, sin anunciar que vas a hacerlo.'
+  : 'Ahora te toca hablar. Responde a lo que dijeron los demás, citando el argumento concreto que discutes antes de refutarlo o aceptarlo, y sin repetir tu posición inicial.'}
 
-EXTENSIÓN: entre 120 y 200 palabras.`;
+No pases de 200 palabras.`;
 
     const text = await generateText({
       model: tier.writer,
-      systemInstruction,
+      systemInstruction: authorInstruction(participant.name),
       turns: [{ role: 'user', text: prompt }],
       thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
     });

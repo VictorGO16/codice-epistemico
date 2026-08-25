@@ -1,24 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { philosophicalData } from '@/lib/data/philosophical-data';
-import { getExposition, getVoice } from '@/lib/data/corpus';
-import { buildWriterInstruction } from '@/lib/prompts/voice';
-import {
-  WORK_ORDER_SCHEMA,
-  WorkOrder,
-  routerInstruction,
-  routerTurns,
-} from '@/lib/prompts/comprehension';
-import { generateText, generateJson, hasApiKey, Turn } from '@/lib/ai/client';
+import { authorInstruction } from '@/lib/prompts/voice';
+import { generateText, hasApiKey, Turn } from '@/lib/ai/client';
 import { WRITER_THINKING } from '@/lib/ai/models';
 import { resolveTier } from '@/lib/ai/quota';
 
 /**
- * Dos etapas.
+ * Una sola llamada.
  *
- * 1. Comprensión, en el modelo barato y con salida JSON: qué se pregunta, a
- *    qué resuelven las menciones, qué material hace falta, qué ya se dijo.
- * 2. Redacción, en el modelo bueno, con instrucción corta y la conversación
- *    literal completa. El historial no se resume: es lo que da el hilo.
+ * La instrucción de sistema es la persona del autor y nada más. El historial
+ * va literal, en turnos con rol, porque es lo que sostiene el hilo. No hay
+ * etapa intermedia que resuma la conversación ni que le dicte al autor qué
+ * hacer con ella: cualquier cosa que se le diga en modo imperativo lo devuelve
+ * a ser un asistente, y esa es justamente la figura que no debe existir.
  */
 
 interface HistoryMessage {
@@ -70,35 +64,9 @@ export async function POST(request: NextRequest) {
         text: msg.text,
       }));
 
-    const exposition = getExposition(conceptId);
-    const voice = getVoice(conceptId);
-
-    // Etapa 1. Si falla, la conversación sigue sin orden de trabajo.
-    const order = await generateJson<WorkOrder>({
-      model: tier.router,
-      systemInstruction: routerInstruction(
-        concept.name,
-        (exposition?.keyNotions ?? []).map((n) => n.term),
-      ),
-      turns: routerTurns(history, message),
-      schema: WORK_ORDER_SCHEMA,
-    });
-
-    // Etapa 2.
-    const systemInstruction = buildWriterInstruction({
-      name: concept.name,
-      year: concept.year,
-      kind: concept.type,
-      exposition,
-      voice,
-      order,
-      firstTurn: history.length === 0,
-      fallbackCoreIdea: concept.coreIdea,
-    });
-
     const text = await generateText({
       model: tier.writer,
-      systemInstruction,
+      systemInstruction: authorInstruction(concept.name),
       turns: [...history, { role: 'user', text: message }],
       thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
       maxOutputTokens: 1400,

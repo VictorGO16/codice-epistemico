@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ANALYSIS_STYLE } from '@/lib/prompts/voice';
 import { generateText, hasApiKey } from '@/lib/ai/client';
 import { WRITER_THINKING } from '@/lib/ai/models';
 import { resolveTier } from '@/lib/ai/quota';
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
       `- ${p.name} (${p.type === 'philosopher' ? 'Filósofo' : 'Científico'})`
     ).join('\n');
 
-    const analysisPrompt = `Eres un experto moderador y analista de debates filosóficos. Analiza el siguiente debate y proporciona un análisis estructurado.
+    const analysisPrompt = `Analiza el siguiente debate y entrega un análisis estructurado.
 
 TEMA DEL DEBATE: ${topic}
 
@@ -74,6 +75,7 @@ IMPORTANTE: Responde SOLO con el JSON válido, sin markdown, sin explicaciones a
 
     let text = await generateText({
       model: tier.writer,
+      systemInstruction: ANALYSIS_STYLE,
       turns: [{ role: 'user', text: analysisPrompt }],
       thinkingLevel: tier.degraded ? undefined : WRITER_THINKING,
     });

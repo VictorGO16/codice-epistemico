@@ -35,17 +35,16 @@ export async function POST(request: NextRequest) {
 
     // Handle user input if provided
     const userInputContext = userInput 
-      ? `\n\nInstrucción del usuario para dirigir el debate:\n"${userInput}"`
+      ? `\n\nLo que pidió quien sigue el debate:\n"${userInput}"`
       : '';
 
-    const prompt = `Moderas una discusión sobre: "${topic}"${historyContext}${userInputContext}
+    const prompt = `Discusión sobre: "${topic}"${historyContext}${userInputContext}
 
-${MODERATOR_VOICE}
-
-ESTA INTERVENCIÓN: nombra el punto exacto en que los participantes discrepan y formula la pregunta que los obliga a pronunciarse sobre él. Si hay una indicación de quien modera desde fuera, redirige la discusión hacia ahí sin comentarla.`;
+Ahora interviene el moderador: nombra el punto exacto en que los participantes discrepan y formula la pregunta que los obliga a pronunciarse sobre él. Si quien sigue el debate pidió algo, redirige hacia ahí sin comentarlo.`;
 
     const text = await generateText({
       model: MODEL_ROUTER,
+      systemInstruction: MODERATOR_VOICE,
       turns: [{ role: 'user', text: prompt }],
     });
 

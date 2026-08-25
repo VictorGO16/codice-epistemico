@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BASE_STYLE } from '@/lib/prompts/voice';
+import { ANALYSIS_STYLE } from '@/lib/prompts/voice';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { generateText, hasApiKey } from '@/lib/ai/client';
 import { MODEL_WRITER, WRITER_THINKING } from '@/lib/ai/models';
@@ -63,12 +63,12 @@ CRITERIOS:
 4. Respeta la extensión pedida en cada campo.
 5. Separa los párrafos con saltos de línea dobles (\\n\\n). Usa listas con "- " cuando enumeres, y subtítulos con ## solo si la sección lo exige.
 
-${BASE_STYLE}
 
 Responde ÚNICAMENTE con el JSON válido, sin texto adicional:`;
 
     let text = await generateText({
       model: MODEL_WRITER,
+      systemInstruction: ANALYSIS_STYLE,
       turns: [{ role: 'user', text: analysisPrompt }],
       thinkingLevel: WRITER_THINKING,
     });
