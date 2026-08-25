@@ -24,11 +24,16 @@ export function useOracle() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * El texto llega por streaming. onChunk recibe lo acumulado hasta el momento,
+   * como mucho cada 50 ms, para no reprocesar el markdown en cada trozo.
+   */
   const askOracle = async (
     conceptId: string,
     message: string,
     conversationHistory: ConversationMessage[] = [],
-    usedHighQuality = 0
+    usedHighQuality = 0,
+    onChunk?: (accumulated: string) => void
   ): Promise<OracleReply> => {
     setIsLoading(true);
     setError(null);
@@ -52,13 +57,37 @@ export function useOracle() {
         throw new Error(errorData.error || 'Failed to get oracle response');
       }
 
-      const data = await response.json();
-      
-      if (!data.success) {
-        throw new Error(data.error || 'Oracle response was not successful');
-      }
+      const tier: TierInfo | undefined = response.headers.get('X-Tier-Model')
+        ? {
+            model: response.headers.get('X-Tier-Model') || '',
+            degraded: response.headers.get('X-Tier-Degraded') === 'true',
+            remaining: Number(response.headers.get('X-Tier-Remaining') || 0),
+            warn: response.headers.get('X-Tier-Warn') === 'true',
+            limit: Number(response.headers.get('X-Tier-Limit') || 0),
+          }
+        : undefined;
 
-      return { text: data.response as string, tier: data.tier as TierInfo | undefined };
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('Sin cuerpo de respuesta');
+
+      const decoder = new TextDecoder();
+      let text = '';
+      let lastEmit = 0;
+
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        text += decoder.decode(value, { stream: true });
+        const now = performance.now();
+        if (onChunk && now - lastEmit > 50) {
+          lastEmit = now;
+          onChunk(text);
+        }
+      }
+      text += decoder.decode();
+      onChunk?.(text);
+
+      return { text, tier };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(errorMessage);

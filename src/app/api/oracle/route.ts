@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { philosophicalData } from '@/lib/data/philosophical-data';
 import { authorInstruction } from '@/lib/prompts/voice';
-import { generateText, hasApiKey, Turn } from '@/lib/ai/client';
+import { streamText, hasApiKey, Turn } from '@/lib/ai/client';
 import { WRITER_THINKING } from '@/lib/ai/models';
 import { resolveTier } from '@/lib/ai/quota';
 
 /**
+ * La respuesta se envía en streaming: el navegador recibe el texto a medida que
+ * el modelo lo escribe. Los datos de cuota viajan en cabeceras porque el cuerpo
+ * ya no es JSON.
+ *
  * Una sola llamada.
  *
  * La instrucción de sistema es la persona del autor y nada más. El historial
@@ -19,6 +23,8 @@ interface HistoryMessage {
   speaker: string;
   text: string;
 }
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,7 +70,8 @@ export async function POST(request: NextRequest) {
         text: msg.text,
       }));
 
-    const text = await generateText({
+    const encoder = new TextEncoder();
+    const chunks = streamText({
       model: tier.writer,
       systemInstruction: authorInstruction(concept.name),
       turns: [...history, { role: 'user', text: message }],
@@ -72,15 +79,29 @@ export async function POST(request: NextRequest) {
       maxOutputTokens: 1400,
     });
 
-    return NextResponse.json({
-      response: text,
-      success: true,
-      tier: {
-        model: tier.writer,
-        degraded: tier.degraded,
-        remaining: tier.remaining,
-        warn: tier.warn,
-        limit: tier.limit,
+    const body = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        try {
+          for await (const chunk of chunks) {
+            controller.enqueue(encoder.encode(chunk));
+          }
+        } catch (error) {
+          console.error('Error durante el streaming:', error);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-store, no-transform',
+        'X-Tier-Model': tier.writer,
+        'X-Tier-Degraded': String(tier.degraded),
+        'X-Tier-Remaining': String(tier.remaining),
+        'X-Tier-Warn': String(tier.warn),
+        'X-Tier-Limit': String(tier.limit),
       },
     });
   } catch (error: unknown) {

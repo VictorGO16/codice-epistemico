@@ -57,6 +57,10 @@ interface OracleChatProps {
 
 export default function OracleChat({ conceptId, conceptName }: OracleChatProps) {
   const [inputMessage, setInputMessage] = useState('');
+  /* El texto en vuelo vive acá y no en el store: escribir cada trozo al store
+     dispararía una escritura en el navegador por trozo. Se guarda una sola vez
+     al terminar. */
+  const [streaming, setStreaming] = useState<{ id: string; text: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -72,13 +76,18 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
     startSession
   } = useOracleStore();
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [currentSession?.messages]);
+
+  // El scroll sigue al texto mientras llega, sin animación para no dar tirones.
+  useEffect(() => {
+    if (streaming) scrollToBottom('auto');
+  }, [streaming]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -185,6 +194,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
 
     const userText = inputMessage.trim();
     setInputMessage('');
+    inputRef.current?.focus();
 
     try {
       // Prepare conversation history for context
@@ -196,13 +206,18 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
         }));
 
       const used = useUsageStore.getState().dialogue;
-      const reply = await askOracle(conceptId, userText, conversationHistory, used);
+      setStreaming({ id: loadingMessageId, text: '' });
+
+      const reply = await askOracle(conceptId, userText, conversationHistory, used, (accumulated) => {
+        setStreaming({ id: loadingMessageId, text: accumulated });
+      });
 
       updateMessage(loadingMessageId, {
         text: reply.text,
         isLoading: false,
         degraded: reply.tier?.degraded,
       });
+      setStreaming(null);
 
       if (reply.tier && !reply.tier.degraded) {
         useUsageStore.getState().consume('dialogue');
@@ -223,7 +238,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
       }
 
     } catch (err) {
-      // Remove loading message and show error
+      setStreaming(null);
       updateMessage(loadingMessageId, {
         text: 'No se pudo generar la respuesta. Vuelve a intentarlo.',
         isLoading: false,
@@ -315,7 +330,7 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
                     : 'bg-gray-800 text-gray-100 border border-gray-700'
                 }`}
               >
-                {message.isLoading ? (
+                {message.isLoading && !(streaming?.id === message.id && streaming.text) ? (
                   <div className="flex items-center gap-2">
                     <div className="animate-spin w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></div>
                     <span className="text-[#9aa6b8]">Generando respuesta…</span>
@@ -323,12 +338,14 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
                 ) : (
                   <>
                     <EnhancedRichContent
-                      content={message.text}
+                      content={streaming?.id === message.id ? streaming.text : message.text}
                       className={`rich-content--compact rich-content--full ${
                         message.speaker === 'user' ? '[&_*]:text-[#04211f]' : ''
                       }`}
                     />
-                    <div className="text-[11px] opacity-60 mt-2 tabular-nums flex items-center gap-2">
+                    <div className={`text-[11px] opacity-60 mt-2 tabular-nums flex items-center gap-2 ${
+                      streaming?.id === message.id ? 'invisible' : ''
+                    }`}>
                       <span>
                         {new Date(message.timestamp).toLocaleTimeString('es-CL', {
                           hour: '2-digit',
@@ -358,7 +375,6 @@ export default function OracleChat({ conceptId, conceptName }: OracleChatProps) 
               onKeyPress={handleKeyPress}
               placeholder={`Pregunta a ${conceptName}…`}
               className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}

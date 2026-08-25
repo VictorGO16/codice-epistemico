@@ -54,6 +54,36 @@ export async function generateText(params: {
 }
 
 /**
+ * Igual que generateText, pero entrega el texto por trozos a medida que el
+ * modelo lo produce. La primera palabra sale cuando el modelo la escribió, no
+ * cuando terminó la respuesta entera.
+ */
+export async function* streamText(params: {
+  model: string;
+  systemInstruction?: string;
+  turns: Turn[];
+  thinkingLevel?: ThinkingLevel;
+  maxOutputTokens?: number;
+}): AsyncGenerator<string> {
+  const { model, systemInstruction, turns, thinkingLevel, maxOutputTokens } = params;
+
+  const stream = await client().models.generateContentStream({
+    model,
+    contents: toContents(turns),
+    config: {
+      ...(systemInstruction ? { systemInstruction } : {}),
+      ...(maxOutputTokens ? { maxOutputTokens } : {}),
+      ...(thinkingLevel ? { thinkingConfig: { thinkingLevel } } : {}),
+    },
+  });
+
+  for await (const chunk of stream) {
+    const text = chunk.text;
+    if (text) yield text;
+  }
+}
+
+/**
  * Salida estructurada. Si el modelo devuelve algo que no parsea, se devuelve
  * null y quien llama sigue sin la orden de trabajo: la conversación nunca se
  * cae por culpa de la etapa de comprensión.
