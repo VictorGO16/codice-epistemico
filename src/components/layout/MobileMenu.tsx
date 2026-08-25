@@ -53,7 +53,7 @@ export default function MobileMenu() {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-4 border-b border-gray-600 flex items-center justify-between">
-            <h1 className="text-xl font-bold text-white">El Códice Epistémico</h1>
+            <h1 className="text-lg font-bold text-white leading-tight">Epistemología y Metodología</h1>
             <button
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 text-gray-400 hover:text-white transition-colors"

@@ -415,7 +415,7 @@ class ProfessionalPDFDesigner {
       this.pdf.setFont('helvetica', 'normal');
       
       // Left: Brand
-      this.pdf.text('El Códice Epistémico', margin, footerY + 15);
+      this.pdf.text('Epistemología y Metodología', margin, footerY + 15);
       
       // Center: Date
       const dateText = new Date().toLocaleDateString('es-ES');
@@ -630,7 +630,7 @@ class ProfessionalPDFDesigner {
     
     this.addMetadata({
       createdAt: data.timestamp,
-      author: 'El Códice Epistémico',
+      author: 'Epistemología y Metodología',
       subject: `Análisis paradigmático: ${data.objectOfStudy}`,
       keywords: ['paradigma', 'análisis', 'epistemología', data.paradigm.toLowerCase()]
     });
@@ -708,7 +708,7 @@ export function exportToHTML(options: ExportOptions): void {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${options.title} - El Codice Epistemico</title>
+    <title>${options.title} - Epistemologia y Metodologia</title>
     <style>
         body {
             font-family: 'Georgia', serif;
@@ -761,7 +761,7 @@ export function exportToHTML(options: ExportOptions): void {
 </head>
 <body>
     <div class="header">
-        <h1 class="title">El Codice Epistemico</h1>
+        <h1 class="title">Epistemologia y Metodologia</h1>
         <h2 class="subtitle">${options.title}</h2>
     </div>
     
@@ -777,7 +777,7 @@ export function exportToHTML(options: ExportOptions): void {
     <div class="content">${options.content}</div>
     
     <div class="footer">
-        <p>Generado por El Codice Epistemico - ${new Date().toLocaleDateString('es-ES')}</p>
+        <p>Generado por Epistemologia y Metodologia - ${new Date().toLocaleDateString('es-ES')}</p>
     </div>
 </body>
 </html>

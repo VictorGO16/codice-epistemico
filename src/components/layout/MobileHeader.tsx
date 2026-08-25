@@ -39,8 +39,8 @@ export default function MobileHeader({ onLeftSidebarToggle }: MobileHeaderProps)
               </p>
             </div>
           ) : (
-            <h1 className="text-lg font-semibold text-white">
-              Códice Epistémico
+            <h1 className="text-base font-semibold text-white leading-tight truncate">
+              Epistemología y Metodología
             </h1>
           )}
         </div>

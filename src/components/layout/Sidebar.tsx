@@ -74,9 +74,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   onClose();
                 }
               }}
-              className="text-lg font-semibold text-white hover:text-teal-400 transition-colors"
+              className="text-base font-semibold text-white hover:text-teal-400 transition-colors text-left leading-tight"
             >
-              Códice Epistémico
+              Epistemología y Metodología
             </button>
             <button
               onClick={onClose}

@@ -14,10 +14,10 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "El Códice Epistémico",
+  title: "Epistemología y Metodología",
   description: "Explora la filosofía de la ciencia y psicología a través de una interfaz interactiva. Conversa con grandes pensadores, simula debates filosóficos y analiza paradigmas científicos.",
   keywords: "filosofía, ciencia, psicología, epistemología, paradigmas, debates filosóficos",
-  authors: [{ name: "El Códice Epistémico" }],
+  authors: [{ name: "Epistemología y Metodología" }],
 };
 
 export const viewport = {

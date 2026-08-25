@@ -3,7 +3,7 @@
 import React from 'react';
 
 /**
- * Códice: sistema de iconos de línea (1.25px stroke)
+ * Sistema de iconos de línea (1.25px stroke)
  * Sin emojis. Todos los iconos heredan currentColor y se controlan con tamaño/clase.
  */
 type IconProps = {
@@ -51,7 +51,7 @@ export const IconParadigm = ({ size, className, strokeWidth, ...rest }: IconProp
 );
 
 export const IconBook = ({ size, className, strokeWidth, ...rest }: IconProps) => (
-  // Códice / página
+  // Página
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <path d="M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3V4z" />
     <path d="M5 17a3 3 0 013-3h10" />
