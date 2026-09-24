@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { philosophicalData } from '@/lib/data/philosophical-data';
+import { SHOW_DEBATE_METRICS_AND_WINNER } from '@/lib/config/features';
 
 /* ==========================================================================
    Exportación de documentos (PDF y HTML)
@@ -558,12 +559,17 @@ export function buildDebatePdf(data: DebateExportData): jsPDF {
 
     data.analysis.arguments?.forEach((argument) => {
       doc.space(2);
-      doc.speaker(argument.participantName, `solidez ${argument.strength}/10 · coherencia ${argument.coherence}/10`);
+      doc.speaker(
+        argument.participantName,
+        SHOW_DEBATE_METRICS_AND_WINNER
+          ? `solidez ${argument.strength}/10 · coherencia ${argument.coherence}/10`
+          : undefined
+      );
       if (argument.thesis) doc.body(argument.thesis, { indent: 4, size: 10 });
       argument.arguments?.forEach((line) => doc.body(`- ${line}`, { indent: 4, size: 10 }));
     });
 
-    if (data.analysis.moderatorConclusion) {
+    if (SHOW_DEBATE_METRICS_AND_WINNER && data.analysis.moderatorConclusion) {
       doc.space(3);
       doc.label('Cierre');
       doc.body(data.analysis.moderatorConclusion);

@@ -13,6 +13,7 @@ import ExportButton from '@/components/ui/ExportButton';
 import { exportDebateToPDF, exportToHTML, DebateExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
 import { IconForum, IconScale, IconPerson, IconSettings, TypeIcon } from '@/components/ui/Icons';
+import { SHOW_DEBATE_METRICS_AND_WINNER } from '@/lib/config/features';
 
 /* Un color por hablante, todos por encima de 7:1 sobre el fondo. El moderador
    va en gris: comenta, no debate. */
@@ -609,7 +610,9 @@ export default function DebateChat({ onClose }: DebateChatProps) {
       currentAnalysis.arguments.forEach((arg: AnalysisArgument, index: number) => {
         content += `${index + 1}. ${arg.participantName}\n`;
         content += `   Tesis: ${arg.thesis}\n`;
-        content += `   Fuerza: ${arg.strength}/10 | Coherencia: ${arg.coherence}/10\n`;
+        if (SHOW_DEBATE_METRICS_AND_WINNER) {
+          content += `   Fuerza: ${arg.strength}/10 | Coherencia: ${arg.coherence}/10\n`;
+        }
         if (arg.arguments.length > 0) {
           content += `   Argumentos:\n`;
           arg.arguments.forEach((argument: string) => {
@@ -619,16 +622,18 @@ export default function DebateChat({ onClose }: DebateChatProps) {
         content += `\n`;
       });
 
-      content += `PUNTUACIONES:\n\n`;
-      Object.entries(currentAnalysis.participantScores).forEach(([participantId, score]) => {
-        const participant = philosophicalData[participantId];
-        if (participant) {
-          content += `${participant.name}: ${score}/10\n`;
-        }
-      });
+      if (SHOW_DEBATE_METRICS_AND_WINNER) {
+        content += `PUNTUACIONES:\n\n`;
+        Object.entries(currentAnalysis.participantScores).forEach(([participantId, score]) => {
+          const participant = philosophicalData[participantId];
+          if (participant) {
+            content += `${participant.name}: ${score}/10\n`;
+          }
+        });
 
-      content += `\nCONCLUSIÓN DEL MODERADOR:\n\n`;
-      content += `${currentAnalysis.moderatorConclusion}\n\n`;
+        content += `\nCONCLUSIÓN DEL MODERADOR:\n\n`;
+        content += `${currentAnalysis.moderatorConclusion}\n\n`;
+      }
 
       content += `ANÁLISIS GENERAL:\n\n`;
       content += `${currentAnalysis.overallAnalysis}\n`;

@@ -9,6 +9,7 @@ import { useUIStore } from '@/lib/stores/ui-store';
 import { exportToHTML, exportDebateToPDF, DebateExportData } from '@/lib/utils/export';
 import EnhancedRichContent from '@/components/ui/EnhancedRichContent';
 import { TypeIcon, IconAnalysis, IconTarget } from '@/components/ui/Icons';
+import { SHOW_DEBATE_METRICS_AND_WINNER } from '@/lib/config/features';
 
 interface DebateAnalysisProps {
   session: DebateSession;
@@ -208,7 +209,9 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
     analysis.arguments.forEach((arg, index) => {
       content += `${index + 1}. ${arg.participantName}\n`;
       content += `   Tesis: ${arg.thesis}\n`;
-      content += `   Fuerza: ${arg.strength}/10 | Coherencia: ${arg.coherence}/10\n`;
+      if (SHOW_DEBATE_METRICS_AND_WINNER) {
+        content += `   Fuerza: ${arg.strength}/10 | Coherencia: ${arg.coherence}/10\n`;
+      }
       if (arg.arguments.length > 0) {
         content += `   Argumentos:\n`;
         arg.arguments.forEach((argument) => {
@@ -224,16 +227,18 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
       content += `\n`;
     });
 
-    content += `PUNTUACIONES:\n\n`;
-    Object.entries(analysis.participantScores).forEach(([participantId, score]) => {
-      const participant = philosophicalData[participantId];
-      if (participant) {
-        content += `${participant.name}: ${score}/10\n`;
-      }
-    });
+    if (SHOW_DEBATE_METRICS_AND_WINNER) {
+      content += `PUNTUACIONES:\n\n`;
+      Object.entries(analysis.participantScores).forEach(([participantId, score]) => {
+        const participant = philosophicalData[participantId];
+        if (participant) {
+          content += `${participant.name}: ${score}/10\n`;
+        }
+      });
 
-    content += `\nCONCLUSIÓN DEL MODERADOR:\n\n`;
-    content += `${analysis.moderatorConclusion}\n\n`;
+      content += `\nCONCLUSIÓN DEL MODERADOR:\n\n`;
+      content += `${analysis.moderatorConclusion}\n\n`;
+    }
 
     content += `ANÁLISIS GENERAL:\n\n`;
     content += `${analysis.overallAnalysis}\n`;
@@ -307,11 +312,13 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
                 <TypeIcon type={participant?.type || 'concept'} size={20} className="shrink-0 text-gray-400/70 mt-0.5" />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-sm md:text-base truncate">{argument.participantName}</h4>
-                  <div className="flex items-center gap-1 md:gap-2 text-xs">
-                    <span>Fuerza: {argument.strength}/10</span>
-                    <span>•</span>
-                    <span>Coherencia: {argument.coherence}/10</span>
-                  </div>
+                  {SHOW_DEBATE_METRICS_AND_WINNER && (
+                    <div className="flex items-center gap-1 md:gap-2 text-xs">
+                      <span>Fuerza: {argument.strength}/10</span>
+                      <span>•</span>
+                      <span>Coherencia: {argument.coherence}/10</span>
+                    </div>
+                  )}
                 </div>
               </div>
               
@@ -359,51 +366,55 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
     <div className={`overflow-y-auto ${className}`}>
       <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
         <IconAnalysis size={18} className="text-teal-400 shrink-0" />
-        Evaluación
+        {SHOW_DEBATE_METRICS_AND_WINNER ? 'Evaluación' : 'Síntesis'}
       </h3>
-      
-      {/* Participant Scores */}
-      <div className="mb-6">
-        <h4 className="font-semibold text-white mb-3">Puntuaciones</h4>
-        <div className="space-y-3">
-          {Object.entries(analysis!.participantScores).map(([participantId, score]) => {
-            const participant = philosophicalData[participantId];
-            if (!participant) return null;
-            
-            return (
-              <div key={participantId} className="flex items-center gap-3">
-                <TypeIcon type={participant.type} size={20} className="shrink-0 text-gray-400/70" />
-                <div className="flex-1">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm font-medium text-white">{participant.name}</span>
-                    <span className="text-sm text-teal-400">{score}/10</span>
-                  </div>
-                  <div className="w-full bg-gray-700 rounded-full h-2">
-                    <div
-                      className="bg-teal-500 h-2 rounded-full transition-all"
-                      style={{ width: `${(score / 10) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
 
-      {/* Moderator Conclusion */}
-      <div className="mb-6">
-        <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-          <IconTarget size={16} className="text-teal-400 shrink-0" />
-          Conclusión del Moderador
-        </h4>
-        <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
-          <EnhancedRichContent 
-            content={analysis!.moderatorConclusion}
-            className="text-sm"
-          />
-        </div>
-      </div>
+      {SHOW_DEBATE_METRICS_AND_WINNER && (
+        <>
+          {/* Participant Scores */}
+          <div className="mb-6">
+            <h4 className="font-semibold text-white mb-3">Puntuaciones</h4>
+            <div className="space-y-3">
+              {Object.entries(analysis!.participantScores).map(([participantId, score]) => {
+                const participant = philosophicalData[participantId];
+                if (!participant) return null;
+
+                return (
+                  <div key={participantId} className="flex items-center gap-3">
+                    <TypeIcon type={participant.type} size={20} className="shrink-0 text-gray-400/70" />
+                    <div className="flex-1">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-sm font-medium text-white">{participant.name}</span>
+                        <span className="text-sm text-teal-400">{score}/10</span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div
+                          className="bg-teal-500 h-2 rounded-full transition-all"
+                          style={{ width: `${(score / 10) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Moderator Conclusion */}
+          <div className="mb-6">
+            <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+              <IconTarget size={16} className="text-teal-400 shrink-0" />
+              Conclusión del Moderador
+            </h4>
+            <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
+              <EnhancedRichContent
+                content={analysis!.moderatorConclusion}
+                className="text-sm"
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Overall Analysis */}
       <div>
@@ -424,7 +435,11 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
         <div className="bg-gray-900 rounded-xl border border-gray-700 p-8 text-center">
           <div className="animate-spin w-12 h-12 border-4 border-teal-400 border-t-transparent rounded-full mx-auto mb-4"></div>
           <h3 className="text-xl font-bold text-white mb-2">Analizando Debate</h3>
-          <p className="text-gray-400">Extrayendo argumentos y evaluando coherencia filosófica...</p>
+          <p className="text-gray-400">
+            {SHOW_DEBATE_METRICS_AND_WINNER
+              ? 'Extrayendo argumentos y evaluando coherencia filosófica...'
+              : 'Extrayendo argumentos y sintetizando el debate...'}
+          </p>
         </div>
       </div>
     );
@@ -547,7 +562,7 @@ export default function DebateAnalysis({ session, onClose }: DebateAnalysisProps
                   : 'text-gray-400 hover:text-gray-300'
               }`}
             >
-              Evaluación
+              {SHOW_DEBATE_METRICS_AND_WINNER ? 'Evaluación' : 'Síntesis'}
             </button>
           </div>
         )}
