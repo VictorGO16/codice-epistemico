@@ -18,5 +18,9 @@ export default async function TeacherTestsPage() {
 
   if (!isAdminTokenValid(token)) redirect('/');
 
-  return <TeacherDashboard />;
+  return (
+    <div className="h-dvh w-full overflow-y-auto overscroll-y-contain">
+      <TeacherDashboard />
+    </div>
+  );
 }
