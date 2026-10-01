@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import MainLayout from '@/components/layout/MainLayout';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,9 +32,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark">
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-gray-900 text-white`}>
-        <MainLayout>
-          {children}
-        </MainLayout>
+        {children}
       </body>
     </html>
   );

@@ -108,6 +108,15 @@ export const IconScientist = ({ size, className, strokeWidth, ...rest }: IconPro
   </svg>
 );
 
+export const IconPractice = ({ size, className, strokeWidth, ...rest }: IconProps) => (
+  <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
+    <path d="M6 4h12v16H6z" />
+    <path d="M9 9h6" />
+    <path d="M9 13h3" />
+    <path d="M14 15l1.5 1.5L19 13" />
+  </svg>
+);
+
 export const IconArrowRight = ({ size, className, strokeWidth, ...rest }: IconProps) => (
   <svg {...base(size, strokeWidth)} className={className} aria-hidden {...rest}>
     <path d="M5 12h14" />

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useUIStore } from '@/lib/stores/ui-store';
 import { useConceptStore } from '@/lib/stores/concept-store';
 import ConceptTree from '@/components/features/ConceptExplorer/ConceptTree';
-import { IconForum, IconParadigm } from '@/components/ui/Icons';
+import { IconForum, IconParadigm, IconPractice } from '@/components/ui/Icons';
 
 export default function MobileMenu() {
   const { isMobileMenuOpen, setMobileMenuOpen, setActiveTab } = useUIStore();
@@ -103,6 +103,16 @@ export default function MobileMenu() {
             >
               <IconParadigm size={16} className="shrink-0" />
               Análisis Paradigmático
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('tests');
+                setMobileMenuOpen(false);
+              }}
+              className="w-full bg-gray-700/60 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 border border-gray-600"
+            >
+              <IconPractice size={16} className="shrink-0" />
+              Preguntas de práctica
             </button>
           </div>
         </div>

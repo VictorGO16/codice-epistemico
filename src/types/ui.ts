@@ -1,5 +1,5 @@
 // Tab system
-export type TabId = 'home' | 'context' | 'psychology' | 'methodology' | 'oracle' | 'debate' | 'paradigm';
+export type TabId = 'home' | 'context' | 'psychology' | 'methodology' | 'oracle' | 'debate' | 'paradigm' | 'tests';
 
 // Modal types
 export type ModalType = 

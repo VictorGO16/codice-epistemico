@@ -11,6 +11,7 @@ import DebateChat from '@/components/features/Debate/DebateChat';
 import DebateAnalysis from '@/components/features/Debate/DebateAnalysis';
 import ParadigmLab from '@/components/features/Paradigm/ParadigmLab';
 import OracleChat from '@/components/features/Oracle/OracleChat';
+import TestsPractice from '@/components/features/Tests/TestsPractice';
 
 export default function ContentArea() {
   const { activeTab, setActiveTab } = useUIStore();
@@ -84,6 +85,8 @@ export default function ContentArea() {
         );
       case 'paradigm':
         return <ParadigmLab />;
+      case 'tests':
+        return <TestsPractice />;
       case 'context':
       case 'psychology':
       case 'methodology':

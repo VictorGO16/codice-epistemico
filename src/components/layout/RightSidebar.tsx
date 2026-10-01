@@ -76,6 +76,12 @@ const mainNavigationItems: NavigationItem[] = [
     label: 'Debate',
     icon: ChatBubbleLeftRightIcon,
     description: 'Debates filosóficos'
+  },
+  {
+    id: 'tests',
+    label: 'Práctica',
+    icon: AcademicCapIcon,
+    description: 'Preguntas formativas'
   }
 ];
 
@@ -294,7 +300,7 @@ export default function RightSidebar({ isOpen, onClose }: RightSidebarProps) {
                             <div className="text-xs opacity-75">{item.description}</div>
                           </div>
                         </button>
-                        {item.id !== 'home' && (
+                        {(item.id === 'debate' || item.id === 'paradigm') && (
                           <button
                             onClick={() => handleCreateSession(item.id)}
                             className="p-1 text-gray-400 hover:text-teal-400 transition-colors flex-shrink-0"

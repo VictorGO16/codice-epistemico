@@ -5,7 +5,7 @@ import { useConceptStore } from '@/lib/stores/concept-store';
 import { TabId } from '@/types';
 import {
   IconHome, IconForum, IconParadigm,
-  IconBook, IconMind, IconMethod, IconDialogue,
+  IconBook, IconMind, IconMethod, IconDialogue, IconPractice,
 } from '@/components/ui/Icons';
 import type { ComponentType } from 'react';
 
@@ -19,6 +19,7 @@ export default function MainNavigation() {
     { id: 'home',     label: 'Inicio',   Icon: IconHome },
     { id: 'debate',   label: 'Debate',   Icon: IconForum },
     { id: 'paradigm', label: 'Análisis', Icon: IconParadigm },
+    { id: 'tests',    label: 'Práctica',  Icon: IconPractice },
   ];
 
   const conceptTabs: { id: string; label: string; Icon: ComponentType<IconProps> }[] = currentConcept ? [

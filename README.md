@@ -58,6 +58,7 @@ El Códice Epistémico es una aplicación web avanzada que permite explorar la f
 ### Backend & IA
 - **Google Gemini AI** - Modelo de lenguaje para conversaciones y análisis
 - **Next.js API Routes** - Endpoints del servidor
+- **Neon Postgres** - Persistencia de prácticas formativas y respuestas
 - **Gemini 2.5 Flash** - Modelo optimizado para respuestas rápidas
 
 ### Utilidades
@@ -94,11 +95,15 @@ pnpm install
 cp .env.example .env.local
 ```
 
-Edita `.env.local` y agrega tu clave API de Gemini:
+Edita `.env.local` y agrega las variables necesarias:
 ```env
 GEMINI_API_KEY=tu_clave_api_de_gemini_aqui
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=postgresql://...
+TESTS_ADMIN_KEY=una_clave_docente_de_al_menos_8_caracteres
 ```
+
+`DATABASE_URL` y `TESTS_ADMIN_KEY` son necesarias para sincronizar las prácticas y acceder al panel docente. La tabla de prácticas se crea de forma idempotente al usar las rutas de tests.
 
 ### 4. Ejecutar en desarrollo
 ```bash
@@ -138,6 +143,16 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 3. **Define tu objeto de estudio** (ej: "la ansiedad en adolescentes")
 4. **Obtén análisis** ontológico, epistemológico y metodológico
 5. **Exporta el análisis** completo
+
+
+### Preguntas de práctica
+1. Accede a **Práctica** desde la navegación principal
+2. Selecciona la sesión que quieres revisar
+3. Responde las preguntas y revisa la retroalimentación de cada alternativa
+4. Si quieres, explica con tus palabras por qué elegiste una respuesta
+5. El progreso se guarda localmente y se sincroniza con Neon cuando la base de datos está configurada
+
+El acceso docente no aparece en la navegación principal. Dentro de la sección de práctica, el enlace discreto **Debug** abre el formulario de clave y, después de autenticar, dirige a `/tests/docente`.
 
 ## 🏗️ Arquitectura del Proyecto
 

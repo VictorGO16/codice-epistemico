@@ -4,7 +4,7 @@ import { useUIStore } from '@/lib/stores/ui-store';
 import PageTransition from '@/components/ui/PageTransition';
 import StaggerContainer, { StaggerItem } from '@/components/ui/StaggerContainer';
 import { AnimatedButton } from '@/components/ui/AnimatedCard';
-import { IconConcept, IconForum, IconParadigm } from '@/components/ui/Icons';
+import { IconConcept, IconForum, IconParadigm, IconPractice } from '@/components/ui/Icons';
 
 export default function HomePage() {
   const { setActiveTab } = useUIStore();
@@ -33,7 +33,7 @@ export default function HomePage() {
         </StaggerItem>
 
         <StaggerItem>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 max-w-6xl mx-auto">
             <div className="bg-gray-900/45 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-teal-400/40 hover:bg-gray-900/65 transition-colors duration-200 text-left">
               <IconConcept size={32} className="mb-4 text-teal-400/70" />
               <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Conceptos Filosóficos</h3>
@@ -61,6 +61,17 @@ export default function HomePage() {
               <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Análisis Paradigmático</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Analiza objetos de estudio desde diferentes paradigmas epistemológicos
+              </p>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('tests')}
+              className="bg-gray-900/45 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-teal-400/40 hover:bg-gray-900/65 transition-colors duration-200 text-left"
+            >
+              <IconPractice size={32} className="mb-4 text-teal-400/70" />
+              <h3 className="text-base font-semibold text-white mb-2 tracking-tight">Preguntas de práctica</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Revisa los contenidos de las sesiones con retroalimentación por alternativa
               </p>
             </button>
           </div>
