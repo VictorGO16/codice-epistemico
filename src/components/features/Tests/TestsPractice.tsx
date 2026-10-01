@@ -250,7 +250,7 @@ export default function TestsPractice() {
 
   const renderFooter = () => (
     <footer className="mt-16 border-t border-gray-700 pt-4 pb-2 flex flex-wrap items-start gap-4 text-xs text-[#7f8b9c]">
-      <span>Epistemología y Metodología</span>
+      <span>Gracias al trabajo de David Carrasco y Carolina Contreras.</span>
       <button
         type="button"
         onClick={() => {
